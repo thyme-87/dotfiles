@@ -8,6 +8,7 @@ In this repository I'll keep my dotfiles/configuration for the following program
 5. tmux
 6. urxvt
 7. xmonad
+8. ansible
 
 I don't know yet how exactly I'll organize everything, but I'll try to add more information on the way.
 You are welcome to copy some or all of my settings. I'll try to keep them commented to provide some basic explanation.

@@ -10,7 +10,7 @@
 " PURPOSE COMMENT
 
 " [2015-02-08] filetype treat *.md files as markdown-files 
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+" autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 " [2015-02-08] command-line completion
 " Better command-line completion
@@ -88,6 +88,9 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"			MY SECTION
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Various plugins from around the web
 "
 " Adding a new plugin must always be accompanied from adding a short comment
@@ -95,12 +98,18 @@ Plugin 'gmarik/Vundle.vim'
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
 
+" [2015-04-18] switch to markdown-plugin from @tim pope@
+Plugin 'tpope/vim-markdown'
+
+" [2015-04-18] nerdtree fileexplorer
+Plugin 'scrooloose/nerdtree'
+
 " [2015-02-08] vim-monokai monokai colorscheme for syntaxhighlighting
 Plugin 'sickill/vim-monokai'
 
 " [2015-02-08] tabular + vim-markdown to enable markdown support
 Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
+"Plugin 'plasticboy/vim-markdown'
 
 
 " All of your Plugins must be added before the following line
