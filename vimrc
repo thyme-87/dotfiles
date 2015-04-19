@@ -89,7 +89,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"			MY SECTION
+"			MY SECTION START
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Various plugins from around the web
 "
@@ -98,6 +98,8 @@ Plugin 'gmarik/Vundle.vim'
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
 
+" [2015-04-19] add vim-ansible-yaml to suppot ansible yaml syntax
+Plugin 'chase/vim-ansible-yaml'
 " [2015-04-18] switch to markdown-plugin from @tim pope@
 Plugin 'tpope/vim-markdown'
 
