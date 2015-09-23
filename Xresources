@@ -8,7 +8,8 @@ URxvt*.foreground: #e0e0e0
 !URxvt*background: #101010
 !URxvt*foreground: #d0d0d0
 URxvt*color0: #101010
-URxvt*color1: #960050
+!URxvt*color1: #960050
+URxvt*color1: #F92672
 URxvt*color2: #66aa11
 URxvt*color3: #c47f2c
 URxvt*color4: #30309b
