@@ -58,6 +58,12 @@ set encoding=utf8
 " use smarttab
 set smarttab
 
+" [2015-09-19]
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set softtabstop=0
+
 " [2015-02-08] wrap lines
 " wrap lines
 set wrap
@@ -112,7 +118,7 @@ Plugin 'sickill/vim-monokai'
 " [2015-02-08] tabular + vim-markdown to enable markdown support
 Plugin 'godlygeek/tabular'
 "Plugin 'plasticboy/vim-markdown'
-
+Plugin 'lervag/vimtex'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
