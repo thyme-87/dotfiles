@@ -9,7 +9,9 @@ alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 export EDITOR="vim" 
 
-TERM='rxvt-unicode'
+#TERM='rxvt-unicode'
+#try to  set term for tmux:
+TERM='screen-256color'
 COLORTERM='rxvt-unicode-256color'
 
 
