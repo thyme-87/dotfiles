@@ -39,8 +39,14 @@ set number
 
 " [2015-02-08] color scheme
 " Enable monokai color scheme
+" We can also use molokai (make sure it is present first)
 syntax enable
 colorscheme monokai
+"colorscheme molokai
+
+" [2015-10-13] vim-airline color scheme
+" Set dark color scheme for vim-airline
+:let g:airline_theme="dark"
 
 " [2015-02-08] regular expressions
 " Turn magic on for regular expressions
@@ -104,8 +110,19 @@ Plugin 'gmarik/Vundle.vim'
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
 
+" [2015-10-13] add another monokai color scheme
+" Same thing: color need to be copyied to ~/.vim/colors
+Plugin 'tomasr/molokai'
+
+" [2015-10-13] add vim-airline for vim
+Plugin 'bling/vim-airline'
+
+" [2015-10-11] add tmuxline for fancier tmuxline and vim statusline
+Plugin 'edkolev/tmuxline.vim'
+
 " [2015-04-19] add vim-ansible-yaml to suppot ansible yaml syntax
 Plugin 'chase/vim-ansible-yaml'
+
 " [2015-04-18] switch to markdown-plugin from @tim pope@
 Plugin 'tpope/vim-markdown'
 
@@ -118,7 +135,10 @@ Plugin 'sickill/vim-monokai'
 " [2015-02-08] tabular + vim-markdown to enable markdown support
 Plugin 'godlygeek/tabular'
 "Plugin 'plasticboy/vim-markdown'
-Plugin 'lervag/vimtex'
+
+" [2015-09-19] Latex support.
+" Plugin deactivated. It seems to cause preformance issues on T400
+"Plugin 'lervag/vimtex'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required

@@ -12,8 +12,9 @@ export EDITOR="$VISUAL"
 #NOTE that this will not affect root!
 
 PATH=$PATH:~/dotfiles/bin
-export PATH
+PATH=$PATH:~/.cabal/bin
 
+export PATH
 #look for existing ssh-agent and use it, otherwise start new ssh-agent
 #script from: https://stackoverflow.com/questions/18880024/start-ssh-agent-on-login
 #SSH_ENV="$HOME/.ssh/environment"
