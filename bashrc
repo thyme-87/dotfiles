@@ -14,6 +14,8 @@ export EDITOR="vim"
 TERM='screen-256color'
 COLORTERM='rxvt-unicode-256color'
 
+#  ------------- aliase area ---------------
+alias tor='~/tor-browser_en-US/start-tor-browser --detach'
 
 # find running ssh-agent and use it
 # info from: http://blog.joncairns.com/2013/12/understanding-ssh-agent-and-ssh-add/

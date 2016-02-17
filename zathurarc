@@ -1,0 +1,18 @@
+# set basic settings for a nice zathura experience
+
+# 1. Set colors
+# remember: urxvt background color is: #313131 272822
+set recolor-lightcolor '#313131'
+set recolor-darkcolor'#e0e0e0'
+set highlight-color '#36B9CF'
+set highlight-active-color '#F92672'
+set highlight-transparency 0.5
+set recolor 1
+
+set statusbar-bg '#313131'
+set statusbar-fg '#36B9CF'
+
+# 2. Other settings
+set adjust-open width
+set page-padding 1
+set incremental-search 1

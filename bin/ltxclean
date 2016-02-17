@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# shell script to clean unnecessary files after compiling latex document to pdf
+
+echo "räume auf.."
+rm -f *.bbl *.aux *.blg *.bcf *.log *.run.xml *.synctex.gz
+echo "fertig!"

@@ -11,8 +11,14 @@ export EDITOR="$VISUAL"
 #add dotfiles/bin to PATH
 #NOTE that this will not affect root!
 
+# currently I'm not using cabal for some reasons (cabal-hell)
 PATH=$PATH:~/dotfiles/bin
-PATH=$PATH:~/.cabal/bin
+#PATH=$PATH:~/.cabal/bin
+
+xrdb  ~/.Xresources
+
+# make sure that .bashrc is also executed
+source  ~/.bashrc
 
 export PATH
 #look for existing ssh-agent and use it, otherwise start new ssh-agent
