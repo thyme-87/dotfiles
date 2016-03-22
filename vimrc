@@ -96,14 +96,21 @@ set cursorline
 " tread virtual lines to wrap long lines onto screen as normal lines
 " [2016-02-06] handling of virtual lines
 " remap gj and gk to address real lines.
-nnoremap j gj
-nnoremap k gk
-nnoremap gj j
-nnoremap gk k
+" [2016-03-04] deactivate this because it is a penance when working with latex
+" nnoremap j gj
+" nnoremap k gk
+" nnoremap gj j
+" nnoremap gk k
 
 " [2016-02-12] Settings for latex suite
 " see http://www.kubieziel.de/blog/archives/1333-Die-vim-LaTeXSuite.html
 " for more infos
+
+" [2016-03-13] Set leader key from [\] to [,] as it is more convenient on
+" DE-layout
+"let mapleader = "\"
+let maplocalleader = ","
+
 
 " settings for grep. Grep is used for autocomplete.
 set grepprg=grep\ -nH\ $*
@@ -180,6 +187,16 @@ Plugin 'gmarik/Vundle.vim'
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
 
+" [2016-03-13] add speeddating-plugin for vim as it seems to be a dependency
+" for vim-orgmode
+Plugin 'tpope/vim-speeddating'
+
+" [2016-03-12] add orgmode for vim
+Plugin 'jceb/vim-orgmode'
+
+" [2016-02-14] plugin Latex Suite
+Plugin 'vim-latex/vim-latex'
+" Plugin 'LaTeX-Suite-aka-Vim-LaTeX'
 
 " [2015-10-13] add another monokai color scheme
 " Same thing: color need to be copyied to ~/.vim/colors
@@ -206,14 +223,6 @@ Plugin 'sickill/vim-monokai'
 " [2015-02-08] tabular + vim-markdown to enable markdown support
 Plugin 'godlygeek/tabular'
 "Plugin 'plasticboy/vim-markdown'
-
-" [2015-09-19] Latex plugin THIS IS NOT LATEX SUITE
-" Plugin deactivated. It seems to cause preformance issues on T400
-" Plugin 'lervag/vimtex'
-
-" [2016-02-14] plugin Latex Suite
-Plugin 'vim-latex/vim-latex'
-" Plugin 'LaTeX-Suite-aka-Vim-LaTeX'
 
 " [2015-12-25] git wrapper.
 Plugin 'tpope/vim-fugitive'

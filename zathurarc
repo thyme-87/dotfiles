@@ -1,4 +1,6 @@
 # set basic settings for a nice zathura experience
+# in order for this file to have any effect
+# create a symlink in ~/.config/zathura/
 
 # 1. Set colors
 # remember: urxvt background color is: #313131 272822

@@ -1,9 +1,9 @@
 #
 # ~/.bash_profile
+# This file is executed for login shells
 #
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
-
 #set editor to VIM
 export VISUAL=vim
 export EDITOR="$VISUAL"
@@ -11,11 +11,8 @@ export EDITOR="$VISUAL"
 #add dotfiles/bin to PATH
 #NOTE that this will not affect root!
 
-# currently I'm not using cabal for some reasons (cabal-hell)
 PATH=$PATH:~/dotfiles/bin
-#PATH=$PATH:~/.cabal/bin
 
-xrdb  ~/.Xresources
 
 # make sure that .bashrc is also executed
 source  ~/.bashrc
