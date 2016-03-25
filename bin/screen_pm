@@ -7,14 +7,13 @@ if [ -e $1 ]; then
     exit 0
 elif [ $1 ]; then
     if [ $1 = "on" ]; then
-        echo "Turning on X power saving setting\n"
+        echo "Turning on X power saving settings"
         #Enable power-saving for monitor
         /usr/bin/xset dpms 
         /usr/bin/xset s on 
         exit 1
     elif [ $1 = "off" ]; then
-        echo "argument "off" was passed"
-        echo "Turning off X power saving setting\n"
+        echo "Turning off X power saving settings"
         #Disable power-saving for monitor
         /usr/bin/xset -dpms
         /usr/bin/xset s off
