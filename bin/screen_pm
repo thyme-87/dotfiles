@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# file_info: turn off/on power saving settings for monitor. So that we can watch a movie without the monitor going into powersave mode
+
+if [ -e $1 ]; then 
+    echo "You need to pass either 'on' of 'off' as an argument."
+    exit 0
+elif [ $1 ]; then
+    if [ $1 = "on" ]; then
+        echo "Turning on X power saving setting\n"
+        #Enable power-saving for monitor
+        /usr/bin/xset dpms 
+        /usr/bin/xset s on 
+        exit 1
+    elif [ $1 = "off" ]; then
+        echo "argument "off" was passed"
+        echo "Turning off X power saving setting\n"
+        #Disable power-saving for monitor
+        /usr/bin/xset -dpms
+        /usr/bin/xset s off
+        exit 1
+    else
+        echo "another argument was passed"
+fi
+fi
+
+#if [ $1 ];then
+#    if [ $1 = "off" ]; then
+#        echo "\n Turning off X power saving setting\n"
+#        #Disable power-saving for monitor
+#        /usr/bin/xset -dpms &
+#        /usr/bin/xset -s off &
+#        exit 1
+#    elif [ $1 = "on" ]; then
+#        echo "\n Turning on X power saving setting\n"
+#        #Enable power-saving for monitor
+#        /usr/bin/xset dpms 
+#        /usr/bin/xset s on 
+#        exit 1
+#    else
+#        echo "\n wrong arguments. You can pass either "on" or "off" as argument."
+#        exit 0
+#    fi
+#else 
+#    echo "\There was an error processing the command line arguments\n"
+#    exit 0
+#fi
