@@ -1,3 +1,6 @@
-#!/bin/bash
+#/bin/bash
 
-#start physlock and switch X to power saving mode
+# PROBLEM physlock starts a new window session and thus prevents switching off montior via xset dpms force off
+# IDEAS
+physlock -d
+xset dpms force off

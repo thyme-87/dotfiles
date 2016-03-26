@@ -9,11 +9,11 @@ import System.IO
 
 -- molokai color scheme
 -- To Do: document which color scheme is used and where it is located to prepare for easy changes
--- dark grey:   272822
--- pink:        F92672
--- blue:        66D9EF
--- green:       A6E22E
--- ocker:       FD971F
+-- dark grey:   #272822
+-- pink:        #F92672
+-- blue:        #66D9EF
+-- green:       #A6E22E
+-- ocker:       #FD971F
 
 
 -- mod keys:

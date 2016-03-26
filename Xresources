@@ -26,8 +26,33 @@ URxvt*color14: #4eb4fa
 URxvt*color15: #d0d0d0
 !----THEME: MOLOKAI End
 
-!URxvt*font: xft:Bitstream Vera Sans Mono:pixelsize=12
-URxvt*font: xft:Droid Sans Mono-11
+!------FONTS-----------
+! This font should work on every linux installation:
+! URxvt*font: xft:Bitstream Vera Sans Mono:pixelsize=12
+!
+! Some general settings for xft:
+Xft.dpi:            96
+Xft.antialias:      true
+Xft.rgba:           rgb
+Xft.hinting:        true 
+Xft.hintstyle:      hintfull
+Xft.autohint:       true
+!
+! Old standard Droid Sans Mono
+! URxvt*font: xft:Droid Sans Mono-11
+
+!New to make vim-airline look good :)
+!URxvt*font: xft:Droid Sans Mono for Powerline-11
+URxvt*font: xft:Roboto Mono for Powerline-11
+URxvt*boldFont: Roboto Mono Bold for Powerline-11
+URxvt*italicFont: Roboto Mono Italic for Powerline-11
+URxvt*bolditalicFont: Roboto Mono Bold Italic for Powerline-11
+
+URxvt.letterSpace: -1
+
 URxvt*.saveLines: 1000
 URxvt*.urlLauncher: chromium
 
+! use visual bell instead of beep:
+URxvt*urgentOnBell: false
+URxvt*visualBell: true

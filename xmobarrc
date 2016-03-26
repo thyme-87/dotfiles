@@ -1,0 +1,22 @@
+Config { font = "xft:RobotoMono-Regular:size=9:antialiasing=false"
+        --font = "xft:Bitstream Vera Sans Mono:size=9:bold:antialiasing=true"
+        --font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
+        , borderColor = "#272822"
+        , border = TopB
+        , bgColor = "#272822"
+        , fgColor = "#e0e0e0"
+        , position = TopW L 100
+        , commands = [ Run Weather "EDDT" ["-t","<tempC>C","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
+                        , Run Network "enp0s25" ["-L","0","-H","32","--normal","green","--high","red"] 10
+                        , Run Network "wlp3s0" ["-L","0","-H","32","--normal","green","--high","red"] 10
+                        , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
+                        , Run Memory ["-t","Mem: <usedratio>%"] 10
+                        , Run Swap [] 10
+                        , Run Com "uname" ["-s","-r"] "" 36000
+                        , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+                        , Run StdinReader
+                        ]
+        , sepChar = "%"
+        , alignSep = "}{"
+        , template = "%StdinReader% | %cpu% | %memory% * %swap% | %eth0% - %eth1% }{<fc=#ee9a00>%date%</fc> | %uname% | %CYVR% "
+        }
