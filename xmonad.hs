@@ -4,6 +4,8 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Util.Paste
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Layout.NoBorders
+import XMonad.Layout.PerWorkspace
 import Graphics.X11.ExtraTypes.XF86
 import System.IO
 
@@ -20,6 +22,24 @@ import System.IO
 -- mod1mask -> [alt left]
 -- mod4mask -> [super]
 
+-- VARIABLES FOR XMOBAR
+myTitleColor        =   "#272822"
+myTitleLength       =   100
+myCurrentWSColor    =   "#F92672"
+myVisibleWSColor    =   "#66D9EF"
+--myUrgentWSColor     =   "#F92672"
+myUrgentWSColor     =   "#F92672"
+myUrgentWSLeft      =   "!"
+myUrgentWSRight     =   "!"
+myVisibleWSLeft     =   "("
+myVisibleWSRight    =   ")"
+myCurrentWSLeft     =   "["
+myCurrentWSRight    =   "]"
+
+
+myManageHook = composeAll
+    [ className =? "Gimp"   --> doFloat
+    , resource =? "synapse" --> doFloat]
 myStartupHook ::X ()
 myStartupHook = do
     spawn "compton -f -I 0.10 -O 0.10 --backend glx --vsync opengl"
@@ -27,14 +47,16 @@ myStartupHook = do
 main = do
     xmproc <- spawnPipe "xmobar"
 
-
     xmonad $ defaultConfig { 
-        manageHook      = manageDocks <+> manageHook defaultConfig
+        manageHook      = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , startupHook   = myStartupHook <+> startupHook defaultConfig
-        , layoutHook    = avoidStruts $ layoutHook defaultConfig
+        , layoutHook    = avoidStruts $ layoutHook $ defaultConfig
         , logHook = dynamicLogWithPP xmobarPP
                         { ppOutput = hPutStrLn xmproc
-                        , ppTitle = xmobarColor "#F92672" "#272822" . shorten 100
+                        , ppTitle = xmobarColor "#F92672" "#272822" . shorten myTitleLength
+                        , ppCurrent =   xmobarColor myCurrentWSColor "" . wrap myCurrentWSLeft myCurrentWSRight
+                        , ppVisible =   xmobarColor myVisibleWSColor "" . wrap myVisibleWSLeft myVisibleWSRight 
+                        , ppUrgent =   xmobarColor myUrgentWSColor "" . wrap myUrgentWSLeft myUrgentWSRight 
                         }
         , modMask                 = myModMask
         , terminal                = myTerminal

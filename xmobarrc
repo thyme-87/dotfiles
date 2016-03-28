@@ -1,22 +1,103 @@
-Config { font = "xft:RobotoMono-Regular:size=9:antialiasing=false"
-        --font = "xft:Bitstream Vera Sans Mono:size=9:bold:antialiasing=true"
+Config { 
+
+        -- APPEARANCE
+        --font = "xft:RobotoMono-Regular:size=9:antialiasing=false"
+        font = "xft:Roboto Mono for Powerline:size=9:antialiasing=true"
+        , position = TopW L 100
         --font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
-        , borderColor = "#272822"
-        , border = TopB
         , bgColor = "#272822"
         , fgColor = "#e0e0e0"
-        , position = TopW L 100
-        , commands = [ Run Weather "EDDT" ["-t","<tempC>C","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
-                        , Run Network "enp0s25" ["-L","0","-H","32","--normal","green","--high","red"] 10
-                        , Run Network "wlp3s0" ["-L","0","-H","32","--normal","green","--high","red"] 10
-                        , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
-                        , Run Memory ["-t","Mem: <usedratio>%"] 10
-                        , Run Swap [] 10
-                        , Run Com "uname" ["-s","-r"] "" 36000
-                        , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
-                        , Run StdinReader
-                        ]
-        , sepChar = "%"
-        , alignSep = "}{"
-        , template = "%StdinReader% | %cpu% | %memory% * %swap% | %eth0% - %eth1% }{<fc=#ee9a00>%date%</fc> | %uname% | %CYVR% "
+        , border = TopB 0
+        , borderColor = "#272822"
+
+
+        -- GENERAL BEHAVIOR
+        , lowerOnStart      =   True    -- send to bottom of window stack on start
+        , hideOnStart       =   False   -- start with window unmapped (hidden)
+        , allDesktops       =   True    -- show on all desktops
+        , overrideRedirect  =   True    -- set the Override Redirect flag (Xlib)
+        , pickBroadest      =   True    -- choose display dynamically by width (multi-monitor)
+        , persistent        =   True    -- enable/disable hiding (True = disabled)
+
+        -- PLUGINS
+        , commands = 
+        -- weather monitor
+        [ Run Weather "EDDT" [  "--template", "<skyCondition> | <fc=#F92672><tempC></fc>°C | <fc=#F92672><rh></fc>% | <fc=#F92672><pressure></fc> hPa"] 36000
+
+        -- network activity monitor (dynamic interface resolution)
+        , Run DynNetwork    [   "--template",   "<dev>: <tx>kB/s|<rx>kB/s"
+                            ,   "--Low"     ,   "1000"        --units: kB/s
+                            ,   "--High"    ,   "5000"        --units: kB/s
+                            ,   "--high"    ,   "#00FFDD" 
+                            ,   "--normal"  ,   "#e0e0e0" 
+                            ,   "--low"     ,   "#FF0000" 
+                            ] 10
+
+        -- cpu activity monitor
+        , Run MultiCpu      [   "--template",   "Cpu: <total0>%|<total1>%"
+                            ,   "--Low"     ,   "30"        --units: %
+                            ,   "--High"    ,   "65"        --units: %
+                            ,   "--high"    ,   "#FF0000" 
+                            ,   "--normal"  ,   "#e0e0e0" 
+                            ,   "--low"     ,   "#00FFDD" 
+                            ,   "--ppad"    ,   "3"
+                            ] 10
+
+        -- cpu core temperature monitor
+        , Run CoreTemp      [   "--template",   "Temp: <core0>°C | <core1>°C"
+                            ,   "--Low"     ,   "70"        --units: °C
+                            ,   "--High"    ,   "80"        --units: °C
+                            ,   "--high"    ,   "#FF0000" 
+                            ,   "--normal"  ,   "#e0e0e0" 
+                            ,   "--low"     ,   "#00FFDD" 
+                            ] 10
+        
+        -- memory usage monitor
+        , Run Memory        [   "--template",   "Mem: <usedratio>%"
+                            ,   "--Low"     ,   "20"        --units: %
+                            ,   "--High"    ,   "90"        --units: %
+                            ,   "--high"    ,   "#FF0000" 
+                            ,   "--normal"  ,   "#e0e0e0" 
+                            ,   "--low"     ,   "#00FFDD" 
+                            ] 10
+
+        -- swap monitor
+        --, Run Swap          [] 10
+
+        -- battery monitor
+        , Run Battery       [   "--template",   "Batt: <acstatus>"
+                            ,   "--Low"     ,   "20"        --units: %
+                            ,   "--High"    ,   "80"        --units: %
+                            ,   "--high"    ,   "#00FFDD" 
+                            ,   "--normal"  ,   "#e0e0e0" 
+                            ,   "--low"     ,   "#FF0000" 
+
+                            , "--" --battery specific options
+                                    -- discharging status
+                                    , "-o"  , "<left>% (<timeleft>)"
+                                    -- AC "on" status
+                                    , "-O"  , "<fc=#FF0000>Charging</fc>"
+                                    -- charged status
+                                    , "-i"  , "<fc=#00FF00>Charged</fc>"
+                            ] 50
+
+        -- time and date indicator
+        --, Run Date "<fc=#0000FF>%a %b %_d %Y %H:%M:%S</fc>" "date" 10
+        , Run Date "<fc=#66aa11>%F (%a) %T</fc>" "date" 10
+
+        -- keyboard layout indicator
+        , Run Kbd           [   ("de",  "<fc=#4444FF>DE</fc>")
+                            --,   ("polytonic",  "<fc=#4444FF>GR</fc>")
+                            --,   ("fr",  "<fc=#4444FF>FR</fc>")
+                            --,   ("es",  "<fc=#4444FF>ES</fc>")
+                            ]
+        , Run StdinReader  --["--minwidth=50"]
+
+        , Run Volume "default" "Master" [] 10
+
+        ]
+        -- LAYOUT
+        , sepChar   = "%"   -- delineator between plugin and text
+        , alignSep  = "}{"  -- separator between left-right alignment
+        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %default:Master%  %EDDT% | <action=`gnome-calendar`>%date%</action> || %kbd%"
         }
