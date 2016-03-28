@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# DESCRIPTION: switch between de,fr,es,gr (polytonic) layout
+
+# Use first argument as layout if there is one
+if [[ -n "$1" ]]; then
+    setxkbmap $1
+    exit 1
+else
+    layout=$(setxkbmap -query | awk 'FNR == 3 {print $2}')
+    case $layout in
+        de)
+            setxkbmap fr
+            exit 1
+            ;;
+        fr)
+            setxkbmap es
+            exit 1
+            ;;
+        es)
+            setxkbmap gr polytonic
+            exit 1
+            ;;
+        gr)
+            setxkbmap de
+            exit 1
+            ;;
+        *)
+            echo "invalid input" >&2
+            exit 0
+            ;;
+    esac
+fi

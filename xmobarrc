@@ -86,10 +86,10 @@ Config {
         , Run Date "<fc=#66aa11>%F (%a) %T</fc>" "date" 10
 
         -- keyboard layout indicator
-        , Run Kbd           [   ("de",  "<fc=#4444FF>DE</fc>")
-                            --,   ("polytonic",  "<fc=#4444FF>GR</fc>")
-                            --,   ("fr",  "<fc=#4444FF>FR</fc>")
-                            --,   ("es",  "<fc=#4444FF>ES</fc>")
+        , Run Kbd           [   ("de",  "<fc=#3579a8>DE </fc>")
+                            ,   ("gr(polytonic)",  "<fc=#3579a8>GR (polytonic) </fc>")
+                            ,   ("fr",  "<fc=#3579a8>FR </fc>")
+                            ,   ("es",  "<fc=#3579a8>ES </fc>")
                             ]
         , Run StdinReader  --["--minwidth=50"]
 
@@ -99,5 +99,5 @@ Config {
         -- LAYOUT
         , sepChar   = "%"   -- delineator between plugin and text
         , alignSep  = "}{"  -- separator between left-right alignment
-        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %default:Master%  %EDDT% | <action=`gnome-calendar`>%date%</action> || %kbd%"
+        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %default:Master%  %EDDT% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
         }

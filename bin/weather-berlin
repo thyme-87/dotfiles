@@ -2,7 +2,7 @@
 
 URL='http://www.accuweather.com/en/de/berlin/10178/weather-forecast/178087'
 
-wget -q -O- "$URL" | awk -F\' '/acm_RecentLocationsCarousel\.push/{print "In Berlin: it is ", $2,  ". The temperature is " $10"° celsius. " "It feels like: "  $12"° celsius. ",  "The sky is "  $14 "."}'| head -1
+wget -q -O- "$URL" | awk -F\' '/acm_RecentLocationsCarousel\.push/{print "In Berlin it is " $2". The temperature is " $10"° celsius. " "It feels like "  $12"° celsius.",  "The sky is "  $14 "."}'| head -1
 
 #wget -q -O- "$URL" | awk -F\' '/acm_RecentLocationsCarousel\.push/{print "In Berlin: it is", "\033[0;31m" $2, "\033[0m" "|" "temperature is " "\033[0;31m" $10"° C" "\033[0m" "| it feels like: " "\033[0;31m" $12"° C", "\033[0m" "| sky is: \033[0;31m"  $14 "\033[0m |"}'| head -1
 

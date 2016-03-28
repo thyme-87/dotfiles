@@ -1,13 +1,21 @@
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.SetWMName
+import XMonad.Hooks.UrgencyHook
 import XMonad.Util.Paste
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Layout.Grid
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.ThreeColumns
 import XMonad.Layout.NoBorders
-import XMonad.Layout.PerWorkspace
+import XMonad.Layout.Fullscreen
+import XMonad.Layout.PerWorkspace (onWorkspace)
+import XMonad.Layout.ToggleLayouts
 import Graphics.X11.ExtraTypes.XF86
 import System.IO
+import Data.Ratio ((%))
 
 -- molokai color scheme
 -- To Do: document which color scheme is used and where it is located to prepare for easy changes
@@ -37,9 +45,12 @@ myCurrentWSLeft     =   "["
 myCurrentWSRight    =   "]"
 
 
-myManageHook = composeAll
+myManageHook = floatHook <+> fullscreenManageHook
+floatHook = composeAll
     [ className =? "Gimp"   --> doFloat
-    , resource =? "synapse" --> doFloat]
+    , resource =? "synapse" --> doFloat
+    , resource =? "gnome-calendar" --> doFloat]
+
 myStartupHook ::X ()
 myStartupHook = do
     spawn "compton -f -I 0.10 -O 0.10 --backend glx --vsync opengl"
@@ -47,10 +58,11 @@ myStartupHook = do
 main = do
     xmproc <- spawnPipe "xmobar"
 
-    xmonad $ defaultConfig { 
+    xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig { 
         manageHook      = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , startupHook   = myStartupHook <+> startupHook defaultConfig
-        , layoutHook    = avoidStruts $ layoutHook $ defaultConfig
+        , handleEventHook   =   handleEventHook defaultConfig <+> fullscreenEventHook
+        , layoutHook    = avoidStruts $ toggleLayouts (noBorders Full) $ smartBorders $ layoutHook defaultConfig
         , logHook = dynamicLogWithPP xmobarPP
                         { ppOutput = hPutStrLn xmproc
                         , ppTitle = xmobarColor "#F92672" "#272822" . shorten myTitleLength
@@ -67,7 +79,8 @@ main = do
         , normalBorderColor     = myNormalBorderColor
         , focusedBorderColor    = myFocusedBorderColor
         } `additionalKeys`
-        [ ((mod4Mask .|. shiftMask, xK_l), spawn "sleep 1; xset dpms force off; physlock -ds")
+        [ ((mod4Mask .|. shiftMask, xK_l), spawn "physlock -ds")
+        , ((mod1Mask        , xK_space), spawn "/home/timon/dotfiles/bin/layout_switch")
         , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume 1 +2db")
         , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume 1 -2db")
         , ((0, xF86XK_AudioMute), spawn "pactl set-sink-mute 1 toggle")
@@ -79,13 +92,7 @@ main = do
         , ((0, xK_Print), spawn "scrot")
         , ((0, xK_Insert), pasteSelection) -- there is a problem here, as it seems to escape some characters
         ]
---To Do:
--- define keys shortcuts and hotkeys
--- Volume up
--- Volume down
--- Sound off
--- Suspend to ram
--- open vl
+
 myTerminal              = "urxvt"
 myModMask               = mod4Mask -- [super]
 myBorderWidth           = 1
