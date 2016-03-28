@@ -9,10 +9,11 @@ import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Layout.Grid
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.ThreeColumns
-import XMonad.Layout.NoBorders
+import XMonad.Layout.NoBorders ( noBorders, smartBorders)
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.ToggleLayouts
+--import XMonad.Hooks.EwmhDesktops --ambigous with fullscreenEventHook
 import Graphics.X11.ExtraTypes.XF86
 import System.IO
 import Data.Ratio ((%))
@@ -81,6 +82,7 @@ main = do
         } `additionalKeys`
         [ ((mod4Mask .|. shiftMask, xK_l), spawn "physlock -ds")
         , ((mod1Mask        , xK_space), spawn "/home/timon/dotfiles/bin/layout_switch")
+        , ((mod4Mask            , xK_m), sendMessage ToggleStruts)
         , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume 1 +2db")
         , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume 1 -2db")
         , ((0, xF86XK_AudioMute), spawn "pactl set-sink-mute 1 toggle")
