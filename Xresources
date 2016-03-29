@@ -43,12 +43,12 @@ Xft.autohint:       true
 
 !New to make vim-airline look good :)
 !URxvt*font: xft:Droid Sans Mono for Powerline-11
-URxvt*font: xft:Roboto Mono for Powerline-11
-URxvt*boldFont: Roboto Mono Bold for Powerline-11
-URxvt*italicFont: Roboto Mono Italic for Powerline-11
-URxvt*bolditalicFont: Roboto Mono Bold Italic for Powerline-11
+URxvt*font:             xft:Roboto Mono for Powerline-11
+URxvt*boldFont:         xft:RobotoMono-Bold-11
+URxvt*italicFont:       xft:RobotoMono-Italic-11
+URxvt*bolditalicFont:   xft:RobotoMono-Bold-Italic-11
 
-URxvt.letterSpace: -1
+!URxvt.letterSpace: -1
 
 URxvt*.saveLines: 1000
 URxvt*.urlLauncher: chromium
