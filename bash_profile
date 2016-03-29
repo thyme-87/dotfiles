@@ -12,7 +12,7 @@ export EDITOR="$VISUAL"
 #NOTE that this will not affect root!
 
 PATH=$PATH:~/dotfiles/bin
-PATH=$PATH:~/.cabal/bin
+#PATH=$PATH:~/.cabal/bin
 export PATH
 
 

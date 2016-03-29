@@ -4,6 +4,11 @@ URxvt*.scrollBar_right: true
 URxvt*.background: #313131
 URxvt*.foreground: #e0e0e0 
 
+!----Various settings:
+URxvt*.fasing:      30
+URxvt*.visualBell:  true
+URxvt*colorUL:      #F92672
+
 !----THEME: MOLOKAI Begin
 !URxvt*background: #101010
 !URxvt*foreground: #d0d0d0

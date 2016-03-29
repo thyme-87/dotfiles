@@ -79,6 +79,11 @@ set cursorline
 nnoremap j gj
 nnoremap k gk
 
+" [2016-03-14] set localleader and leader
+"
+let maplocalleader= ","
+"let mapleader = ","
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                       PLUGINS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -104,6 +109,18 @@ Plugin 'gmarik/Vundle.vim'
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
 
+" [2016-03-14] added vim latex suit for real latex support
+Plugin 'vim-latex/vim-latex'
+
+" [2016-03-14] added tpopes speeddating plugin as it is used by vim-orgmode
+Plugin 'tpope/vim-speeddating'
+
+" [2016-03-07] vim-orgmode
+Plugin 'jceb/vim-orgmode'
+
+" [2016-03-07] add vim-simple-todo for todo-list management
+"Plugin 'vitalk/vim-simple-todo'
+
 " [2015-04-19] add vim-ansible-yaml to suppot ansible yaml syntax
 Plugin 'chase/vim-ansible-yaml'
 " [2015-04-18] switch to markdown-plugin from @tim pope@
@@ -118,7 +135,6 @@ Plugin 'sickill/vim-monokai'
 " [2015-02-08] tabular + vim-markdown to enable markdown support
 Plugin 'godlygeek/tabular'
 "Plugin 'plasticboy/vim-markdown'
-Plugin 'lervag/vimtex'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
