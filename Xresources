@@ -46,7 +46,7 @@ Xft.autohint:       true
 URxvt*font:             xft:Roboto Mono for Powerline-11
 URxvt*boldFont:         xft:RobotoMono-Bold-11
 URxvt*italicFont:       xft:RobotoMono-Italic-11
-URxvt*bolditalicFont:   xft:RobotoMono-Bold-Italic-11
+URxvt*bolditalicFont:   xft:RobotoMono-BoldItalic-11
 
 !URxvt.letterSpace: -1
 
