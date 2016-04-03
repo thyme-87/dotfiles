@@ -33,7 +33,7 @@ import Data.Ratio ((%))
 
 -- VARIABLES FOR XMOBAR
 myTitleColor        =   "#272822"
-myTitleLength       =   100
+myTitleLength       =   50
 myCurrentWSColor    =   "#F92672"
 myVisibleWSColor    =   "#66D9EF"
 --myUrgentWSColor     =   "#F92672"
