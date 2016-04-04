@@ -1,7 +1,28 @@
 #!/bin/sh
 
+
+# PROJECTPLAN:
+
+# Milestone 1: simple program to handle english vocabulary.
+#   MUST:   read argument and store it in the format: [WORD], [DATE] \n in a file (appending at the end).
+#   MUST:   return errors if too many arguments are given or none at all.
+#   SHOULD: verify, if file is present, otherwise return an error message.
+#   SHOULD: accept sentences if quoted ("more than one word")
+
+# Milestone 2:
+#   MUST:   support multi-language support plus possiblility for localization (e.g. for "coche" or "plata" which have different meaning in latin-american spanish than in castellano); maybe utf8-abbreviations can be of use here? (en_US, en_en, etc.)
+#   MUST:   support a way to mark ambiguous words.
+#   MUST:   support a way to bind words/sentences to specific contexts (etc. [cuisine], [informatics], [mathematics] etc.)
+#   MUST:   support a way to provide multiple full sentences as examples/context for words.
+#   MUST:   support placeholders to be used within example sentences
+
 #ToDo:
-# check if local directory to store dictionaries exists. Proceed if it does, otherwise create it as ~/.vocabulary
+# 0. check if local directory to store dictionaries exists. Proceed if it does, otherwise create it as ~/.vocabulary
+# 1. try to append argument 1 to file [en_all.csv] in path [path] in format: "[WORD]", [DATE]
+# 2. return either fail or success
+
+
+#
 # read command line arguments. Arguments are:
 # -r --read         = print content of languagefile -l
 # -a --add          = add word(s) to lanuagefile -l (print output on screen  to allow user to check for spelling mistakes)
