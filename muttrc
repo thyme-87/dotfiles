@@ -65,9 +65,12 @@ set send_charset    =   "utf-8"
 
 # we use one config-file per account located in ~/.mutt/[accountname].conf
 # and when we switch accounts, we want to source the right config, to make sure that mutt keeps mail accounts separated
-folder-hook timon.schroeder@posteo.de      'source ~/.mutt/posteo.conf'
-folder-hook timon.schr@gmail.com           'source ~/.mutt/gmail.conf'
-folder-hook timon.schroeder@uni-potsdam.de 'source ~/.mutt/university.conf'
+#folder-hook 'timon.schroeder@posteo.de'      'source ~/.mutt/posteo.conf'
+#folder-hook 'timon.schr@gmail.com'           'source ~/.mutt/gmail.conf'
+#folder-hook 'timon.schroeder@uni-potsdam.de' 'source ~/.mutt/university.conf'
+folder-hook 'posteo.de'      'source ~/.mutt/posteo.conf'
+folder-hook 'gmail.com'      'source ~/.mutt/gmail.conf'
+folder-hook 'uni-potsdam.de' 'source ~/.mutt/university.conf'
 
 # settings regarding HTML-Mails
 auto_view   text/html
@@ -78,17 +81,23 @@ source ~/.mutt/posteo.conf
 #source ~/.mutt/university.conf
 
 # Key bindings / shortcuts
-bind index G imap-fetch-mail # shortcut for fetching mail
+#bind index x imap-fetch-mail # shortcut for fetching mail
 
 # MACROS
-macro index,pager <f2> '<sync-mailbox><enter-command>source ~/.mutt/gmail.conf<enter><change-folder>!<enter>'
-macro index,pager <f3> '<sync-mailbox><enter-command>source ~/.mutt/posteo.conf<enter><change-folder>!<enter>'
-macro index,pager <f4> '<sync-mailbox><enter-command>source ~/.mutt/university.conf<enter><change-folder>!<enter>'
+#macro index,pager <f2> '<sync-mailbox><enter-command>source ~/.mutt/gmail.conf<enter><change-folder>!<enter>'
+#
+
+macro index <f1> "<enter-command>less /usr/share/doc/mutt/manual.txt<enter>" "test"
+
+macro index <f2> '<sync-mailbox><enter-command>source ~/.mutt/gmail.conf<enter><change-folder>!<enter>' "switch to gmail"
+
+macro index <f3> '<sync-mailbox><enter-command>source ~/.mutt/posteo.conf<enter><change-folder>!<enter>' "switch to posteo"
+macro index <f4> '<sync-mailbox><enter-command>source ~/.mutt/university.conf<enter><change-folder>!<enter>' "switch to university"
 
 macro pager \Cb <pipe-entry>'urlview'<enter> 'Follow links with urlview'
 
 # bind commands to keys so that we can disable commands that may reveal passphrases
-bind generic,alias,attach,browser,editor,index,compose,pager,pgp,postpone ':' noop
+#bind generic,alias,attach,browser,editor,index,compose,pager,pgp,postpone ':' noop
 
 # VIM like keybindings:
 bind index  j       next-entry
@@ -116,7 +125,7 @@ bind index  <tab>   sync-mailbox
 bind index h        limit
 
 # as '?' is used for searching we need to replace key binding for help
-bind index \Ch      help
+bind index H      help
 
 # Start with threads collapsed and most recent thread selected
 push <collapse-all><last-entry>
@@ -129,6 +138,7 @@ bind pager <up>     previous-line
 
 bind pager /    search
 bind pager ?    search-reverse
+
 bind pager n    search-next
 bind pager N    search-opposite
 
@@ -136,7 +146,7 @@ bind pager  g   top
 bind pager  G   bottom
 
 # as '?' is used for searching we need to replace key binding for help
-bind pager \Ch  help
+bind pager H  help
 
 bind attach,index,pager \CD next-page
 bind attach,index,pager \CU previous-page
