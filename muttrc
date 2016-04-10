@@ -13,25 +13,40 @@ set     mail_check      =   120                     # intervall to check for new
 set     text_flowed     =   yes     # set text_flowed to avoid hart line-breaks
 set     mbox_type       =   Maildir # not sure, if this is needed for a pure mutt setup
 
+set     date_format         =   "%a, %d. %b %H:%M"
+
+
+set     xterm_set_titles    =   yes
+
+
 # use only safe SSL connections:
 # see https://gist.github.com/bnagy/8914f712f689cc01c267 for details
-#set     ssl_force_tls       =   yes
-#set     ssl_starttls        =   yes
-#set     ssl_use_sslv3       =   no
-#set     ssl_use_sslv2       =   no
-#set     ssl_use_tlsv1       =   no
-#set     ssl_use_tlsv1_1     =   no
-#set     ssl_use_tlsv1_2     =   yes
-#set     ssl_verify_dates    =   yes
-#set     ssl_verify_host     =   yes
+# SECURITY
+set     ssl_force_tls       =   yes
+set     ssl_starttls        =   yes
+set     ssl_use_sslv3       =   no
+set     ssl_use_sslv2       =   no
+set     ssl_use_tlsv1       =   no #this setting is problematic for use with my university mail account
+set     ssl_use_tlsv1_1     =   no
+set     ssl_use_tlsv1_2     =   yes
+set     ssl_verify_dates    =   yes
+set     ssl_verify_host     =   yes
 
 # TODO
 # regarding security, these settings need to be reviewed once everything is set up
 # because it means we keep a local unencrypted copy of all e-mails.
 # and I don't want that
+# Solution is probably something like keeping inbox as empty as possible and restrict loading to inbox
 #set     message_cachedir    =  "~/.cache/mutt"      # store messages locally
 set     header_cache    =   ~/.cache/mutt           # store message header locally
 
+# TODO
+# regarding security, an alias file is a really really bad idea
+# so I need to think about that. But for now, let's keep an alias file
+# ideas: encrypted alias file (which would mean that alias are static, as adding an alias requires manual work
+set     alias_file          =   ~/.mutt/alias       # we want alias for names
+source  ~/.mutt/alias       # so read alias file on startup
+set     reverse_alias                               # resolv mail adresses for list view and show alias if existing
 
 # to make mutt even more secure, handle certificates seperately
 unset   ssl_usesystemcerts
@@ -42,44 +57,35 @@ set     certificate_file    =   ~/.mutt/mailcerts
 # get passwords from gpg-encrypted file ~/.my-pwds.gpg
 source  "gpg2 -dq $HOME/.my-pwds.gpg |"
 
-# For now we test with only one account
-set     from            =   timon.schroeder@posteo.de
-set     hostname        =   "posteo.de" 
-set     realname        =   "Timon Schröder"
-set     imap_user       =   timon.schroeder@posteo.de
-set     imap_pass       =   $my_pw_posteo
-set     folder          =   "imaps://$imap_user@posteo.de/"
-set     spoolfile       =   +INBOX
-set     postponed       =   +Drafts
-set     record          =   +Sent
-
-# SMTP
-set     use_from        =   yes
-set     smtp_url        =   smtps://$imap_user:$my_pw_posteo@smtp.posteo.de
-set     smtp_pass       =   $my_pw_posteo
-set     ssl_force_tls   =   yes
-set     ssl_starttls    =   yes
+# THIS MAY ONLY BE USED TEMPORARILY FOR DEBUGGING!
+#source  "cat $HOME/.my-pwds |"
 
 # set charset to UTF8 for all outgoing mails
 set send_charset    =   "utf-8"
 
 # we use one config-file per account located in ~/.mutt/[accountname].conf
-#folder-hook 'posteo.de'         'source ~/.mutt/posteo.conf'
-#folder-hook 'gmail.com'         'source ~/.mutt/gmail.conf'
-#folder-hook 'uni-potsdam.de'    'source ~/.mutt/university.conf'
+# and when we switch accounts, we want to source the right config, to make sure that mutt keeps mail accounts separated
+folder-hook timon.schroeder@posteo.de      'source ~/.mutt/posteo.conf'
+folder-hook timon.schr@gmail.com           'source ~/.mutt/gmail.conf'
+folder-hook timon.schroeder@uni-potsdam.de 'source ~/.mutt/university.conf'
 
 # settings regarding HTML-Mails
 auto_view   text/html
 
 # switch to posteo account after startup
-source ~/.mutt/posteo.conf
+#source ~/.mutt/posteo.conf
+#source ~/.mutt/gmail.conf
+source ~/.mutt/university.conf
 
 # Key bindings / shortcuts
 bind index G imap-fetch-mail # shortcut for fetching mail
 
-macro index <f2> '<sync-mailbox><enter-command>source ~/.mutt/gmail.conf<enter><change-folder>!<enter>'
-macro index <f3> '<sync-mailbox><enter-command>source ~/.mutt/posteo.conf<enter><change-folder>!<enter>'
-macro index <f4> '<sync-mailbox><enter-command>source ~/.mutt/university.conf<enter><change-folder>!<enter>'
+# MACROS
+macro index <f2> "<sync-mailbox><enter-command>source ~/.mutt/gmail.conf<enter><change-folder>!<enter>"
+macro index <f3> "<sync-mailbox><enter-command>source ~/.mutt/posteo.conf<enter><change-folder>!<enter>"
+macro index <f4> "<sync-mailbox><enter-command>source ~/.mutt/university.conf<enter><change-folder>!<enter>"
+
+macro pager \Cb <pipe-entry>'urlviewl'<enter> 'Follow links with urlview'
 
 # bind commands to keys so that we can disable commands that may reveal passphrases
 bind generic,alias,attach,browser,editor,index,compose,pager,pgp,postpone ':' noop
@@ -132,3 +138,17 @@ bind pager \Ch  help
 
 bind attach,index,pager \CD next-page
 bind attach,index,pager \CU previous-page
+
+
+# COLORS
+color   header  brightblack default "^(from|subject):'
+color   body    cyan        default "[-a-z_0-9.+]+@[-a-z_0-9.]+"
+
+uncolor index   *
+color   index   white       default ~Q  # answered
+color   index   green       default ~F  # marked
+color   index   red         default ~N  # new
+color   index   brightred   default ~O  # unread
+color   index   magenta     default ~T  # tagged
+color   index   yellow      default ~D  # deleted
+
