@@ -73,48 +73,50 @@ folder-hook timon.schroeder@uni-potsdam.de 'source ~/.mutt/university.conf'
 auto_view   text/html
 
 # switch to posteo account after startup
-#source ~/.mutt/posteo.conf
+source ~/.mutt/posteo.conf
 #source ~/.mutt/gmail.conf
-source ~/.mutt/university.conf
+#source ~/.mutt/university.conf
 
 # Key bindings / shortcuts
 bind index G imap-fetch-mail # shortcut for fetching mail
 
 # MACROS
-macro index <f2> "<sync-mailbox><enter-command>source ~/.mutt/gmail.conf<enter><change-folder>!<enter>"
-macro index <f3> "<sync-mailbox><enter-command>source ~/.mutt/posteo.conf<enter><change-folder>!<enter>"
-macro index <f4> "<sync-mailbox><enter-command>source ~/.mutt/university.conf<enter><change-folder>!<enter>"
+macro index,pager <f2> '<sync-mailbox><enter-command>source ~/.mutt/gmail.conf<enter><change-folder>!<enter>'
+macro index,pager <f3> '<sync-mailbox><enter-command>source ~/.mutt/posteo.conf<enter><change-folder>!<enter>'
+macro index,pager <f4> '<sync-mailbox><enter-command>source ~/.mutt/university.conf<enter><change-folder>!<enter>'
 
-macro pager \Cb <pipe-entry>'urlviewl'<enter> 'Follow links with urlview'
+macro pager \Cb <pipe-entry>'urlview'<enter> 'Follow links with urlview'
 
 # bind commands to keys so that we can disable commands that may reveal passphrases
 bind generic,alias,attach,browser,editor,index,compose,pager,pgp,postpone ':' noop
 
 # VIM like keybindings:
-bind index j    next-entry
-bind index k    previous-entry
-bind index J    next-thread 
-bind index K    previous-thread
+bind index  j       next-entry
+bind index  k       previous-entry
+bind index  J       next-thread 
+bind index  K       previous-thread
 
-bind index /    search
-bind index ?    search-reverse
-bind index n    search-next
-bind index N    search-opposite
+bind index  /       search
+bind index  ?       search-reverse
+bind index  n       search-next
+bind index  N       search-opposite
 
-bind index g    first-entry
-bind index G    last-entry
+bind index  g       first-entry
+bind index  G       last-entry
 
-bind index l    collapse-thread
-bind index z    collapse-all
+bind index  l       collapse-thread
+bind index  z       collapse-all
 
-bind index r    reply
-bind index a    group-reply
-bind index L    list-reply
+bind index  r       reply
+bind index  R       group-reply
+bind index  L       list-reply
 
-bind index h    limit
+bind index  <tab>   sync-mailbox
+
+bind index h        limit
 
 # as '?' is used for searching we need to replace key binding for help
-bind index \Ch  help
+bind index \Ch      help
 
 # Start with threads collapsed and most recent thread selected
 push <collapse-all><last-entry>
