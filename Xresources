@@ -56,3 +56,12 @@ URxvt*.urlLauncher: chromium
 ! use visual bell instead of beep:
 URxvt*urgentOnBell: false
 URxvt*visualBell: true
+
+!----Various settings:
+URxvt*.fasing:      30
+URxvt*colorUL:      #F92672
+
+!try to activate perlscript for convenient copy & pasting
+!in order for this to work  osc-xterm-clipboard needs to reside in /usr/lib/urxvt/perl/
+!for further infos see: https://wiki.archlinux.org/index.php/Tmux 
+URxvt.perl-ext-common: osc-xterm-clipboard   
