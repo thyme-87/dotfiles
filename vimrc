@@ -55,11 +55,14 @@ colorscheme monokai
 
 " [2015-10-13] vim-airline color scheme
 " Set dark color scheme for vim-airline
-:let g:airline_theme="dark"
+let g:airline_theme="dark"
 
 " [2016-04-12] vim-airline smart tab line
 " display all buffers when only one tab is open
-let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+set laststatus=2
+
 
 
 " [2015-02-08] regular expressions
