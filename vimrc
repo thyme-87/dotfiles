@@ -57,6 +57,11 @@ colorscheme monokai
 " Set dark color scheme for vim-airline
 :let g:airline_theme="dark"
 
+" [2016-04-12] vim-airline smart tab line
+" display all buffers when only one tab is open
+let g:airline#extensions#tabline#enabled = 1
+
+
 " [2015-02-08] regular expressions
 " Turn magic on for regular expressions
 set magic
@@ -203,7 +208,10 @@ Plugin 'vim-latex/vim-latex'
 Plugin 'tomasr/molokai'
 
 " [2015-10-13] add vim-airline for vim
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+
+" [2016-04-12] add vim-airline themes
+Plugin 'vim-airline/vim-airline-themes'
 
 " [2015-10-11] add tmuxline for fancier tmuxline and vim statusline
 Plugin 'edkolev/tmuxline.vim'
