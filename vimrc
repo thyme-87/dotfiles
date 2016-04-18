@@ -9,6 +9,10 @@
 " [YYYY-MM-DD] SETTING_NAME
 " PURPOSE COMMENT
 
+" [2016-04-12] counts / number format
+" create first own macro :) prettyfy json
+" thanks to: https://pascalprecht.github.io/2014/07/10/pretty-print-json-in-vim/
+nnoremap <localleader>p :%!python -m json.tool<cr>
 
 " [2016-01-30] counts / number format
 " set numberformat to decimal. Don't tread numbers with leading zero as octal.
@@ -194,6 +198,9 @@ Plugin 'gmarik/Vundle.vim'
 " in a FIXED syntax that informs about the date, name, purpose. It CAN be
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
+"
+" [2016-04-13] add Vdebug Plugin for debugging php with Xdebug
+Plugin 'joonty/vdebug'
 
 " [2016-03-13] add speeddating-plugin for vim as it seems to be a dependency
 " for vim-orgmode

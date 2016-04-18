@@ -99,5 +99,5 @@ Config {
         -- LAYOUT
         , sepChar   = "%"   -- delineator between plugin and text
         , alignSep  = "}{"  -- separator between left-right alignment
-        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %default:Master%  %EDDT% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
+        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | <action=`gnome-control-center`>%dynnetwork%</action> }{ %default:Master%  <action=`gnome-weather`>%EDDT%</action> | <action=`gnome-calendar`>%date%</action> | <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
         }
