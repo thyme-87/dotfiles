@@ -4,6 +4,19 @@ URxvt*.scrollBar_right: true
 URxvt*.background: #313131
 URxvt*.foreground: #e0e0e0 
 
+URxvt*.saveLines: 1000
+URxvt*.urlLauncher: chromium
+
+! use visual bell instead of beep:
+URxvt*urgentOnBell: false
+URxvt*visualBell: true
+
+!----Various settings:
+URxvt*.fasing:      30
+URxvt*colorUL:      #F92672
+
+URxvt*.termName:    rxvt-unicode-256color
+
 !----THEME: MOLOKAI Begin
 !URxvt*background: #101010
 !URxvt*foreground: #d0d0d0
@@ -47,19 +60,9 @@ URxvt*font:             xft:Roboto Mono for Powerline-11
 URxvt*boldFont:         xft:RobotoMono-Bold-11
 URxvt*italicFont:       xft:RobotoMono-Italic-11
 URxvt*bolditalicFont:   xft:RobotoMono-BoldItalic-11
-
 !URxvt.letterSpace: -1
 
-URxvt*.saveLines: 1000
-URxvt*.urlLauncher: chromium
 
-! use visual bell instead of beep:
-URxvt*urgentOnBell: false
-URxvt*visualBell: true
-
-!----Various settings:
-URxvt*.fasing:      30
-URxvt*colorUL:      #F92672
 
 !try to activate perlscript for convenient copy & pasting
 !in order for this to work  osc-xterm-clipboard needs to reside in /usr/lib/urxvt/perl/

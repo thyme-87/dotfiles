@@ -9,6 +9,10 @@
 " [YYYY-MM-DD] SETTING_NAME
 " PURPOSE COMMENT
 
+" [2016-04-26] settings for vimorgmode
+" Define Workflow
+let g:org_todo_keywords = [['TODO(t)', '|', 'DONE(d)'], ['GET_FEEDBACK(g)', 'PROVIDE_FEEDBACK(f)', 'WATING(w)', 'PAUSED(p)', 'DELEGATED(D)', '|', 'CANCELED(c)']]
+
 " [2016-04-12] counts / number format
 " create first own macro :) prettyfy json
 " thanks to: https://pascalprecht.github.io/2014/07/10/pretty-print-json-in-vim/
@@ -198,7 +202,16 @@ Plugin 'gmarik/Vundle.vim'
 " in a FIXED syntax that informs about the date, name, purpose. It CAN be
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
-"
+
+" [20167-04-25] add plugin to fold markdown
+Plugin 'nelstrom/vim-markdown-folding'
+
+" [20167-04-25] add Plugin VOom
+Plugin 'VOoM'
+
+" [2016-04-25] add Plugin vimoutline
+Plugin 'vimoutliner/vimoutliner'
+
 " [2016-04-13] add Vdebug Plugin for debugging php with Xdebug
 Plugin 'joonty/vdebug'
 
