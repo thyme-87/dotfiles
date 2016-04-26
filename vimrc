@@ -9,6 +9,11 @@
 " [YYYY-MM-DD] SETTING_NAME
 " PURPOSE COMMENT
 
+" [2016-04-26] settings for markdown-folding plugin
+let g:markdown_fold_style = 'nested'
+
+set foldlevel=1
+
 " [2016-04-26] settings for vimorgmode
 " Define Workflow
 let g:org_todo_keywords = [['TODO(t)', '|', 'DONE(d)'], ['GET_FEEDBACK(g)', 'PROVIDE_FEEDBACK(f)', 'WATING(w)', 'PAUSED(p)', 'DELEGATED(D)', '|', 'CANCELED(c)']]
