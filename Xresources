@@ -20,7 +20,8 @@ URxvt*.termName:    rxvt-unicode-256color
 !----THEME collection/monokai from terminal.sexy
 !special
 *.foreground:   #f1ebeb
-*.background:   #272822
+!*.background:   #272822
+*.background:   #313131
 *.cursorColor:  #f1ebeb
 
 !black
@@ -53,7 +54,7 @@ URxvt*.termName:    rxvt-unicode-256color
 
 ! white
 *.color7:       #acada1
-*.color15:      #cfd0c2oin/bash: special: Kemmando nicht gefunden.
+*.color15:      #cfd0c2
 !------END
 
 !!----THEME: MOLOKAI Begin
