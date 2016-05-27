@@ -33,7 +33,7 @@ import Data.Ratio ((%))
 
 -- VARIABLES FOR XMOBAR
 myTitleColor        =   "#272822"
-myTitleLength       =   15
+myTitleLength       =   40
 myCurrentWSColor    =   "#F92672"
 myVisibleWSColor    =   "#66D9EF"
 --myUrgentWSColor     =   "#F92672"
@@ -48,14 +48,9 @@ myCurrentWSRight    =   "]"
 
 myManageHook = floatHook <+> fullscreenManageHook
 floatHook = composeAll
-    [ className =? "gimp"                   --> doFloat
-    , resource =? "synapse"                 --> doFloat
-    , resource =? "keepassx2"               --> doFloat
-    , resource =? "skype"                   --> doFloat
-    , resource =? "arandr"                   --> doFloat
-    , resource =? "gnome-weather"           --> doFloat
-    , resource =? "gnome-control-center"    --> doFloat
-    , resource =? "gnome-calendar"          --> doFloat]
+    [ className =? "Gimp"   --> doFloat
+    , resource =? "synapse" --> doFloat
+    , resource =? "gnome-calendar" --> doFloat]
 
 myStartupHook ::X ()
 myStartupHook = do
@@ -88,9 +83,9 @@ main = do
         [ ((mod4Mask .|. shiftMask, xK_l), spawn "physlock -ds")
         , ((mod1Mask        , xK_space), spawn "/home/timon/dotfiles/bin/layout_switch")
         , ((mod4Mask            , xK_m), sendMessage ToggleStruts)
-        , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume 0 +2db")
-        , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume 0 -2db")
-        , ((0, xF86XK_AudioMute), spawn "pactl set-sink-mute 0 toggle")
+        , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume 1 +2db")
+        , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume 1 -2db")
+        , ((0, xF86XK_AudioMute), spawn "pactl set-sink-mute 1 toggle")
         , ((controlMask .|. mod1Mask, xK_t), spawn "urxvt")
         , ((controlMask, xK_space), spawn "synapse")
         , ((0, xF86XK_Tools), spawn "systemctl suspend")

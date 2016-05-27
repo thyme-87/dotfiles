@@ -9,19 +9,6 @@
 " [YYYY-MM-DD] SETTING_NAME
 " PURPOSE COMMENT
 
-" [2016-04-26] settings for markdown-folding plugin
-let g:markdown_fold_style = 'nested'
-
-set foldlevel=1
-
-" [2016-04-26] settings for vimorgmode
-" Define Workflow
-let g:org_todo_keywords = [['TODO(t)', '|', 'DONE(d)'], ['GET_FEEDBACK(g)', 'PROVIDE_FEEDBACK(f)', 'WATING(w)', 'PAUSED(p)', 'DELEGATED(D)', '|', 'CANCELED(c)']]
-
-" [2016-04-12] counts / number format
-" create first own macro :) prettyfy json
-" thanks to: https://pascalprecht.github.io/2014/07/10/pretty-print-json-in-vim/
-nnoremap <localleader>p :%!python -m json.tool<cr>
 
 " [2016-01-30] counts / number format
 " set numberformat to decimal. Don't tread numbers with leading zero as octal.
@@ -68,15 +55,7 @@ colorscheme monokai
 
 " [2015-10-13] vim-airline color scheme
 " Set dark color scheme for vim-airline
-let g:airline_theme="dark"
-
-" [2016-04-12] vim-airline smart tab line
-" display all buffers when only one tab is open
-"let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-set laststatus=2
-
-
+:let g:airline_theme="dark"
 
 " [2015-02-08] regular expressions
 " Turn magic on for regular expressions
@@ -208,18 +187,6 @@ Plugin 'gmarik/Vundle.vim'
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
 
-" [20167-04-25] add plugin to fold markdown
-Plugin 'nelstrom/vim-markdown-folding'
-
-" [20167-04-25] add Plugin VOom
-Plugin 'VOoM'
-
-" [2016-04-25] add Plugin vimoutline
-Plugin 'vimoutliner/vimoutliner'
-
-" [2016-04-13] add Vdebug Plugin for debugging php with Xdebug
-Plugin 'joonty/vdebug'
-
 " [2016-03-13] add speeddating-plugin for vim as it seems to be a dependency
 " for vim-orgmode
 Plugin 'tpope/vim-speeddating'
@@ -236,10 +203,7 @@ Plugin 'vim-latex/vim-latex'
 Plugin 'tomasr/molokai'
 
 " [2015-10-13] add vim-airline for vim
-Plugin 'vim-airline/vim-airline'
-
-" [2016-04-12] add vim-airline themes
-Plugin 'vim-airline/vim-airline-themes'
+Plugin 'bling/vim-airline'
 
 " [2015-10-11] add tmuxline for fancier tmuxline and vim statusline
 Plugin 'edkolev/tmuxline.vim'

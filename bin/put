@@ -14,7 +14,6 @@
 #   MUST:   support a way to mark ambiguous words.
 #   MUST:   support a way to bind words/sentences to specific contexts (etc. [cuisine], [informatics], [mathematics] etc.)
 #   MUST:   support a way to provide multiple full sentences as examples/context for words.
-#   MUST:   Workflow for words that are already in the file (potentially, every word could reoccur to the user indefinetely as 'new'. We want to be aware of that, in order to identify words that the user encounters often. First guess: let [DATE] be an array of dates. Check first if word already exists and only add the timestamp if it does, otherwise, create a new entry.)
 #   MUST:   support placeholders to be used within example sentences
 
 #ToDo:

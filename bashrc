@@ -8,8 +8,6 @@
 
 #-------------- ALIAS BEGIN----------------
 alias tor='~/tor-browser_en-US/start-tor-browser --detach'
-alias chromium='setsid /usr/bin/chromium >& /dev/null &'
-alias bopdf='~/Dropbox/BerlinOnline/4_other/bo_pdf/bopdf.sh'
 
 # make ls use colors automatically
 alias ls='ls --color=auto'
@@ -25,8 +23,7 @@ export PATH
 
 #TERM='rxvt-unicode'
 #try to  set term for tmux:
-#TERM='screen-256color'
-#TERM='rxvt-unicode--256color'
+TERM='screen-256color'
 COLORTERM='rxvt-unicode-256color'
 
 
