@@ -50,6 +50,7 @@ myManageHook = floatHook <+> fullscreenManageHook
 floatHook = composeAll
     [ className =? "Gimp"   --> doFloat
     , resource =? "synapse" --> doFloat
+    , resource =? "virtualbox" --> doFloat
     , resource =? "gnome-calendar" --> doFloat]
 
 myStartupHook ::X ()
