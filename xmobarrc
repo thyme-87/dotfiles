@@ -16,7 +16,7 @@ Config {
         , hideOnStart       =   False   -- start with window unmapped (hidden)
         , allDesktops       =   True    -- show on all desktops
         , overrideRedirect  =   True    -- set the Override Redirect flag (Xlib)
-        , pickBroadest      =   True    -- choose display dynamically by width (multi-monitor)
+        , pickBroadest      =   False -- choose display dynamically by width (multi-monitor)
         , persistent        =   True    -- enable/disable hiding (True = disabled)
 
         -- PLUGINS
