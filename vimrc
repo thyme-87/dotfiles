@@ -9,13 +9,29 @@
 " [YYYY-MM-DD] SETTING_NAME
 " PURPOSE COMMENT
 
+" [2016-05-08] map key to execute latex wordcount
+nnoremap <F11> :!detex % \| wc -w<CR>
+
+" [2016-04-24] open VOom automatically for files that are handled by
+" vimoutliner
+" currently not working
+"au FileType vo_base :Voom vimoutliner
+
+" 2016-05-24] set updatetime for vim-gitgutter
+set updatetime=250
+
+" [2016-04-15] set vim to 256 colors
+set t_Co=256
 
 " [2016-01-30] counts / number format
 " set numberformat to decimal. Don't tread numbers with leading zero as octal.
-set nrformats=
+set nrformats=alpha
 
 " [2015-02-08] filetype treat *.md files as markdown-files 
 " autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
+" [2016-05-24] set key for taggbar
+set <F8>    :TagbarToggle<CR>
 
 " [2015-02-08] command-line completion
 " Better command-line completion
@@ -52,10 +68,16 @@ set number
 syntax enable
 colorscheme monokai
 "colorscheme molokai
+"for molokai
+"let g:molokai_original = 1
 
 " [2015-10-13] vim-airline color scheme
 " Set dark color scheme for vim-airline
-:let g:airline_theme="dark"
+"let g:airline_theme="dark"
+let g:airline_powerline_fonts = 1
+let g:airline_theme="dark"
+set laststatus=2
+
 
 " [2015-02-08] regular expressions
 " Turn magic on for regular expressions
@@ -71,7 +93,8 @@ set visualbell
 
 " [2015-02-08] encoding
 " set utf8 as standard encoding
-set encoding=utf8
+set encoding=utf-8
+set fileencoding=utf-8
 
 " [2015-02-08] tabs
 " use smarttab
@@ -85,7 +108,18 @@ set softtabstop=0
 
 " [2015-02-08] wrap lines
 " wrap lines
+" [2016-04-16] wrapping lines hurts readability in orgmode. Probably also in
+" other contexts.
+" Currently experimenting with wrapping/line breaks
+" see http://vim.wikia.com/wiki/Word_wrap_without_line_breaks for further
+" information
 set wrap
+set linebreak
+set nolist
+set textwidth=0
+set wrapmargin=0
+set formatoptions-=t
+
 
 " [2015-02-08] cursor position
 " horizontal line to indicate cursor position
@@ -110,6 +144,7 @@ set cursorline
 " DE-layout
 "let mapleader = "\"
 let maplocalleader = ","
+let mapleader = ","
 
 
 " settings for grep. Grep is used for autocomplete.
@@ -145,6 +180,10 @@ let g:Tex_completion_bibliographystyle = 'authoryear-icomp,abbr,alpha,plain,unsr
 " for more infos see: https://sourceforge.net/p/vim-latex/mailman/message/32672109/
 autocmd FileType tex :NoMatchParen
 autocmd FileType tex setlocal nocursorline
+
+" [2016-05-24] disable fancy plugins for tex files
+autocmd FileType tex let b:tagbar_ignore = 1
+autocmd FileType tex let g:neocomplete#enable_at_startup = 0
 
 " [2016-02-12] Also, to maximize performance I added settings for highlighting
 " for more infos see http://vim.wikia.com/wiki/Fix_syntax_highlighting
@@ -187,6 +226,54 @@ Plugin 'gmarik/Vundle.vim'
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
 
+" [2016-05-24] plugin to display tags in a window (ordered by scope)
+" deactivatet to check performance
+Plugin 'majutsushi/tagbar'
+
+" [2016-05-24] dark color scheme for vim
+" See http://vimawesome.com/plugin/hybrid-vim for instructions to set the
+" right color palette in ~.Xressources
+Plugin 'w0ng/vim-hybrid'
+
+" [2016-05-24] plugin for seamless navigation between tmux, panes and splits
+" deactivatet to check performance
+" Plugin 'christoomey/vim-tmux-navigator'
+
+" [2016-05-24] better hightlighting for JSON
+Plugin 'elzr/vim-json'
+
+" [2016-05-24] plugin to work with multiple cursors
+" See http://vimawesome.com/plugin/vim-multiple-cursors for instructions
+" deactivatet to check performance
+" Plugin 'terryma/vim-multiple-cursors'
+
+" [2016-05-24] alternativ to ctrlp that supports plugins
+Plugin 'shougo/unite.vim'
+
+" [2016-05-24] fuzzy search for files, buffers, tags and MRUs (most recent
+" used)
+" deactivatet to check performance
+" Plugin 'ctrlpvim/ctrlp.vim'
+
+" [2016-05-24] plugin for completion in vim
+" Needs to be configured and tested
+" https://github.com/Shougo/neocomplete.vim
+" deactivatet to check performance
+" Plugin 'Shougo/neocomplete'
+
+" [2016-05-24] plugin to visualize diffs in the gutter
+" deactivatet to check performance
+Plugin 'airblade/vim-gitgutter'
+
+" [2016-04-24] markdown folding
+Plugin 'nelstrom/vim-markdown-folding'
+
+" [2016-04-24] add VOoM (vim two-pane outliner)
+Plugin 'VOom'
+
+" [2016-04-24] add vim-outliner
+Plugin 'vimoutliner/vimoutliner'
+
 " [2016-03-13] add speeddating-plugin for vim as it seems to be a dependency
 " for vim-orgmode
 Plugin 'tpope/vim-speeddating'
@@ -203,16 +290,16 @@ Plugin 'vim-latex/vim-latex'
 Plugin 'tomasr/molokai'
 
 " [2015-10-13] add vim-airline for vim
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+
+" [2016-04-12] add vim-airline themes
+Plugin 'vim-airline/vim-airline-themes'
 
 " [2015-10-11] add tmuxline for fancier tmuxline and vim statusline
 Plugin 'edkolev/tmuxline.vim'
 
 " [2015-04-19] add vim-ansible-yaml to suppot ansible yaml syntax
 Plugin 'chase/vim-ansible-yaml'
-
-" [2015-04-18] switch to markdown-plugin from @tim pope@
-Plugin 'tpope/vim-markdown'
 
 " [2015-04-18] nerdtree fileexplorer
 Plugin 'scrooloose/nerdtree'
@@ -222,7 +309,12 @@ Plugin 'sickill/vim-monokai'
 
 " [2015-02-08] tabular + vim-markdown to enable markdown support
 Plugin 'godlygeek/tabular'
-"Plugin 'plasticboy/vim-markdown'
+
+" [2015-04-18] switch to markdown-plugin from @tim pope@
+"Plugin 'tpope/vim-markdown'
+
+" [2016-05-24 another attempt with better syntaxhighlighting for markdown
+Plugin 'plasticboy/vim-markdown'
 
 " [2015-12-25] git wrapper.
 Plugin 'tpope/vim-fugitive'
