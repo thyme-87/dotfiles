@@ -1,3 +1,4 @@
+# Note that there is also a global muttrc: /etc/Muttrc
 # global settings
 
 # set vim as editor, and configure it to not store a copy on disk

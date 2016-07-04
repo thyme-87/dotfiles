@@ -9,6 +9,11 @@
 " [YYYY-MM-DD] SETTING_NAME
 " PURPOSE COMMENT
 
+" [2016-07-04] settings for syntastic
+let g:syntastic_enable_sign=1
+let g:syntastic_php_checkers=['php', 'phpcs']
+let g:syntastic_php_phpcs_args="--standard=PSR2 -n"
+
 " [2016-05-08] map key to execute latex wordcount
 nnoremap <F11> :!detex % \| wc -w<CR>
 
@@ -226,6 +231,9 @@ Plugin 'gmarik/Vundle.vim'
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
 
+" [2016-07-04] plugin to check syntax for various languages
+Plugin 'scrooloose/syntastic'
+
 " [2016-05-24] plugin to display tags in a window (ordered by scope)
 " deactivatet to check performance
 Plugin 'majutsushi/tagbar'
@@ -311,10 +319,10 @@ Plugin 'sickill/vim-monokai'
 Plugin 'godlygeek/tabular'
 
 " [2015-04-18] switch to markdown-plugin from @tim pope@
-"Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-markdown'
 
 " [2016-05-24 another attempt with better syntaxhighlighting for markdown
-Plugin 'plasticboy/vim-markdown'
+"Plugin 'plasticboy/vim-markdown'
 
 " [2015-12-25] git wrapper.
 Plugin 'tpope/vim-fugitive'
