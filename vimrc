@@ -33,7 +33,7 @@ set t_Co=256
 set nrformats=alpha
 
 " [2015-02-08] filetype treat *.md files as markdown-files 
-" autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 " [2016-05-24] set key for taggbar
 set <F8>    :TagbarToggle<CR>
@@ -319,10 +319,10 @@ Plugin 'sickill/vim-monokai'
 Plugin 'godlygeek/tabular'
 
 " [2015-04-18] switch to markdown-plugin from @tim pope@
-Plugin 'tpope/vim-markdown'
+"Plugin 'tpope/vim-markdown'
 
 " [2016-05-24 another attempt with better syntaxhighlighting for markdown
-"Plugin 'plasticboy/vim-markdown'
+Plugin 'plasticboy/vim-markdown'
 
 " [2015-12-25] git wrapper.
 Plugin 'tpope/vim-fugitive'
