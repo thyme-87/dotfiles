@@ -50,7 +50,9 @@ myManageHook = floatHook <+> fullscreenManageHook
 floatHook = composeAll
     [ className =? "Gimp"   --> doFloat
     , resource =? "synapse" --> doFloat
+    , resource =? "gimp" --> doFloat
     , resource =? "virtualbox" --> doFloat
+    , resource =? "keepassx" --> doFloat
     , resource =? "gnome-calendar" --> doFloat]
 
 myStartupHook ::X ()
@@ -101,4 +103,4 @@ myModMask               = mod4Mask -- [super]
 myBorderWidth           = 1
 myNormalBorderColor     = "#e0e0e0"
 myFocusedBorderColor    = "#F92672"
-myWorkSpaces    = [ "1:web", "2:term", "3:files", "4:chat", "5:music", "6:writing", "7:other" ]
+myWorkSpaces    = [ "1:web", "2:term", "3:music", "4:work1", "5:work2", "6:writing", "7:other" ]
