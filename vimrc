@@ -14,6 +14,15 @@ let g:syntastic_enable_sign=1
 let g:syntastic_php_checkers=['php', 'phpcs']
 let g:syntastic_php_phpcs_args="--standard=PSR2 -n"
 
+" [2016-09-20] map keys for better tab navigation
+nnoremap th :tabfirst<CR>
+nnoremap tl :tablast<CR>
+nnoremap <c-h> :tabprevious<CR>
+nnoremap <c-l> :tabnext<CR>
+
+" [2016-09-20] map f12 to NERDTreeToggle
+nnoremap <F12> :NerdTreeGoogle<CR>
+
 " [2016-05-08] map key to execute latex wordcount
 nnoremap <F11> :!detex % \| wc -w<CR>
 
@@ -230,6 +239,9 @@ Plugin 'gmarik/Vundle.vim'
 " in a FIXED syntax that informs about the date, name, purpose. It CAN be
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
+
+" [2016-09-20] Support for R:
+Plugin 'jalvesaq/Nvim-R'
 
 " [2016-07-04] plugin to check syntax for various languages
 Plugin 'scrooloose/syntastic'
