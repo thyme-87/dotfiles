@@ -21,7 +21,7 @@ nnoremap <c-h> :tabprevious<CR>
 nnoremap <c-l> :tabnext<CR>
 
 " [2016-09-20] map f12 to NERDTreeToggle
-nnoremap <F12> :NerdTreeGoogle<CR>
+nnoremap <F12> :NERDTreeToggle<CR>
 
 " [2016-05-08] map key to execute latex wordcount
 nnoremap <F11> :!detex % \| wc -w<CR>
