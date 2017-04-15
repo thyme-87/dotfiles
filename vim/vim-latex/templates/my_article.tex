@@ -1,0 +1,62 @@
+<+	+>	!comp!	!exe!
+%        File: !comp!expand("%:p:t")!comp!
+%     Created: !comp!strftime("%a %b %d %I:00 %p %Y ").substitute(strftime('%Z'), '\<\(\w\)\(\w*\)\>\(\W\|$\)', '\1', 'g')!comp!
+% Last Change: !comp!strftime("%a %b %d %I:00 %p %Y ").substitute(strftime('%Z'), '\<\(\w\)\(\w*\)\>\(\W\|$\)', '\1', 'g')!comp!
+%
+\documentclass[a4paper]{scrartcl}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+%package to customize table of contents
+\usepackage{tocloft}
+
+%package to provide pdf bookmarks and hyperlinks
+\usepackage[colorlinks=false,hidelinks]{hyperref}
+
+%package to enable awesome workflow for missing informaiton, tasks, notes etc. 
+\usepackage{todonotes}
+
+%Packages for Quotations via Bibtex
+\usepackage[babel,german=quotes]{csquotes}
+
+%define citation style and package to use
+\usepackage[style=authoryear-icomp, dashed=false]{biblatex}
+
+%File where we keep our .bib-file
+\bibliography{literatur_energiepolitik.bib}
+
+% set formatting properties
+\usepackage[left=2.5cm, right=6cm, top=3cm, bottom=3.5cm, marginparwidth=4cm, marginparsep=5mm, bindingoffset=5mm]{geometry}
+\pagestyle{headings}
+
+% set line height
+\usepackage{setspace}
+\onehalfspacing
+%let us have nice lists
+\usepackage{paralist}
+
+%make some tweaks to get short citations with colon instead of "S."
+\renewcommand*{\postnotedelim}{\addcolon\space}
+\DeclareFieldFormat{postnote}{#1}
+\DeclareFieldFormat{multipostnote}{#1}
+
+% change itemlist symbol to asterisk to save a tiny amount of toner for itemlists :)
+\renewcommand{\labelitemi}{$\ast$}
+
+\begin{document}
+\title{<+title+>}
+\author{Timon Schröder}
+
+\maketitle
+\newpage
+
+%\pdfbookmark{\contentsname}{toc}
+\tableofcontents
+\newpage
+<++>
+
+
+\printbibliography
+\end{document}
