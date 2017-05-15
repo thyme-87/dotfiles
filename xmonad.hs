@@ -3,6 +3,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.ManageHelpers
 import XMonad.Util.Paste
 import XMonad.Util.NamedWindows
 import XMonad.Util.Run(spawnPipe, safeSpawn)
@@ -10,7 +11,7 @@ import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Layout.Grid
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.ThreeColumns
-import XMonad.Layout.NoBorders ( noBorders, smartBorders)
+import XMonad.Layout.NoBorders(noBorders, smartBorders)
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.ToggleLayouts
@@ -35,10 +36,9 @@ import Data.Ratio ((%))
 
 -- VARIABLES FOR XMOBAR
 myTitleColor        =   "#272822"
-myTitleLength       =   15
+myTitleLength       =   40
 myCurrentWSColor    =   "#F92672"
 myVisibleWSColor    =   "#66D9EF"
---myUrgentWSColor     =   "#F92672"
 myUrgentWSColor     =   "#F92672"
 myUrgentWSLeft      =   "!"
 myUrgentWSRight     =   "!"
@@ -47,54 +47,59 @@ myVisibleWSRight    =   ")"
 myCurrentWSLeft     =   "["
 myCurrentWSRight    =   "]"
 
-
-myManageHook = floatHook <+> fullscreenManageHook
-floatHook = composeAll
-    [ className =? "Gimp"   --> doFloat
-    , resource =? "synapse" --> doFloat
-    , resource =? "gimp-2.8" --> doFloat
-    , resource =? "virtualbox" --> doFloat
-    , resource =? "keepassx2" --> doFloat
-    , resource =? "gnome-calendar" --> doFloat]
-
-myStartupHook ::X ()
-myStartupHook = do
-    spawn "compton -f -I 0.10 -O 0.10 --backend glx --vsync opengl"
-
 data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
 
 instance UrgencyHook LibNotifyUrgencyHook where
     urgencyHook LibNotifyUrgencyHook w = do
-        name    <- getName w
+        name        <- getName w
         Just idx    <- fmap (W.findTag w) $ gets windowset
-
         safeSpawn "notify-send" [show name, "workspace" ++ idx]
 
-main = do
-    xmproc <- spawnPipe "xmobar"
+myManageHook = floatHook <+> fullscreenManageHook
 
-    xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig { 
-        manageHook      = manageDocks <+> myManageHook <+> manageHook defaultConfig
-        , startupHook   = myStartupHook <+> startupHook defaultConfig
-        , handleEventHook   =   handleEventHook defaultConfig <+> fullscreenEventHook
-        , layoutHook    = avoidStruts $ toggleLayouts (noBorders Full) $ smartBorders $ layoutHook defaultConfig
-        , logHook = dynamicLogWithPP xmobarPP
-                        { ppOutput = hPutStrLn xmproc
-                        , ppTitle = xmobarColor "#F92672" "#272822" . shorten myTitleLength
-                        , ppCurrent =   xmobarColor myCurrentWSColor "" . wrap myCurrentWSLeft myCurrentWSRight
-                        , ppVisible =   xmobarColor myVisibleWSColor "" . wrap myVisibleWSLeft myVisibleWSRight 
-                        , ppUrgent =   xmobarColor myUrgentWSColor "" . wrap myUrgentWSLeft myUrgentWSRight 
-                        }
+floatHook = composeAll
+    [ className =? "gimp"   --> doFloat
+    , resource =? "synapse" --> doFloat
+    , resource =? "arandr" --> doFloat
+    , resource =? "keepassx2" --> doFloat
+    , resource =? "skype" --> doFloat
+    , resource =? "gnome-calendar" --> doFloat
+    , resource =? "gnome-control-center" --> doFloat
+    , resource =? "gnome-weather" --> doFloat]
+
+myStartupHook ::X ()
+myStartupHook = do
+     spawn "compton -f -I 0.10 -O 0.10 --backend glx --vsync opengl"
+ 
+main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
+--withUrgencyHook LibNotifyUrgencyHook <- This still is ToDo!
+
+myPP = xmobarPP
+            { ppTitle = xmobarColor "#F92672" "#272822" . shorten myTitleLength
+            , ppCurrent =   xmobarColor myCurrentWSColor "" . wrap myCurrentWSLeft myCurrentWSRight
+            , ppVisible =   xmobarColor myVisibleWSColor "" . wrap myVisibleWSLeft myVisibleWSRight 
+            , ppUrgent  =   xmobarColor myUrgentWSColor  "" . wrap myUrgentWSLeft myUrgentWSRight 
+            }
+
+myBar = "xmobar ~/dotfiles/xmobarrc"
+
+toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_m)
+
+myConfig = def {
+        manageHook      = ( isFullscreen --> doFullFloat ) <+> manageDocks <+> myManageHook <+> manageHook def
+        , startupHook   = myStartupHook <+> startupHook def
+        , handleEventHook   =   handleEventHook def <+> fullscreenEventHook
+        , layoutHook    = avoidStruts $ toggleLayouts (noBorders Full) $ smartBorders $ layoutHook def
         , modMask                 = myModMask
         , terminal                = myTerminal
-        , XMonad.workspaces              = myWorkSpaces
+        , XMonad.workspaces       = myWorkSpaces
     
         --appearance
         , borderWidth           = myBorderWidth
         , normalBorderColor     = myNormalBorderColor
         , focusedBorderColor    = myFocusedBorderColor
         } `additionalKeys`
-        [((mod4Mask .|. shiftMask, xK_l), spawn "physlock -ds") --deactivated because it freezes the system
+        [ ((mod4Mask .|. shiftMask, xK_l), spawn "physlock -ds")
         , ((mod1Mask        , xK_space), spawn "/home/timon/dotfiles/bin/layout_switch")
         , ((mod4Mask            , xK_m), sendMessage ToggleStruts)
         , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +1%")
@@ -109,9 +114,10 @@ main = do
         , ((0, xK_Insert), pasteSelection) -- there is a problem here, as it seems to escape some characters
         ]
 
+
 myTerminal              = "urxvt"
 myModMask               = mod4Mask -- [super]
 myBorderWidth           = 1
 myNormalBorderColor     = "#e0e0e0"
 myFocusedBorderColor    = "#F92672"
-myWorkSpaces    = [ "1:web", "2:term", "3:music", "4:work1", "5:work2", "6:writing", "7:other" ]
+myWorkSpaces    = [ "1:www", "2:bash", "3:music", "4:mail", "5:firefox", "6:calc", "7:misc", "8:misc", "9:misc"]
