@@ -1,218 +1,152 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                        SETTINGS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" various settings from around the web
-"
-" Adding a new setting should always be accompanied with a short comment 
-" that states the setting, the purpose and possible a short comment
-" The following syntax must be used:
-" [YYYY-MM-DD] SETTING_NAME
-" PURPOSE COMMENT
+" switch from date based comments about changes to other format:
+" Any change will must be commented.
+" The comment must inform about the purpose of the change. What shall the
+" change achieve?
+" Changes should be implemented step by step and ideally a commit should
+" follow every commit to allow finer granularity when it comes to merging
 
-" [2016-07-04] settings for syntastic
-let g:syntastic_enable_sign=1
-let g:syntastic_php_checkers=['php', 'phpcs']
-let g:syntastic_php_phpcs_args="--standard=PSR2 -n"
-
-" [2016-09-20] map keys for better tab navigation
-nnoremap th :tabfirst<CR>
-nnoremap tl :tablast<CR>
-nnoremap <c-h> :tabprevious<CR>
-nnoremap <c-l> :tabnext<CR>
-
-" [2016-09-20] map f12 to NERDTreeToggle
-nnoremap <F12> :NERDTreeToggle<CR>
-
-" [2016-05-08] map key to execute latex wordcount
-nnoremap <F11> :!detex % \| wc -w<CR>
-
-" [2016-04-24] open VOom automatically for files that are handled by
-" vimoutliner
-" currently not working
-"au FileType vo_base :Voom vimoutliner
-
-" 2016-05-24] set updatetime for vim-gitgutter
-set updatetime=250
-
-" [2016-04-15] set vim to 256 colors
-set t_Co=256
-
-" [2016-01-30] counts / number format
-" set numberformat to decimal. Don't tread numbers with leading zero as octal.
-set nrformats=alpha
-
-" [2015-02-08] filetype treat *.md files as markdown-files 
- autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-
-" [2016-05-24] set key for taggbar
-set <F8>    :TagbarToggle<CR>
-
-" [2015-02-08] command-line completion
-" Better command-line completion
-set wildmenu
-
-" [2015-02-08] hightlighting 
-" Better highlighting for searchresults
-set hlsearch
-
-" [2016-02-06]
-" Set incsearch on to hightlight matches
-set incsearch
-
-" [2015-02-08] case sensitive search
-" search will be cas insensitive except when using capital letters
-set ignorecase
-set smartcase
-
-" [2015-02-08] indention
-" Enable indenting (same indention as line before)
-set autoindent
-
-" [2015-02-08] mouse usage
-" Enable use of mouse for all modes
-set mouse=a
-
-" [2015-02-08] line numbers
-" Display line numbers on the left
-set number
-
-" [2015-02-08] color scheme
-" Enable monokai color scheme
-" We can also use molokai (make sure it is present first)
-syntax enable
-colorscheme monokai
-"colorscheme molokai
-"for molokai
-"let g:molokai_original = 1
-
-" [2015-10-13] vim-airline color scheme
-" Set dark color scheme for vim-airline
-"let g:airline_theme="dark"
-let g:airline_powerline_fonts = 1
-let g:airline_theme="dark"
-set laststatus=2
-
-
-" [2015-02-08] regular expressions
-" Turn magic on for regular expressions
-set magic
-
-" [2015-02-08] alerts for errors
-" turn off sounds for errors
-" set noerrorbells
-
-" [2015-11-06]
-" lets try visual error bell
-set visualbell
-
-" [2015-02-08] encoding
-" set utf8 as standard encoding
-set encoding=utf-8
-set fileencoding=utf-8
-
-" [2015-02-08] tabs
-" use smarttab
-set smarttab
-
-" [2015-09-19]
-set tabstop=4
+set t_Co=256        "set vim to 256 colors
+set nrformats=alpha "set number format to decimal; numbers with leading zero won't be treated as octal
+set wildmenu        "better command-line completion
+set hlsearch        "better hightlighting for searchresults
+set incsearch       "highlight matches when searching
+set ignorecase      "no case sensitivity when searching
+set smartcase       "enable case sensitivity for searchterms that start with capital letters?
+set autoindent      "enable auto indenting
+"TODO currently indention for latex files seems broken
+"someone propoesd to use `set breakindent` instead of autoindent
+set mouse=a         "enable mouse for all modes
+set number          "display always line numbers
+syntax enable       "enable syntax highlighting
+set magic           "turn on regular expressions
+set visualbell      "use visual notifications for errors instead of annoying sound
+set encoding=utf-8      "set encoding to UTF-8
+set fileencoding=utf-8  "set fileencoding to UTF-8
+set smarttab            "use smart tabs
+set tabstop=4           "a tab equals four spaces
 set shiftwidth=4
-set expandtab
+set expandtab           "expand tabs with spaces
 set softtabstop=0
-
-" [2015-02-08] wrap lines
-" wrap lines
-" [2016-04-16] wrapping lines hurts readability in orgmode. Probably also in
-" other contexts.
-" Currently experimenting with wrapping/line breaks
-" see http://vim.wikia.com/wiki/Word_wrap_without_line_breaks for further
-" information
+"wrap lines             "unset because it hurts readability with VIM-ORGMODE
+"for further informations on wrapping see http://vim.wikia.com/wiki/Word_wrap_without_line_breaks for further
 set wrap
 set linebreak
 set nolist
 set textwidth=0
 set wrapmargin=0
 set formatoptions-=t
+set cursorline      "horizontal line to indicate cursor position
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                           KEY MAPPINGS                            "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Set leader and localleader
+"let mapleader = "\"
+"TODO currently localleader and leader are mapped to the same key. That is not
+"clever
+let maplocalleader = ","    "set localleacer to ","
+let mapleader = ","         "set leader to ","
 
-" [2015-02-08] cursor position
-" horizontal line to indicate cursor position
-set cursorline
+" key mappings in normal mode for navigation between tabs
+nnoremap th :tabfirst<CR>
+nnoremap tl :tablast<CR>
+nnoremap <c-h> :tabprevious<CR>
+nnoremap <c-l> :tabnext<CR>
 
-" [2015-02-08] handling of long line (moving)
-" move vertically by visual line instead of 'real' lines
-" tread virtual lines to wrap long lines onto screen as normal lines
-" [2016-02-06] handling of virtual lines
-" remap gj and gk to address real lines.
-" [2016-03-04] deactivate this because it is a penance when working with latex
+" remap keys for moving up and down linewise instead of virtual line wise
 " nnoremap j gj
 " nnoremap k gk
 " nnoremap gj j
 " nnoremap gk k
 
-" [2016-02-12] Settings for latex suite
-" see http://www.kubieziel.de/blog/archives/1333-Die-vim-LaTeXSuite.html
-" for more infos
+" Keymappings for actions
+nnoremap <F12> :NERDTreeToggle<CR>          "<F12> to toggle Nerdtree
+nnoremap <F11> :!detex % \| wc -w<CR>       "<F11> for simple wordcount
+nnoremap <Leader>t :Voomtoggle<CR>          "<Leader>t to toggle Voom; TODO: this mapping should only be set for .md and .tex files
+set <F8>    :TagbarToggle<CR>               "this should set <F8> for Tagbar plugin; not tested if it is working
 
-" [2016-03-13] Set leader key from [\] to [,] as it is more convenient on
-" DE-layout
-"let mapleader = "\"
-let maplocalleader = ","
-let mapleader = ","
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                 SELF DEFINED COMMANDS                             "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+com! FormatJSON %!python -m json.tool   "reformat current buffer as JSON file
+com! DisplayDot :silent !dot -Tx11 %    "render current file as dot graph and display it
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                 SETTINGS FOR SPECIFIC FILETYPES                   "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+au BufNewFile,BufRead,BufEnter      README      setlocal spell  spelllang=en_us "set spell check for README files
+" au BufNewFile,BufRead,BufEnter      *.md        setlocal spell  spelllang=de_de "set spellcheck with language de_de for markdown files currently deactivated as I assume that it would break settings for markdown beneath
+autocmd BufRead *.md :Voom markdown set filetype=markdown "set .md files to markdown format; use Voom for .md files
+" TODO: Add a command to refresh voom after saving (rebuild tree using :Voom
+" command)
 
-" settings for grep. Grep is used for autocomplete.
-set grepprg=grep\ -nH\ $*
-" make sure that vim treats .tex files, as latex files
-let g:tex_flavor="latex"
-" use biber as bibtex backend
-let g:Tex_BibtexFlavor = 'biber'
-" create a .pdf-document as standard target
-let g:Tex_DefaultTargetFormat = 'pdf'
-" to built a correct .pdf-document with citations, bibliography and index, we
-" must compile the file multiple times
-let g:Tex_MultipleCompileFormats = 'pdf,dvi'
-" set g:Tex_CompileRule_pdf to allow us to sync
-let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 -interaction=nonstopmode $*'
-" get correct servername (filename of .tex-file and drop .tex)
-" let theuniqueserv = expand ('%:r')
-" now bring everything together:
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                  SETTINGS FOR SPECIFIC PLUGINS                    "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" VIM ALE
+let g:airline_section_error = '%{ALEGetStatusLine()}' "ALE output in vim-airline
+let g:ale_linters = {
+    \'php': ['phpcs'],
+    \    }
+let g:ale_php_phpcs_standard = 'PSR2'
+let g:ale_statusline_format = ['✗%d', '⚠%d', '☼ok']
+let g:ale_echo_msg_format = '[%linter%]: %s [%severity%]'
+let g:ale_set_loclist = 1
+let g:ale_sign_error = '✗»'
+let g:ale_sign_warning = '⌕☞'
+let g:ale_echo_msg_error_str = 'Error'
+let g:ale_echo_msg_warning_str  = 'Warning'
+nmap <silent> <leader>] <Plug>(ale_previous_wrap)
+nmap <silent> <leader>[ <Plug>(ale_next_wrap)
+
+" GITGUTTER
+set updatetime=250  "set interval in which gitgutter is updated
+
+" THEMING
+colorscheme monokai "use monokai colorscheme; alternative: molokai
+"let g:molokai_original = 1     "specific setting for molokai
+
+" VIM-AIRLINE
+let g:airline_powerline_fonts = 1       "use fonts patched for powerline
+let g:airline_theme="dark"              "use dark theme
+set laststatus=2
+
+" VIM LATEX SUITE
+" for more infos see: http://www.kubieziel.de/blog/archives/1333-Die-vim-LaTeXSuite.html
+set grepprg=grep\ -nH\ $*                       "settings for grep; used for autocomplete
+let g:tex_flavor="latex"                        "make sure vim treats *.tex files as latex files
+let g:Tex_BibtexFlavor = 'biber'                "use biber as bibtex backend
+let g:Tex_Packages = 0                          "do not scan for packages
+let g:Tex_Menus = 0 "no Tex-menus "don'T show tex menues - this setting
+let g:Tex_DefaultTargetFormat = 'pdf'           "PDF document as standard target for compiling
+let g:Tex_MultipleCompileFormats = 'pdf,dvi'    "compile multiple times for pdf and dvi files (to build index and citations correctly)
+let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 -interaction=nonstopmode $*' "allow us to sync
+" let theuniqueserv = expand ('%:r')            "get correct servername
 " let g:Tex_ViewRuleComplete_pdf = 'zathura -x "vim --servername '.theuniqueserv.' --remote + \%{line} \%{input}" $*.pdf 2>/dev/null &'
-" use zathura as standard viewer for .pdf-documents
-let g:Tex_ViewRule_pdf = 'zathura'
+let g:Tex_ViewRule_pdf = 'zathura'              "use zathura as standard viewer for PDF documents
 let g:Tex_ViewRuleComplete_pdf = 'zathura $*.pdf >/dev/null &'
-" enable caching for citations
-" to manually rebuilt cache use following command:
-" TClearCiteHist
-" For further information see: http://vim-latex.sourceforge.net/documentation/latex-suite/customizing-latex-completion.html#RememberCiteSearch
-let g:Tex_Remember_Cite_Search=1
-" [2016-02-14] set custom command completion for bibliography
+let g:Tex_Remember_Cite_Search=1                "enable caching for citations
+" to manually rebuilt cache for citation use `TCLEARCiteHIST` command
+" for further informations see:http://vim-latex.sourceforge.net/documentation/latex-suite/customizing-latex-completion.html#RememberCiteSearch
+let g:Tex_completion_bibliographystyle = 'authoryear-icomp,abbr,alpha,plain,unsrt' "set custom command completion for bibliography
 " for more informations see: http://vim-latex.sourceforge.net/documentation/latex-suite/ls-completion-custom.html
-let g:Tex_completion_bibliographystyle = 'authoryear-icomp,abbr,alpha,plain,unsrt'
 
 " [2016-02-12] performance settings for latex suite (vimtex)
+" performance  settings for VIM LATEX SUITE
 " for more infos see: https://sourceforge.net/p/vim-latex/mailman/message/32672109/
-autocmd FileType tex :NoMatchParen
-autocmd FileType tex setlocal nocursorline
-
-" [2016-05-24] disable fancy plugins for tex files
-autocmd FileType tex let b:tagbar_ignore = 1
-autocmd FileType tex let g:neocomplete#enable_at_startup = 0
-
-" [2016-02-12] Also, to maximize performance I added settings for highlighting
+autocmd FileType tex :NoMatchParen          "don't match parenthesis
+autocmd FileType tex setlocal nocursorline  "don't set a cursorline for .tex files
+autocmd FileType tex let b:tagbar_ignore = 1    "disable tagbar for tex files
+autocmd FileType tex let g:neocomplete#enable_at_startup = 0 "disable neocomplete for tex files
+autocmd BufEnter * :syn sync minlines=250   "for t400 don't parse whole file for syntax hightlighting
+autocmd BufEnter * :syn sync maxlines=500   "fix syntax hightlighting with `: syntax sync fromstart`
 " for more infos see http://vim.wikia.com/wiki/Fix_syntax_highlighting
-" to manually fix highlighting use command benath
-" : syntax sync fromstart
-autocmd BufEnter * :syn sync minlines=250
-autocmd BufEnter * :syn sync maxlines=500
-
-" settings below should be made in vimtex file?
-" let g:Tex_Menus = 0 "no Tex-menus
-" let g:Tex_Packages = 0 "do not scan for packages
-
-" [2016-02-08] activate matchit plugin
-" extend functionality of %
-runtime macros/matchit.vim
+" MATCHIT PLUGIN
+runtime macros/matchit.vim  "extend functionality of "%"
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -243,8 +177,8 @@ Plugin 'gmarik/Vundle.vim'
 " [2016-09-20] Support for R:
 Plugin 'jalvesaq/Nvim-R'
 
-" [2016-07-04] plugin to check syntax for various languages
-Plugin 'scrooloose/syntastic'
+" [2017-06-14] Linter for various languages
+Plugin 'w0rp/ale'
 
 " [2016-05-24] plugin to display tags in a window (ordered by scope)
 " deactivatet to check performance
