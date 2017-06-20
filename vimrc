@@ -12,12 +12,15 @@ set t_Co=256        "set vim to 256 colors
 set nrformats=alpha "set number format to decimal; numbers with leading zero won't be treated as octal
 set wildmenu        "better command-line completion
 set hlsearch        "better hightlighting for searchresults
-set incsearch       "highlight matches when searching
+set incsearch       "highlight matches while typing searchterm
 set ignorecase      "no case sensitivity when searching
 set smartcase       "enable case sensitivity for searchterms that start with capital letters?
 set autoindent      "enable auto indenting
 "TODO currently indention for latex files seems broken
 "someone propoesd to use `set breakindent` instead of autoindent
+set formatoptions+=2    "Use indent from 2nd line of a paragraph
+"it could be, that formatoption+=2 is what I have been looking for all along
+"for .text files
 set mouse=a         "enable mouse for all modes
 set number          "display always line numbers
 syntax enable       "enable syntax highlighting
@@ -39,6 +42,10 @@ set textwidth=0
 set wrapmargin=0
 set formatoptions-=t
 set cursorline      "horizontal line to indicate cursor position
+set diffopt=filler  "add vertical spaces to keep splits aligned
+set diffopt+=iwhite "ignore white space
+set nostartofline   "don't reset the cursor to start of line
+set noshowmode      "don't show the mode as it is already displayed via airline.vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                           KEY MAPPINGS                            "
