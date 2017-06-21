@@ -15,12 +15,8 @@ set hlsearch        "better hightlighting for searchresults
 set incsearch       "highlight matches while typing searchterm
 set ignorecase      "no case sensitivity when searching
 set smartcase       "enable case sensitivity for searchterms that start with capital letters?
-set autoindent      "enable auto indenting
-"TODO currently indention for latex files seems broken
-"someone propoesd to use `set breakindent` instead of autoindent
-set formatoptions+=2    "Use indent from 2nd line of a paragraph
-"it could be, that formatoption+=2 is what I have been looking for all along
-"for .text files
+set autoindent      "enable auto indenting TODO currently indention for latex files seems broken; someone proposed to use `set breakindent` instead of autoindent
+set formatoptions+=2    "Use indent from 2nd line of a paragraph "it could be, that formatoption+=2 is what I have been looking for all along for .text files
 set mouse=a         "enable mouse for all modes
 set number          "display always line numbers
 syntax enable       "enable syntax highlighting
@@ -33,19 +29,22 @@ set tabstop=4           "a tab equals four spaces
 set shiftwidth=4
 set expandtab           "expand tabs with spaces
 set softtabstop=0
-"wrap lines             "unset because it hurts readability with VIM-ORGMODE
-"for further informations on wrapping see http://vim.wikia.com/wiki/Word_wrap_without_line_breaks for further
-set wrap
-set linebreak
+"wrap lines             "unset because it hurts readability with VIM-ORGMODE for further informations on wrapping see http://vim.wikia.com/wiki/Word_wrap_without_line_breaks for further
+set wrap                    "break text with virtual new lines instead of hard ones TODO use not for .org-files
+"TODO also find best combination for wrap, linebreak, breakindent, textwidth,
+"wrapmargin vormatoptions etc.
+set linebreak               "wrap long lines at characters defined in `breakat` (next line)
+set breakat=" !@*-;:,./?"   "linebreaks shall only happen after complete words! For more infos see `:help breakat`
+set breakindent             "wrapped line will continue visually indented.For further informations see `:help breakindent`
 set nolist
 set textwidth=0
 set wrapmargin=0
-set formatoptions-=t
+set formatoptions-=t        "don't autowrap the text using textwidth
 set cursorline      "horizontal line to indicate cursor position
 set diffopt=filler  "add vertical spaces to keep splits aligned
 set diffopt+=iwhite "ignore white space
 set nostartofline   "don't reset the cursor to start of line
-set noshowmode      "don't show the mode as it is already displayed via airline.vim
+set noshowmode      "only works when it is at the bottom of the .vimrc - i have now idea why :(
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                           KEY MAPPINGS                            "
@@ -79,28 +78,70 @@ set <F8>    :TagbarToggle<CR>               "this should set <F8> for Tagbar plu
 "                 SELF DEFINED COMMANDS                             "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 com! FormatJSON %!python -m json.tool   "reformat current buffer as JSON file
-com! DisplayDot :silent !dot -Tx11 %    "render current file as dot graph and display it
+com! DotDisplay :call DotDisplay()                                      
+com! DotToPdf   :call DotToPdf()                                        
+com! MarkdownRender :call MarkdownRender()                              "render markdown using pandoc
+com! MarkdownDisplay :call MarkdownDisplay()                            "open the according .pdf-file with zathura
+com! UpdateDictonaries :call UpdateDictionaries()                       "call self defined function to update all dictonaries based on .add files in dotfiles/vim/spell
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                 SELF DEFINED FUNCTIONS                            "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! DotDisplay()
+    :silent :execute '!coproc dot -Tx11 %'
+    redraw!
+endfunction
+
+function! DotToPdf()                                                    "use arguments for different programs (algorithms)
+    :silent :execute '!coproc dot -Tpdf -O %'
+    redraw!
+endfunction
+
+function! MarkdownRender()                                              "currently the process is not executed asynchronously
+                                                                        "TODO: add arguments for table of content, formatting etc.
+    :silent :execute '!coproc pandoc --toc -f markdown -o %:p.pdf -i %'
+    redraw!
+endfunction
+
+function! MarkdownDisplay()
+    :silent :execute '!coproc zathura %:p.pdf'
+    redraw!
+endfunction
+
+function! UpdateDictionaries()                                          "Update all spellfiles based on .add-files in dotfiles/vim/spell
+    :silent
+    for d in glob('~/.vim/spell/*.add', 1, 1)
+        if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
+            exec 'mkspell! ' . fnameescape(d)
+        endif
+    endfor
+endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SETTINGS FOR SPECIFIC FILETYPES                   "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 au BufNewFile,BufRead,BufEnter      README      setlocal spell  spelllang=en_us "set spell check for README files
 " au BufNewFile,BufRead,BufEnter      *.md        setlocal spell  spelllang=de_de "set spellcheck with language de_de for markdown files currently deactivated as I assume that it would break settings for markdown beneath
-autocmd BufRead *.md :Voom markdown set filetype=markdown "set .md files to markdown format; use Voom for .md files
-" TODO: Add a command to refresh voom after saving (rebuild tree using :Voom
-" command)
+autocmd BufNewFile,BufRead,BufEnter *.md setlocal filetype=markdown textwidth=80
+autocmd BufNewFile,BufReadPost *.md :Voom
+autocmd BufWritePost *.md call voom#BodyUpdateTree()     "update the tree after the file has been saved
+autocmd BufWritePost *.tex call voom#BodyUpdateTree()    "update the tree after the file has been saved
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                  SETTINGS FOR SPECIFIC PLUGINS                    "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" VIM VOom
+let g:voom_ft_modes = {'markdown': 'markdown', 'tex': 'latex'}
 
 " VIM ALE
 let g:airline_section_error = '%{ALEGetStatusLine()}' "ALE output in vim-airline
+let g:airline#extensions#ale#enabled=1
 let g:ale_linters = {
     \'php': ['phpcs'],
     \    }
 let g:ale_php_phpcs_standard = 'PSR2'
 let g:ale_statusline_format = ['✗%d', '⚠%d', '☼ok']
+let g:ale_echo_cursor=1
 let g:ale_echo_msg_format = '[%linter%]: %s [%severity%]'
 let g:ale_set_loclist = 1
 let g:ale_sign_error = '✗»'
@@ -298,3 +339,4 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+set noshowmode
