@@ -30,16 +30,14 @@ set shiftwidth=4
 set expandtab           "expand tabs with spaces
 set softtabstop=0
 "wrap lines             "unset because it hurts readability with VIM-ORGMODE for further informations on wrapping see http://vim.wikia.com/wiki/Word_wrap_without_line_breaks for further
-set wrap                    "break text with virtual new lines instead of hard ones TODO use not for .org-files
-"TODO also find best combination for wrap, linebreak, breakindent, textwidth,
-"wrapmargin vormatoptions etc.
+set wrap                    "break text with virtual new lines instead of hard ones
 set linebreak               "wrap long lines at characters defined in `breakat` (next line)
 set breakat=" !@*-;:,./?"   "linebreaks shall only happen after complete words! For more infos see `:help breakat`
 set breakindent             "wrapped line will continue visually indented.For further informations see `:help breakindent`
 set nolist
 set textwidth=0
 set wrapmargin=0
-set formatoptions-=t        "don't autowrap the text using textwidth
+set formatoptions-=t
 set cursorline      "horizontal line to indicate cursor position
 set diffopt=filler  "add vertical spaces to keep splits aligned
 set diffopt+=iwhite "ignore white space
