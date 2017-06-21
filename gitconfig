@@ -1,0 +1,15 @@
+[user]
+	name = eiquai
+	email = eiquai@posteo.de
+[push]
+	default = simple
+[core]
+	excludesfile = /home/timon/.global_ignore
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[mergetool]
+	prompt = false
+[alias]
+	pretty-log = log --graph --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\"
+	plog = log --graph --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\"
