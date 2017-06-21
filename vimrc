@@ -220,6 +220,9 @@ Plugin 'gmarik/Vundle.vim'
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
 
+" [2017-06-21] PHP autocompletion
+Plugin 'shawncplus/phpcomplete.vim'
+
 " [2016-09-20] Support for R:
 Plugin 'jalvesaq/Nvim-R'
 
