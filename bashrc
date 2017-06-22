@@ -33,3 +33,5 @@ COLORTERM='rxvt-unicode-256color'
 # info from: http://blog.joncairns.com/2013/12/understanding-ssh-agent-and-ssh-add/
 source ~/dotfiles/bin/ssh-find-agent
 set_ssh_agent_socket
+
+source ~/dotfiles/bin/ls-colors
