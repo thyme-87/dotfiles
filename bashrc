@@ -31,5 +31,5 @@ COLORTERM='rxvt-unicode-256color'
 
 # find running ssh-agent and use it
 # info from: http://blog.joncairns.com/2013/12/understanding-ssh-agent-and-ssh-add/
-#source ~/dotfiles/bin/ssh-find-agent
-#set_ssh_agent_socket
+source ~/dotfiles/bin/ssh-find-agent
+set_ssh_agent_socket
