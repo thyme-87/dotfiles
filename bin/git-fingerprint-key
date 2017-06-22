@@ -1,0 +1,5 @@
+#! /bin/bash
+
+# print md5 fingerprint for file $1
+
+ssh-keygen -l -E md5 -f $1 

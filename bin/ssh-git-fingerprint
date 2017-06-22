@@ -1,3 +1,0 @@
-#!/bin/bash
-
-ssh-keygen -l -E md5 -F #add argument to specify filename
