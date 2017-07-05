@@ -81,10 +81,10 @@ Xft.autohint:       true
 
 !New to make vim-airline look good :)
 !URxvt*font: xft:Droid Sans Mono for Powerline-11
-URxvt*font:             xft:Roboto Mono for Powerline-11
-URxvt*boldFont:         xft:RobotoMono-Bold-11
-URxvt*italicFont:       xft:RobotoMono-Italic-11
-URxvt*bolditalicFont:   xft:RobotoMono-BoldItalic-11
+URxvt*font:             xft:Roboto Mono for Powerline:style=Regular:size=11:antialias=true:hinting=false
+URxvt*boldFont:         xft:Roboto Mono for Powerline:style=Bold:size=11:antialias=true:hinting=false
+URxvt*italicFont:       xft:Roboto Mono for Powerline:style=Italic:size=11:antialias=true:hinting=false
+URxvt*bolditalicFont:   xft:Roboto Mono for Powerline:style=Bold Italic:size=11:antialias=true:hinting=false
 
 !URxvt.letterSpace: -1
 
