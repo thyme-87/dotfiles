@@ -20,6 +20,7 @@ PS1='[\u@\h \W]\$ '
 export EDITOR="vim" 
 
 PATH=$PATH:~/dotfiles/bin
+PATH=$PATH:~/bin #local bin for personal shell scripts
 
 export PATH
 

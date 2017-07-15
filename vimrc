@@ -44,6 +44,9 @@ set diffopt+=iwhite "ignore white space
 set nostartofline   "don't reset the cursor to start of line
 set noshowmode      "only works when it is at the bottom of the .vimrc - i have now idea why :(
 
+set timeoutlen=800  "set mapping delays
+set ttimeoutlen=0   "set keycode delays
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                           KEY MAPPINGS                            "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -96,7 +99,7 @@ endfunction
 
 function! MarkdownRender()                                              "currently the process is not executed asynchronously
                                                                         "TODO: add arguments for table of content, formatting etc.
-    :silent :execute '!coproc pandoc --toc -f markdown -o %:p.pdf -i %'
+    :silent :execute '!coproc pandoc --toc -S -s -f markdown -o %:p.pdf %'
     redraw!
 endfunction
 
@@ -137,7 +140,7 @@ au BufNewFile,BufRead,BufEnter      README      setlocal spell  spelllang=en_us 
 autocmd BufNewFile,BufRead,BufEnter *.md setlocal filetype=markdown textwidth=80 
 autocmd BufNewFile,BufRead,BufEnter *.md nnoremap <Leader>t :Voomtoggle<CR>
 "set Voomtoggle only for md files; TODO: set also for .tex file: set also for .tex files
-autocmd BufNewFile,BufReadPost *.md :Voom
+autocmd BufNewFile,BufReadPost *.md call voom#Init("markdown",1)    "use voom#Init function to generate Tree
 autocmd BufWritePost *.md call voom#BodyUpdateTree()     "update the tree after the file has been saved
 autocmd BufWritePost *.tex call voom#BodyUpdateTree()    "update the tree after the file has been saved
 
@@ -177,6 +180,7 @@ colorscheme monokai "use monokai colorscheme; alternative: molokai
 " VIM-AIRLINE
 let g:airline_powerline_fonts = 1       "use fonts patched for powerline
 let g:airline_theme="dark"              "use dark theme
+let g:airline#extensions#tagbar#enabled = 0 "disable tagbar integration (performance issue)
 set laststatus=2
 
 " VIM LATEX SUITE
