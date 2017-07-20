@@ -15,7 +15,12 @@ alias mychromium='setsid /usr/bin/chromium >& /dev/null &'
 alias ls='ls --color=auto'
 #-------------- ALIAS END -----------------
 
-PS1='[\u@\h \W]\$ '
+
+source ~/dotfiles/bin/git-prompt.sh
+
+#PS1='[\u@\h \W]\$ ' #old prompt config
+# evaluate how to tweak this:
+PS1='\[\033[0;32m\]\[\033[0m\033[0;32m\]\u\[\033[0;36m\] @\[\033[0;36m\]\h \w\[\033[0;32m\]$(__git_ps1)\n\[\033[0;32m\]└─\[\033[0m\033[0;32m\] \$:\[\033[0m\] '
 
 export EDITOR="vim" 
 
