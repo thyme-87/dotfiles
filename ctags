@@ -4,7 +4,7 @@
 
 --fields=+aimS
 --PHP-kinds=+cf
---languages=php,ruby,javascript
+--languages=php,javascript,ruby
 --langmap=php:.inc.php
 --file-scope=no
 -R
@@ -14,7 +14,6 @@
 --regex-markdown=/^#[ \t]+(.*)/\1/h,Heading_L1/
 --regex-markdown=/^##[ \t]+(.*)/\1/i,Heading_L2/
 --regex-markdown=/^###[ \t]+(.*)/\1/k,Heading_L3/
---regex-markdown=/^####[ \t]+(.*)/\1/l,Heading_L4/
 
 --langdef=latex
 --langmap=latex:.tex
