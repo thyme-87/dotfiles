@@ -83,6 +83,7 @@ com! DotToPdf   :call DotToPdf()
 com! MarkdownRender :call MarkdownRender()                              "render markdown using pandoc
 com! MarkdownDisplay :call MarkdownDisplay()                            "open the according .pdf-file with zathura
 com! UpdateDictonaries :call UpdateDictionaries()                       "call self defined function to update all dictonaries based on .add files in dotfiles/vim/spell
+com! FixSyntaxHighlighting :syntax sync fromstart
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SELF DEFINED FUNCTIONS                            "
