@@ -84,6 +84,7 @@ com! MarkdownRender :call MarkdownRender()                              "render 
 com! MarkdownDisplay :call MarkdownDisplay()                            "open the according .pdf-file with zathura
 com! UpdateDictonaries :call UpdateDictionaries()                       "call self defined function to update all dictonaries based on .add files in dotfiles/vim/spell
 com! FixSyntaxHighlighting :syntax sync fromstart
+com! FoldManual :set foldmethod=manual                  "enable manual folding with a simple command
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SELF DEFINED FUNCTIONS                            "
