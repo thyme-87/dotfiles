@@ -1,3 +1,5 @@
 #! /bin/bash
 
-ps aux | awk 'NR==1 || /'$1'/'
+#ps aux | awk 'NR==1 || /'$1'/'
+ps aux | head -n1
+ps aux | grep $1 | grep -v $$
