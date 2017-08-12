@@ -1,5 +1,6 @@
 #! /bin/bash
 
 #ps aux | awk 'NR==1 || /'$1'/'
+# remember that we can also use $$ for the pid of the process
 ps aux | head -n1
-ps aux | grep $1 | grep -v $$
+ps aux | grep $1 | grep -v grep
