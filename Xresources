@@ -94,3 +94,6 @@ URxvt*.urlLauncher: chromium
 ! use visual bell instead of beep:
 URxvt*urgentOnBell: false
 URxvt*visualBell: true
+
+! clipboard
+URxvt*perl-ext-common: selection-to-clipboard
