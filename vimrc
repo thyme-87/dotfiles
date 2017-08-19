@@ -85,10 +85,17 @@ com! MarkdownDisplay :call MarkdownDisplay()                            "open th
 com! UpdateDictonaries :call UpdateDictionaries()                       "call self defined function to update all dictonaries based on .add files in dotfiles/vim/spell
 com! FixSyntaxHighlighting :syntax sync fromstart
 com! FoldManual :set foldmethod=manual                  "enable manual folding with a simple command
+"com! -nargs=1 Voc :silent !coproc voc <q-args>
+com! -nargs=1 Voc :call WriteVocToDictionary(<q-args>)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SELF DEFINED FUNCTIONS                            "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! WriteVocToDictionary(word)
+    :silent :execute '!coproc voc 'a:word
+    redraw!
+endfunction
+
 function! DotDisplay()
     :silent :execute '!coproc dot -Tx11 %'
     redraw!
