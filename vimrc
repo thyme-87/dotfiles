@@ -149,8 +149,8 @@ au BufNewFile,BufRead,BufEnter      README      setlocal spell  spelllang=en_us 
 autocmd BufNewFile,BufRead,BufEnter *.md setlocal filetype=markdown textwidth=80 
 autocmd BufNewFile,BufRead,BufEnter *.md nnoremap <Leader>t :Voomtoggle<CR>
 "set Voomtoggle only for md files; TODO: set also for .tex file: set also for .tex files
-autocmd BufNewFile,BufReadPost *.md call voom#Init("markdown",1)    "use voom#Init function to generate Tree
-autocmd BufWritePost *.md call voom#BodyUpdateTree()     "update the tree after the file has been saved
+autocmd BufNewFile,BufReadPost *.md call voom#Init('markdown',1)    "use voom#Init function to generate Tree
+autocmd BufWritePost,BufEnter *.md call voom#BodyUpdateTree()     "update the tree after the file has been saved
 autocmd BufWritePost *.tex call voom#BodyUpdateTree()    "update the tree after the file has been saved
 
 "PHP
