@@ -1,4 +1,5 @@
 import XMonad
+import XMonad.Config.Gnome
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.SetWMName
@@ -75,11 +76,15 @@ main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
 --withUrgencyHook LibNotifyUrgencyHook <- This still is ToDo!
 
 myPP = xmobarPP
-            { ppTitle = xmobarColor "#F92672" "#272822" . shorten myTitleLength
-            , ppCurrent =   xmobarColor myCurrentWSColor "" . wrap myCurrentWSLeft myCurrentWSRight
-            , ppVisible =   xmobarColor myVisibleWSColor "" . wrap myVisibleWSLeft myVisibleWSRight 
-            , ppUrgent  =   xmobarColor myUrgentWSColor  "" . wrap myUrgentWSLeft myUrgentWSRight 
-            }
+            { ppCurrent = xmobarColor "#F92672" "" . wrap "[" "]"
+            , ppTitle = xmobarColor "#F92672" "#272822" . shorten myTitleLength}
+
+--myPP = xmobarPP
+--             { ppTitle = xmobarColor "#F92672" "#272822" . shorten myTitleLength
+--             , ppCurrent =   xmobarColor myCurrentWSColor "" . wrap myCurrentWSLeft myCurrentWSRight
+--             , ppVisible =   xmobarColor myVisibleWSColor "" . wrap myVisibleWSLeft myVisibleWSRight 
+--             , ppUrgent  =   xmobarColor myUrgentWSColor  "" . wrap myUrgentWSLeft myUrgentWSRight 
+--             }
 
 myBar = "xmobar ~/dotfiles/xmobarrc"
 
