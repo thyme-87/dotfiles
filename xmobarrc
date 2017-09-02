@@ -3,6 +3,11 @@ Config {
         -- APPEARANCE
         --font = "xft:RobotoMono-Regular:size=9:antialiasing=false"
         font = "xft:Roboto Mono for Powerline:size=8:antialiasing=true"
+        , additionalFonts = []
+        , textOffset = -1
+        , iconOffset = -1
+        , iconRoot = "."
+        , alpha = 255
         , position = TopW L 100
         --font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
         , bgColor = "#272822"
@@ -91,13 +96,13 @@ Config {
                             ,   ("fr",  "<fc=#3579a8>FR </fc>")
                             ,   ("es",  "<fc=#3579a8>ES </fc>")
                             ]
-        , Run StdinReader  --["--minwidth=50"]
-
+        --, Run StdinReader
         , Run Volume "default" "Master" [ "--", "-O", "<fc=#66aa11>[on]</fc>"] 10
 
         ]
         -- LAYOUT
         , sepChar   = "%"   -- delineator between plugin and text
         , alignSep  = "}{"  -- separator between left-right alignment
-        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %default:Master%  %EDDT% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
+        --, template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %default:Master%  %EDDT% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
+        , template = "%multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %default:Master%  %EDDT% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
         }
