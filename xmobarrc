@@ -96,13 +96,12 @@ Config {
                             ,   ("fr",  "<fc=#3579a8>FR </fc>")
                             ,   ("es",  "<fc=#3579a8>ES </fc>")
                             ]
-        --, Run StdinReader
+        , Run StdinReader
         , Run Volume "default" "Master" [ "--", "-O", "<fc=#66aa11>[on]</fc>"] 10
 
         ]
         -- LAYOUT
         , sepChar   = "%"   -- delineator between plugin and text
         , alignSep  = "}{"  -- separator between left-right alignment
-        --, template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %default:Master%  %EDDT% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
-        , template = "%multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %default:Master%  %EDDT% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
+        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %default:Master%  %EDDT% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
         }
