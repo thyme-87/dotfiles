@@ -133,6 +133,9 @@ endfunction
 "LATEX
 let tlist_tex_settings = 'latex;l:labels;s:sections;t:subsections;u:subsubsections'
 
+"JAVA
+let g:EclimCompletionMode = 'omnifunc'
+
 "--------------------------------------------------------------------
 
 " MARKDOWN
@@ -251,6 +254,9 @@ Plugin 'gmarik/Vundle.vim'
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
 
+" [2017-09-09] Plugin for ruby language
+Plugin 'vim-ruby/vim-ruby'
+
 " [2017-06-21] PHP autocompletion
 Plugin 'shawncplus/phpcomplete.vim'
 
@@ -332,8 +338,11 @@ Plugin 'vim-airline/vim-airline-themes'
 " [2015-10-11] add tmuxline for fancier tmuxline and vim statusline
 Plugin 'edkolev/tmuxline.vim'
 
+" [2017-09-09] new plugin for ansible
+Plugin 'pearofducks/ansible-vim'
+
 " [2015-04-19] add vim-ansible-yaml to suppot ansible yaml syntax
-Plugin 'chase/vim-ansible-yaml'
+"Plugin 'chase/vim-ansible-yaml'
 
 " [2015-04-18] nerdtree fileexplorer
 Plugin 'scrooloose/nerdtree'
