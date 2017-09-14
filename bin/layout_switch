@@ -25,9 +25,9 @@ else
             setxkbmap de
             exit 1
             ;;
-        *)
-            echo "invalid input" >&2
-            exit 0
+        *)                  # in case of an unkown input, set it to de per default!
+            setxkbmap de
+            exit 1
             ;;
     esac
 fi
