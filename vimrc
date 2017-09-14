@@ -90,6 +90,11 @@ com! ToggleLineNumbers :set relativenumber!
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SELF DEFINED FUNCTIONS                            "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! WriteVocToDictionary(word)
+    :silent :execute '!coproc voc 'a:word
+    redraw!
+endfunction
+
 function! DotDisplay()
     :silent :execute '!coproc dot -Tx11 %'
     redraw!
@@ -135,6 +140,9 @@ augroup END
 "LATEX
 let tlist_tex_settings = 'latex;l:labels;s:sections;t:subsections;u:subsubsections'
 
+"JAVA
+let g:EclimCompletionMode = 'omnifunc'
+
 "--------------------------------------------------------------------
 
 " MARKDOWN
@@ -151,8 +159,8 @@ au BufNewFile,BufRead,BufEnter      README      setlocal spell  spelllang=en_us 
 autocmd BufNewFile,BufRead,BufEnter *.md setlocal filetype=markdown textwidth=80 
 autocmd BufNewFile,BufRead,BufEnter *.md nnoremap <Leader>t :Voomtoggle<CR>
 "set Voomtoggle only for md files; TODO: set also for .tex file: set also for .tex files
-autocmd BufNewFile,BufReadPost *.md call voom#Init("markdown",1)    "use voom#Init function to generate Tree
-autocmd BufWritePost *.md call voom#BodyUpdateTree()     "update the tree after the file has been saved
+autocmd BufNewFile,BufReadPost *.md call voom#Init('markdown',1)    "use voom#Init function to generate Tree
+autocmd BufWritePost,BufEnter *.md call voom#BodyUpdateTree()     "update the tree after the file has been saved
 autocmd BufWritePost *.tex call voom#BodyUpdateTree()    "update the tree after the file has been saved
 
 "PHP
@@ -263,6 +271,9 @@ Plugin 'gmarik/Vundle.vim'
 " in a FIXED syntax that informs about the date, name, purpose. It CAN be
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
+
+" [2017-09-09] Plugin for ruby language
+Plugin 'vim-ruby/vim-ruby'
 
 " [2017-06-21] PHP autocompletion
 Plugin 'shawncplus/phpcomplete.vim'
