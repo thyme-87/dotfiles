@@ -85,6 +85,7 @@ com! MarkdownDisplay :call MarkdownDisplay()                            "open th
 com! UpdateDictonaries :call UpdateDictionaries()                       "call self defined function to update all dictonaries based on .add files in dotfiles/vim/spell
 com! FixSyntaxHighlighting :syntax sync fromstart
 com! FoldManual :set foldmethod=manual                  "enable manual folding with a simple command
+com! ToggleLineNumbers :set relativenumber!
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SELF DEFINED FUNCTIONS                            "
@@ -147,7 +148,18 @@ autocmd BufWritePost *.md call voom#BodyUpdateTree()     "update the tree after 
 autocmd BufWritePost *.tex call voom#BodyUpdateTree()    "update the tree after the file has been saved
 
 "PHP
-let g:tagbar_phpctags_bin='/usr/bin/phpctags'
+"let g:tagbar_phpctags_bin='/usr/bin/phpctags'
+"let g:tagbar_phpctags_memory_limit = '512M'
+let g:tagbar_type_php = {
+    \ 'ctagstype' : 'php',
+    \ 'kinds'     : [
+        \ 'i:interfaces',
+        \ 'c:classes',
+        \ 'd:constant definitions',
+        \ 'f:functions',
+        \ 'j:javascript functions:1'
+      \]
+  \ }
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                  SETTINGS FOR SPECIFIC PLUGINS                    "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -325,8 +337,11 @@ Plugin 'vim-airline/vim-airline-themes'
 " [2015-10-11] add tmuxline for fancier tmuxline and vim statusline
 Plugin 'edkolev/tmuxline.vim'
 
+" [2017-09-06] new plugin for ansible yaml syntax flavor
+Plugin 'pearofducks/ansible-vim'
+
 " [2015-04-19] add vim-ansible-yaml to suppot ansible yaml syntax
-Plugin 'chase/vim-ansible-yaml'
+"Plugin 'chase/vim-ansible-yaml'
 
 " [2015-04-18] nerdtree fileexplorer
 Plugin 'scrooloose/nerdtree'
