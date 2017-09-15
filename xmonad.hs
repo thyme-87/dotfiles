@@ -124,6 +124,7 @@ myConfig = def {
 
 myTerminal              = "urxvt"
 myModMask               = mod4Mask -- [super]
+--myModMask               = SuperL-- [super]
 myBorderWidth           = 1
 myNormalBorderColor     = "#e0e0e0"
 myFocusedBorderColor    = "#F92672"
