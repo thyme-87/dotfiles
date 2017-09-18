@@ -87,6 +87,10 @@ com! FixSyntaxHighlighting :syntax sync fromstart
 com! FoldManual :set foldmethod=manual                  "enable manual folding with a simple command
 com! ToggleLineNumbers :set relativenumber!
 
+"com! -nargs=1 Voc :silent !coproc voc <q-args>
+com! -nargs=1 Voc :call WriteVocToDictionary(<q-args>)
+com! ViewHtml :!w3m %
+com! ReadHtml :%!w3m %
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SELF DEFINED FUNCTIONS                            "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -271,6 +275,12 @@ Plugin 'gmarik/Vundle.vim'
 " in a FIXED syntax that informs about the date, name, purpose. It CAN be
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
+
+" [2017-09-18] Autocompletion
+Plugin 'valloric/youcompleteme'
+
+" [2017-09-16] Plugin fzf - finally start using a fuzzy finder
+Plugin 'junegunn/fzf.vim'
 
 " [2017-09-09] Plugin for ruby language
 Plugin 'vim-ruby/vim-ruby'
