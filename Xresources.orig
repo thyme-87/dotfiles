@@ -1,0 +1,106 @@
+! make scrollbar compact:
+URxvt*.scrollstyle: plain 
+URxvt*.scrollBar_right: true
+<<<<<<< HEAD
+!URxvt*.background: #313131
+URxvt*.background: #272822
+||||||| merged common ancestors
+URxvt*.background: #313131
+=======
+!URxvt*.background: #313131
+>>>>>>> t420s
+URxvt*.foreground: #e0e0e0 
+
+!special
+*.foreground:   #f1ebeb
+*.background:   #272822
+*.cursorColor:  #f1ebeb
+
+! black
+*.color0:       #48483e
+*.color8:       #76715e
+
+! red
+*.color1:       #dc2566
+*.color9:       #fa2772
+
+! green
+*.color2:       #608f00
+*.color10:      #a7e22e
+
+! yellow
+*.color3:       #d4c96e
+*.color11:      #e7db75
+
+! blue
+*.color4:       #007d9a
+*.color12:      #007d9a
+
+! magenta
+*.color5:       #9358fe
+*.color13:      #ae82ff
+
+! cyan
+*.color6:       #0a5d86
+*.color14:      #0a5d86
+
+! white
+*.color7:       #acada1
+*.color15:      #cfd0c2
+
+
+!!----THEME: MOLOKAI Begin
+!!URxvt*background: #101010
+!!URxvt*foreground: #d0d0d0
+!URxvt*color0: #101010
+!!URxvt*color1: #960050
+!URxvt*color1: #F92672
+!URxvt*color2: #66aa11
+!URxvt*color3: #c47f2c
+!URxvt*color4: #30309b
+!URxvt*color5: #7e40a5
+!URxvt*color6: #3579a8
+!URxvt*color7: #9999aa
+!URxvt*color8: #303030
+!URxvt*color9: #ff0090
+!URxvt*color10: #80ff00
+!URxvt*color11: #ffba68
+!URxvt*color12: #5f5fee
+!URxvt*color13: #bb88dd
+!URxvt*color14: #4eb4fa
+!URxvt*color15: #d0d0d0
+!!----THEME: MOLOKAI End
+
+!------FONTS-----------
+! This font should work on every linux installation:
+! URxvt*font: xft:Bitstream Vera Sans Mono:pixelsize=12
+!
+! Some general settings for xft:
+Xft.dpi:            96
+Xft.antialias:      true
+Xft.rgba:           rgb
+Xft.hinting:        true 
+Xft.hintstyle:      hintfull
+Xft.autohint:       true
+!
+! Old standard Droid Sans Mono
+! URxvt*font: xft:Droid Sans Mono-11
+
+!New to make vim-airline look good :)
+!URxvt*font: xft:Droid Sans Mono for Powerline-11
+URxvt*font:             xft:Roboto Mono for Powerline:style=Regular:size=11:antialias=true:hinting=false
+URxvt*boldFont:         xft:Roboto Mono for Powerline:style=Bold:size=11:antialias=true:hinting=false
+URxvt*italicFont:       xft:Roboto Mono for Powerline:style=Italic:size=11:antialias=true:hinting=false
+URxvt*bolditalicFont:   xft:Roboto Mono for Powerline:style=Bold Italic:size=11:antialias=true:hinting=false
+
+!URxvt.letterSpace: -1
+
+URxvt*.saveLines: 1000
+URxvt*.urlLauncher: chromium
+
+! use visual bell instead of beep:
+URxvt*urgentOnBell: false
+URxvt*visualBell: true
+
+! clipboard
+URxvt*perl-ext-common: selection-to-clipboard
