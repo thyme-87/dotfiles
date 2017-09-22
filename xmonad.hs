@@ -9,6 +9,7 @@ import XMonad.Util.Paste
 import XMonad.Util.NamedWindows
 import XMonad.Util.Run(spawnPipe, safeSpawn)
 import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.Scratchpad
 import XMonad.Layout.Grid
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.ThreeColumns
@@ -56,17 +57,27 @@ instance UrgencyHook LibNotifyUrgencyHook where
         Just idx    <- fmap (W.findTag w) $ gets windowset
         safeSpawn "notify-send" [show name, "workspace" ++ idx]
 
-myManageHook = floatHook <+> fullscreenManageHook
+myManageHook = floatHook <+> fullscreenManageHook <+> manageScratchPad
 
 floatHook = composeAll
     [ className =? "gimp"   --> doFloat
-    , resource =? "synapse" --> doFloat
+    , resource =? "synapse" --> doIgnore
     , resource =? "arandr" --> doFloat
     , resource =? "keepassx2" --> doFloat
     , resource =? "skype" --> doFloat
     , resource =? "gnome-calendar" --> doFloat
     , resource =? "gnome-control-center" --> doFloat
     , resource =? "gnome-weather" --> doFloat]
+
+manageScratchPad::ManageHook
+manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
+
+    where
+
+    h = 0.6
+    w = 0.5
+    l = 0.2
+    t = 0.4
 
 myStartupHook ::X ()
 myStartupHook = do
@@ -110,7 +121,8 @@ myConfig = def {
         , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +1%")
         , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ -1%")
         , ((0, xF86XK_AudioMute), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
-        , ((controlMask .|. mod1Mask, xK_t), spawn "urxvt")
+        , ((controlMask .|. mod1Mask, xK_t), spawn myTerminal)
+        , ((mod1Mask .|. shiftMask, xK_comma), scratchpad) --urxvt quake-style
         , ((controlMask, xK_space), spawn "synapse")
         , ((0, xF86XK_Tools), spawn "systemctl suspend")
         , ((0, 0x1008FF21), spawn "systemctl suspend")
@@ -122,9 +134,12 @@ myConfig = def {
         , ((0, xK_Insert), pasteSelection) -- there is a problem here, as it seems to escape some characters
         ]
 
+    where
+
+    scratchpad = scratchpadSpawnActionTerminal myTerminal
+
 myTerminal              = "urxvt"
 myModMask               = mod4Mask -- [super]
---myModMask               = SuperL-- [super]
 myBorderWidth           = 1
 myNormalBorderColor     = "#e0e0e0"
 myFocusedBorderColor    = "#F92672"
