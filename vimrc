@@ -86,6 +86,8 @@ com! UpdateDictonaries :call UpdateDictionaries()                       "call se
 com! FixSyntaxHighlighting :syntax sync fromstart
 com! FoldManual :set foldmethod=manual                  "enable manual folding with a simple command
 com! ToggleLineNumbers :set relativenumber!
+com! MakeExecuteable :call setfperm(expand('%:p'), "rwxrwxrw-")
+com! Bash :!./%
 
 "com! -nargs=1 Voc :silent !coproc voc <q-args>
 com! -nargs=1 Voc :call WriteVocToDictionary(<q-args>)
@@ -111,7 +113,7 @@ endfunction
 
 function! MarkdownRender()                                              "currently the process is not executed asynchronously
                                                                         "TODO: add arguments for table of content, formatting etc.
-    :silent :execute '!coproc pandoc --toc -S -s -f markdown -o %:p.pdf %'
+    :silent :execute '!coproc pandoc --toc --latex-engine=xelatex -S -s -f markdown -o %:p.pdf %'
     redraw!
 endfunction
 
@@ -168,7 +170,7 @@ autocmd BufWritePost,BufEnter *.md call voom#BodyUpdateTree()     "update the tr
 autocmd BufWritePost *.tex call voom#BodyUpdateTree()    "update the tree after the file has been saved
 
 "PHP
-"let g:tagbar_phpctags_bin='/usr/bin/phpctags'
+let g:tagbar_phpctags_bin='/usr/bin/phpctags'
 "let g:tagbar_phpctags_memory_limit = '512M'
 let g:tagbar_type_php = {
     \ 'ctagstype' : 'php',
