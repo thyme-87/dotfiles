@@ -88,6 +88,7 @@ com! FoldManual :set foldmethod=manual                  "enable manual folding w
 com! ToggleLineNumbers :set relativenumber!
 com! MakeExecuteable :call setfperm(expand('%:p'), "rwxrwxrw-")
 com! Bash :!./%
+com! AnsiblePlaybookCheck :!ansible-playbook % --check -i hosts
 
 "com! -nargs=1 Voc :silent !coproc voc <q-args>
 com! -nargs=1 Voc :call WriteVocToDictionary(<q-args>)
