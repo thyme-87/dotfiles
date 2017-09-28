@@ -25,6 +25,7 @@
 --regex-latex=/^\s*\\subsection\*\{([^}]*)\}/\1/t,subsection/
 --regex-latex=/^\s*\\subsubsection\*\{([^}]*)\}/\1/u,subsubsection/
 
---langdef=ansible
---langmap=ansible:.yml
---regex-ansible=/^\s*- name:(.*)/\1/t,task/
+--langdef=yaml
+--langmap=yaml:.yml
+--regex-yaml=/^\s*- name: (.*)/\1/t,task/
+--languages=+yaml
