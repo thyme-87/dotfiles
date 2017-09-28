@@ -143,6 +143,14 @@ augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SETTINGS FOR SPECIFIC FILETYPES                   "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"YML
+let g:tagbar_type_ansible = {
+            \ 'ctagstype' : 'ansible',
+            \ 'kinds' : [
+                \ 't:tasks'
+            \ ],
+            \ 'sort' : 0
+        \ }
 
 "LATEX
 let tlist_tex_settings = 'latex;l:labels;s:sections;t:subsections;u:subsubsections'
