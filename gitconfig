@@ -8,9 +8,13 @@
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
+[difftool]
+    tool = vimdiff
 [mergetool]
 	prompt = false
 [alias]
 	pretty-log  = log --graph --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\"
 	plog        = log --graph --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\"
+    review      = log --pretty=format:\"%C(yellow)%h%C(blue) %ae:%Creset%<|(120) %C(bold)%s%Cresetauthored: %C(bold green)%ai %Cresetcommit: %C(bold green)%ci\"
     filediff    = diff --name-status
+
