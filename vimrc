@@ -88,15 +88,32 @@ com! FoldManual :set foldmethod=manual                  "enable manual folding w
 com! ToggleLineNumbers :set relativenumber!
 com! MakeExecuteable :call setfperm(expand('%:p'), "rwxrwxrw-")
 com! Bash :!./%
-com! AnsiblePlaybookCheck :!ansible-playbook % --check -i hosts
+com! AnsiblePlaybookCheck :!ansible-playbook % --check
+com! -nargs=1 ProvideMysqlPw :call ProvideHashedMysqlPassword(<q-args>)
 
 "com! -nargs=1 Voc :silent !coproc voc <q-args>
 com! -nargs=1 Voc :call WriteVocToDictionary(<q-args>)
-com! ViewHtml :!w3m %
-com! ReadHtml :%!w3m %
+com! W3m :!w3m %
+"com! ReadHtml :%!w3m %
+com! HtmlParse :call ParseHtml()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SELF DEFINED FUNCTIONS                            "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! ParseHtml()
+    :silent
+    :e! %:r "no filetype to signale that this is a scratch buffer
+    :silent r !w3m #
+    :setlocal buftype=nofile
+    :setlocal bufhidden=hide
+    :setlocal noswapfile
+    :set foldmethod=indent
+endfunction
+
+function! ProvideHashedMysqlPassword(test)
+    :let l:cmd = "mysql -NBe \"select password('".a:test."')\""
+    :execute 'normal i' . system(l:cmd)
+endfunction
+
 function! WriteVocToDictionary(word)
     :silent :execute '!coproc voc 'a:word
     redraw!
@@ -114,7 +131,7 @@ endfunction
 
 function! MarkdownRender()                                              "currently the process is not executed asynchronously
                                                                         "TODO: add arguments for table of content, formatting etc.
-    :silent :execute '!coproc pandoc --toc --latex-engine=xelatex -S -s -f markdown -o %:p.pdf %'
+    :silent :execute '!coproc pandoc --toc -S -s -f markdown -o %:p.pdf %'
     redraw!
 endfunction
 
@@ -172,14 +189,14 @@ let g:tagbar_type_markdown = {
 au BufNewFile,BufRead,BufEnter      README      setlocal spell  spelllang=en_us "set spell check for README files
 " au BufNewFile,BufRead,BufEnter      *.md        setlocal spell  spelllang=de_de "set spellcheck with language de_de for markdown files currently deactivated as I assume that it would break settings for markdown beneath
 autocmd BufNewFile,BufRead,BufEnter *.md setlocal filetype=markdown textwidth=80 
-autocmd BufNewFile,BufRead,BufEnter *.md nnoremap <Leader>t :Voomtoggle<CR>
+autocmd BufNewFile,BufRead,BufEnter *.md nnoremap <silent><Leader>t :Voomtoggle<CR>
 "set Voomtoggle only for md files; TODO: set also for .tex file: set also for .tex files
 autocmd BufNewFile,BufReadPost *.md call voom#Init('markdown',1)    "use voom#Init function to generate Tree
 autocmd BufWritePost,BufEnter *.md call voom#BodyUpdateTree()     "update the tree after the file has been saved
 autocmd BufWritePost *.tex call voom#BodyUpdateTree()    "update the tree after the file has been saved
 
 "PHP
-let g:tagbar_phpctags_bin='/usr/bin/phpctags'
+"let g:tagbar_phpctags_bin='/usr/bin/phpctags'
 "let g:tagbar_phpctags_memory_limit = '512M'
 let g:tagbar_type_php = {
     \ 'ctagstype' : 'php',
@@ -194,6 +211,16 @@ let g:tagbar_type_php = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                  SETTINGS FOR SPECIFIC PLUGINS                    "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"VIM youcompleteme
+"add preview for preview scratchpad
+"set completeopt=noinsert,menu
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_filetype_whitelist = {'*':1}
+let g:ycm_filetype_blacklist = {
+\ 'tagbar' : 1,
+\ 'markdown' : 1
+\}
+
 " VIM VOom
 let g:voom_ft_modes = {'markdown': 'markdown', 'tex': 'latex'}
 
