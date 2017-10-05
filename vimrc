@@ -90,6 +90,7 @@ com! MakeExecuteable :call setfperm(expand('%:p'), "rwxrwxrw-")
 com! Bash :!./%
 com! AnsiblePlaybookCheck :!ansible-playbook % --check
 com! ProvideMysqlPw :call ProvideHashedMysqlPassword()
+com! Pwgen :execute 'normal i ' . substitute(system('pwgen -Bsnc 10 1'), '[\r\n]*$', '', '')
 
 "com! -nargs=1 Voc :silent !coproc voc <q-args>
 com! -nargs=1 Voc :call WriteVocToDictionary(<q-args>)
@@ -114,7 +115,7 @@ function! ProvideHashedMysqlPassword()
     :let l:pw = substitute(l:pw, '[\r\n]*$', '', '')
     :let l:cmd = "mysql -NBe \"select password('".l:pw."')\""
     :let l:cmd = substitute(system(l:cmd), '[\r\n]*$', '', '')
-    :execute 'normal i' .l:cmd . " #pw: " . l:pw
+    :execute 'normal i "' .l:cmd . "\" #pw: " . l:pw
 endfunction
 
 function! WriteVocToDictionary(word)
