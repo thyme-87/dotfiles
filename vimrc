@@ -112,7 +112,7 @@ endfunction
 
 function! GenPassword(length)
     :let l:pw= system('pwgen -Bsnc '.a:length.' 1')
-    :execute 'normal i ' . substitute(l:pw, '[\r\n]*$', '', '')
+    :execute 'normal a ' . substitute(l:pw, '[\r\n]*$', '', '')
 endfunction
 
 function! ProvideHashedMysqlPassword()
