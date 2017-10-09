@@ -90,6 +90,7 @@ com! MakeExecuteable :call setfperm(expand('%:p'), "rwxrwxrw-")
 com! Bash :!./%
 com! AnsiblePlaybookCheck :!ansible-playbook % --check
 com! ProvideMysqlPw :call ProvideHashedMysqlPassword()
+com! -nargs=1 MakePasswd :call MakePassword(<q-args>)
 com! -nargs=1 Pwgen :call GenPassword(<q-args>)
 
 "com! -nargs=1 Voc :silent !coproc voc <q-args>
@@ -108,6 +109,15 @@ function! ParseHtml()
     :setlocal bufhidden=hide
     :setlocal noswapfile
     :set foldmethod=indent
+endfunction
+
+function! MakePassword(length)
+    :let l:pw= system('pwgen -Bsnc '.a:length.' 1')
+    :let l:pw= substitute(l:pw, '[\r\n]*$', '', '')
+    :let l:pw_encrypted= system('mkpasswd --method=sha-512 '.l:pw)
+    :let l:pw_encrypted= substitute(l:pw_encrypted, '[\r\n]*$', '', '')
+    :echomsg l:pw_encrypted
+    :execute 'normal a ' . l:pw . " #pw: " . l:pw_encrypted
 endfunction
 
 function! GenPassword(length)
