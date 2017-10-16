@@ -116,8 +116,7 @@ function! MakePassword(length)
     :let l:pw= substitute(l:pw, '[\r\n]*$', '', '')
     :let l:pw_encrypted= system('mkpasswd --method=sha-512 '.l:pw)
     :let l:pw_encrypted= substitute(l:pw_encrypted, '[\r\n]*$', '', '')
-    :echomsg l:pw_encrypted
-    :execute 'normal a ' . l:pw . " #pw: " . l:pw_encrypted
+    :execute 'normal a ' . l:pw_encrypted . " #pw: " . l:pw
 endfunction
 
 function! GenPassword(length)
