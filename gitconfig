@@ -17,5 +17,5 @@
 [alias]
 	pretty-log  = log --graph --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\"
 	plog        = log --graph --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\"
-    review      = log --date=local --pretty=format:\"%C(yellow)%h%C(blue) %ae:%Creset%<|(146) %C(bold)%s%Cresetauthored: %C(bold green)%ad %Cresetcommit: %C(bold green)%cd\"
+    review      = log --date=local --pretty=format:\"%C(yellow)%h%C(blue) %ae:%Creset%<|(146) %C(bold)%s%Creset%<(24)authored: %C(bold green)%ad %Cresetcommit: %C(bold green)%cd\"
     filediff    = diff --name-status
