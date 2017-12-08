@@ -12,7 +12,7 @@ export EDITOR="$VISUAL"
 #NOTE that this will not affect root!
 
 PATH=$PATH:~/dotfiles/bin
-
+PATH=/Library/Tex/texbin:$PATH
 
 # make sure that .bashrc is also executed
 source  ~/.bashrc
@@ -42,3 +42,8 @@ export PATH
 #        else
 #                start_agent;
 #fi
+
+if which rbenv > /dev/null;
+    then eval "$(rbenv init -)";
+        echo "fuck os x!";
+fi

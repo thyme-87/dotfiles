@@ -149,7 +149,7 @@ endfunction
 
 function! MarkdownRender()                                              "currently the process is not executed asynchronously
                                                                         "TODO: add arguments for table of content, formatting etc.
-    :silent :execute '!coproc pandoc --toc -S -s -f markdown -o %:p.pdf %'
+    :silent :execute '!coproc pandoc --toc --pdf-engine=xelatex -s -f markdown+smart -o  %:p.pdf %'
     redraw!
 endfunction
 

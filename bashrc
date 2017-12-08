@@ -10,9 +10,10 @@
 alias tor='~/tor-browser_en-US/start-tor-browser --detach'
 alias bopdf='~/Dropbox/BerlinOnline/4_other/bo_pdf/bopdf.sh'
 alias mychromium='setsid /usr/bin/chromium >& /dev/null &'
+alias ruby-local='PATH=./bin:$PATH'
 
 # make ls use colors automatically
-alias ls='ls --color=auto'
+alias ls='ls -G'
 #-------------- ALIAS END -----------------
 
 
@@ -26,6 +27,7 @@ export EDITOR="vim"
 export JAVA_HOME=/usr/bin/java
 export LC_ALL=en_US.UTF-8
 
+PATH=/usr/local/bin:$PATH
 PATH=$PATH:~/dotfiles/bin
 PATH=$PATH:~/bin #local bin for personal shell scripts
 
@@ -33,8 +35,8 @@ export PATH
 
 #TERM='rxvt-unicode'
 #try to  set term for tmux:
-TERM='screen-256color'
-COLORTERM='rxvt-unicode-256color'
+TERM='xterm-256color'
+COLORTERM='xrv-unicode-256color'
 
 
 # find running ssh-agent and use it
