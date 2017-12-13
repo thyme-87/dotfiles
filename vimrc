@@ -8,6 +8,7 @@
 " Changes should be implemented step by step and ideally a commit should
 " follow every commit to allow finer granularity when it comes to merging
 
+set backspace=indent,eol,start "allow backspace in insert mode
 set t_Co=256        "set vim to 256 colors
 set nrformats=alpha "set number format to decimal; numbers with leading zero won't be treated as octal
 set wildmenu        "better command-line completion
@@ -384,6 +385,9 @@ Plugin 'shougo/unite.vim'
 " https://github.com/Shougo/neocomplete.vim
 " deactivatet to check performance
 " Plugin 'Shougo/neocomplete'
+
+" [2017-12-13] plugin to use nerdfont icons (devicons)
+Plugin 'ryanoasis/vim-devicons'
 
 " [2016-05-24] plugin to visualize diffs in the gutter
 " deactivatet to check performance
