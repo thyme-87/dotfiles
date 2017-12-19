@@ -333,6 +333,9 @@ Plugin 'gmarik/Vundle.vim'
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
 
+" [2017-12-14] add basic fzf support so that the command works as expected
+Plugin 'junegunn/fzf'
+
 " [2017-09-18] Autocompletion
 Plugin 'valloric/youcompleteme'
 
