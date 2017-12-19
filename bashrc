@@ -46,3 +46,5 @@ source ~/dotfiles/bin/ssh-find-agent -a || eval $(ssh-agent) > /dev/null    # au
 set_ssh_agent_socket
 
 source ~/dotfiles/bin/ls-colors
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
