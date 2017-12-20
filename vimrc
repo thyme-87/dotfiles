@@ -128,7 +128,7 @@ endfunction
 function! ProvideHashedMysqlPassword()
     :let l:pw = system('pwgen -Bsnc 10 1')
     :let l:pw = substitute(l:pw, '[\r\n]*$', '', '')
-    :let l:cmd = "mysql -NBe \"select password('".l:pw."')\""
+    :let l:cmd = "mysql -u root -NBe \"select password('".l:pw."')\""
     :let l:cmd = substitute(system(l:cmd), '[\r\n]*$', '', '')
     :execute 'normal i "' .l:cmd . "\" #pw: " . l:pw
 endfunction
