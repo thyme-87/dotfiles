@@ -112,34 +112,53 @@ function! ParseHtml()
     :set foldmethod=indent
 endfunction
 
+"Depends on the existance of 'pwgen'
+"make -Bsnc -Bsync if more complexity is needed
+function! GeneratePassword(length)
+    :let l:pw= system('pwgen -Bsnc '.a:length.' 1')
+    :let l:pw= substitute(l:pw, '[\r\n\s]*$', '', '')
+    return l:pw
+endfunction
+
+function! GenPassword(length)
+    :execute 'normal a '. GeneratePassword(a:length)
+endfunction
+
 "this function assumes the existance of a file named .vault.pw that contains
 "the password in clear text
+function! GenerateVaultedPW(pw)
+    :let l:cmd = 'ansible-vault --vault-password-file .vault.pw encrypt_string ' .a:pw . ' --output -'
+    :let l:pw_vaulted= substitute(system(l:cmd), '[[:cntrl:]]', '\r', 'g')
+    return l:pw_vaulted
+endfunction
+
 function! ProvideVaultedPW(length)
-    :let l:pw= system('pwgen -Bsnc '.a:length.' 1')
-    :let l:pw= substitute(l:pw, '[\r\n]*$', '', '')
-    :let l:cmd = 'ansible-vault --vault-password-file .vault.pw encrypt_string ' .l:pw . ' --output -'
-    :let l:pw_encrypted= substitute(system(l:cmd), '[[:cntrl:]]', '\r', 'g')
+    :let l:pw= GeneratePassword(a:length)
+    :let l:pw_vaulted= GenerateVaultedPW(l:pw)
     :set paste
-    :execute 'normal a '. l:pw_encrypted
+    :execute 'normal a '. l:pw_vaulted . " #pw " . l:pw
+    :set nopaste
+endfunction
+
+function! ProvideVaultedAndHashedMysqlPW(length)
+    :let l:pw= GeneratePassword(a:length)
+    :let l:cmd= "mysql -u root -NBe \"select password('".l:pw."')\""
+    :let l:cmd= substitute(system(l:cmd), '[\r\n]*$', '', '')
+    :let l:pw_vaulted= GenerateVaultedPW(l:cmd)
+    :set paste
+    :execute 'normal a "' .l:pw_vaulted . "\" #pw: " . l:pw
     :set nopaste
 endfunction
 
 function! MakePassword(length)
-    :let l:pw= system('pwgen -Bsnc '.a:length.' 1')
-    :let l:pw= substitute(l:pw, '[\r\n]*$', '', '')
+    :let l:pw=GeneratePassword(a:length)
     :let l:pw_encrypted= system('mkpasswd --method=sha-512 '.l:pw)
     :let l:pw_encrypted= substitute(l:pw_encrypted, '[\r\n]*$', '', '')
     :execute 'normal a ' . l:pw_encrypted . " #pw: " . l:pw
 endfunction
 
-function! GenPassword(length)
-    :let l:pw= system('pwgen -Bsnc '.a:length.' 1')
-    :execute 'normal a ' . substitute(l:pw, '[\r\n]*$', '', '')
-endfunction
-
 function! ProvideHashedMysqlPassword()
-    :let l:pw = system('pwgen -Bsnc 10 1')
-    :let l:pw = substitute(l:pw, '[\r\n]*$', '', '')
+    :let l:pw= GeneratePassword(10)
     :let l:cmd = "mysql -u root -NBe \"select password('".l:pw."')\""
     :let l:cmd = substitute(system(l:cmd), '[\r\n]*$', '', '')
     :execute 'normal i "' .l:cmd . "\" #pw: " . l:pw
