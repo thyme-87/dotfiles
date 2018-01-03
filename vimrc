@@ -112,6 +112,18 @@ function! ParseHtml()
     :set foldmethod=indent
 endfunction
 
+"this function assumes the existance of a file named .vault.pw that contains
+"the password in clear text
+function! ProvideVaultedPW(length)
+    :let l:pw= system('pwgen -Bsnc '.a:length.' 1')
+    :let l:pw= substitute(l:pw, '[\r\n]*$', '', '')
+    :let l:cmd = 'ansible-vault --vault-password-file .vault.pw encrypt_string ' .l:pw . ' --output -'
+    :let l:pw_encrypted= substitute(system(l:cmd), '[[:cntrl:]]', '\r', 'g')
+    :set paste
+    :execute 'normal a '. l:pw_encrypted
+    :set nopaste
+endfunction
+
 function! MakePassword(length)
     :let l:pw= system('pwgen -Bsnc '.a:length.' 1')
     :let l:pw= substitute(l:pw, '[\r\n]*$', '', '')
