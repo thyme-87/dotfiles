@@ -140,6 +140,7 @@ function! ProvideVaultedPW(length)
     :set nopaste
 endfunction
 
+"TODO also create the according .my.cnf file!
 function! ProvideVaultedAndHashedMysqlPW(length)
     :let l:pw= GeneratePassword(a:length)
     :let l:cmd= "mysql -u root -NBe \"select password('".l:pw."')\""
@@ -210,6 +211,15 @@ augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SETTINGS FOR SPECIFIC FILETYPES                   "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Ansible YAML
+let g:tagbar_type_ansible = {
+            \ 'ctagstype' : 'ansible',
+            \ 'kinds' : [
+                \ 't:tasks'
+            \ ],
+            \ 'sort' : 0
+        \}
+
 "YML
 let g:tagbar_type_yaml = {
     \ 'ctagstype' : 'yaml',
