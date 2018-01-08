@@ -112,6 +112,13 @@ function! ParseHtml()
     :set foldmethod=indent
 endfunction
 
+function! ProvideHtaccessPw(username, password)
+    :let l:pw= substitute(system('htpasswd -nb ' . a:username . ' ' . a:password), '[[:cntrl:]]', '', 'g')
+    :set paste
+    :execute 'normal a ' . l:pw . ' #pw: ' . a:password
+    :set nopaste
+endfunction
+
 "Depends on the existance of 'pwgen'
 "make -Bsnc -Bsync if more complexity is needed
 function! GeneratePassword(length)
