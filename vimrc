@@ -48,6 +48,11 @@ set noshowmode      "only works when it is at the bottom of the .vimrc - i have 
 set timeoutlen=800  "set mapping delays
 set ttimeoutlen=0   "set keycode delays
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                       COMPATIBILITY
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"silent! py3 pass
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                           KEY MAPPINGS                            "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -357,7 +362,7 @@ runtime macros/matchit.vim  "extend functionality of "%"
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                       PLUGINS
+"                           PLUGINS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible              " be iMproved, required
 filetype off                  " required
