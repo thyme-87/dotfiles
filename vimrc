@@ -223,20 +223,25 @@ augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SETTINGS FOR SPECIFIC FILETYPES                   "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Ansible YAML
+"Ansible YAML #NOT WORKING!
 let g:tagbar_type_ansible = {
             \ 'ctagstype' : 'ansible',
             \ 'kinds' : [
-                \ 't:tasks'
+                \ 't:tasks',
+                \ 'r:role'
             \ ],
             \ 'sort' : 0
         \}
 
+au BufNewFile,BufRead *.yml set filetype=yaml.ansible
+
 "YML
 let g:tagbar_type_yaml = {
     \ 'ctagstype' : 'yaml',
+    \ 'ctagsargs' : '-f- --excmd=number --fields=nksSa',
     \ 'kinds' : [
-        \ 't:tasks'
+        \ 't:tasks',
+        \ 'r:role'
     \ ],
     \ 'sort' : 0
 \ }
