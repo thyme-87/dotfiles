@@ -32,6 +32,7 @@ export LC_ALL=en_US.UTF-8
 PATH=/usr/local/bin:$PATH
 PATH=$PATH:~/dotfiles/bin
 PATH=$PATH:~/bin #local bin for personal shell scripts
+PATH=$PATH:~/Library/Python/3.6/bin/ #for software installed via pip (aws cli)
 
 export PATH
 
