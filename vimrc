@@ -104,9 +104,14 @@ com! -nargs=1 Voc :call WriteVocToDictionary(<q-args>)
 com! W3m :!w3m %
 "com! ReadHtml :%!w3m %
 com! HtmlParse :call ParseHtml()
+com! ShowPath :call ShowPath()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SELF DEFINED FUNCTIONS                            "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! ShowPath()
+    :echo expand('%:p')
+endfunction
+
 function! ParseHtml()
     :silent
     :e! %:r "no filetype to signale that this is a scratch buffer
