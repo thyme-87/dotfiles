@@ -11,6 +11,8 @@ alias tor='~/tor-browser_en-US/start-tor-browser --detach'
 alias bopdf='~/Dropbox/BerlinOnline/4_other/bo_pdf/bopdf.sh'
 alias mychromium='setsid /usr/bin/chromium >& /dev/null &'
 alias ruby-local='PATH=./bin:$PATH'
+alias lookup="fzf --preview 'highlight -O ansi -l {}'"
+alias vimup="vim \$(fzf)"
 
 # make ls use colors automatically
 alias ls='ls -G'
