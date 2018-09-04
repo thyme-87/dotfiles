@@ -295,22 +295,28 @@ let g:ycm_filetype_blacklist = {
 
 " VIM VOom
 let g:voom_ft_modes = {'markdown': 'markdown', 'tex': 'latex'}
+let g:voom_python_versions = [2]
 
 " VIM ALE
-let g:airline_section_error = '%{ALEGetStatusLine()}' "ALE output in vim-airline
-let g:airline#extensions#ale#enabled=1
+"let g:airline_section_error = '%{ALEGetStatusLine()}' "ALE output in vim-airline
+
 let g:ale_linters = {
     \'php': ['phpcs'],
+    \'yaml': ['ansible-lint'],
     \    }
 let g:ale_php_phpcs_standard = 'PSR2'
 let g:ale_statusline_format = ['✗%d', '⚠%d', '☼ok']
-let g:ale_echo_cursor=1
+let g:ale_echo_cursor = 1
+let g:ale_echo_delay = 0
+let g:ale_enabled = 1
 let g:ale_echo_msg_format = '[%linter%]: %s [%severity%]'
 let g:ale_set_loclist = 1
+let g:ale_sign_column_always = 1
 let g:ale_sign_error = '✗»'
 let g:ale_sign_warning = '⌕☞'
 let g:ale_echo_msg_error_str = 'Error'
 let g:ale_echo_msg_warning_str  = 'Warning'
+let g:ale_echo_msg_info_str = 'Info'
 nmap <silent> <leader>] <Plug>(ale_previous_wrap)
 nmap <silent> <leader>[ <Plug>(ale_next_wrap)
 
@@ -325,6 +331,10 @@ colorscheme monokai "use monokai colorscheme; alternative: molokai
 let g:airline_powerline_fonts = 1       "use fonts patched for powerline
 let g:airline_theme="dark"              "use dark theme
 let g:airline#extensions#tagbar#enabled = 0 "disable tagbar integration (performance issue)
+
+let g:airline#extensions#ale#enabled = 1
+let airline#extensions#ale#error_symbol = '✗'
+let airline#extensions#ale#warning_symbol = '⚠'
 set laststatus=2
 
 " VIM LATEX SUITE
