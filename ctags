@@ -32,6 +32,7 @@
 
 --langdef=ansible
 --langmap=ansible:.yml
+--regex-ansible=/\s*roles\:/role-section/r,roles/
 --regex-ansible=/\s*- name: "?(.[^"]+)/\1/t,task/
 --regex-ansible=/^\s*- name: "?(.[^"]+)/\1/t,task/
---languages=+yml
+--languages=+ansible
