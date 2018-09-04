@@ -1,0 +1,2 @@
+#!/bin/bash
+vault-password $1 $2 $3 | tail -n +2 | head -n -1 
