@@ -374,7 +374,7 @@ call vundle#begin()
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "			MY SECTION START
@@ -453,7 +453,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'nelstrom/vim-markdown-folding'
 
 " [2016-04-24] add VOoM (vim two-pane outliner)
-Plugin 'VOom'
+Plugin 'vim-voom/VOom'
 
 " [2016-04-24] add vim-outliner
 Plugin 'vimoutliner/vimoutliner'
