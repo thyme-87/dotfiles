@@ -149,12 +149,10 @@ function! GenerateVaultedPW(pw)
     return l:pw_vaulted
 endfunction
 
-function! ProvideVaultedPW(length)
-    :let l:pw= GeneratePassword(a:length)
-    :let l:pw_vaulted= GenerateVaultedPW(l:pw)
-    :set paste
-    :execute 'normal a '. l:pw_vaulted . " #pw " . l:pw
-    :set nopaste
+"Start a new term and run the mk-vault-pw command in it
+function! VaultStringWithID(secret, vaultId, vaultPwd)
+    :let l:cmd = 'mk-vaulted-pw ' . a:secret . ' ' . a:vaultId . ' ' . a:vaultPwd
+    :call term_start(l:cmd)
 endfunction
 
 "TODO also create the according .my.cnf file!
