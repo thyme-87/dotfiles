@@ -105,9 +105,14 @@ com! W3m :!w3m %
 "com! ReadHtml :%!w3m %
 com! HtmlParse :call ParseHtml()
 com! ShowPath :call ShowPath()
+com! Term :call OpenTerminal()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SELF DEFINED FUNCTIONS                            "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! OpenTerminal()
+    :vs|:term ++curwin
+endfunction
+
 function! ShowPath()
     :echo expand('%:p')
 endfunction
