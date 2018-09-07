@@ -79,6 +79,7 @@ nnoremap <c-l> :tabnext<CR>
 nnoremap <F12> :NERDTreeToggle<CR>          "<F12> to toggle Nerdtree
 nnoremap <F11> :!detex % \| wc -w<CR>       "<F11> for simple wordcount
 nnoremap <silent> <Leader>t :TagbarToggle<CR>
+nnoremap <silent> <c-t> :call OpenTerminal()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SELF DEFINED COMMANDS                             "
