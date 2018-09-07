@@ -36,3 +36,14 @@
 --regex-ansible=/\s*- name: "?(.[^"]+)/\1/t,task/
 --regex-ansible=/^\s*- name: "?(.[^"]+)/\1/t,task/
 --languages=+ansible
+
+--langdef=cloudformation
+--langmap=cloudformation:.json
+--regex-cloudformation=/^\s*Metadata/Metadata/d,metadata/
+--regex-cloudformation=/^\s*Parameters/Parameters/p,parameters/
+--regex-cloudformation=/^\s*Mappings/Mappings/m,mappings/
+--regex-cloudformation=/^\s*Conditions/Conditions/c,conditions/
+--regex-cloudformation=/^\s*Transform/Transform/t,transform/
+--regex-cloudformation=/^\s*Resources/Resources/r,resources/
+--regex-cloudformation=/^\s*Outputs/Outputs/o,outputs/
+--languages=+cloudformation
