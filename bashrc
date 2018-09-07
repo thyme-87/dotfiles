@@ -12,7 +12,7 @@ alias bopdf='~/Dropbox/BerlinOnline/4_other/bo_pdf/bopdf.sh'
 alias mychromium='setsid /usr/bin/chromium >& /dev/null &'
 alias ruby-local='PATH=./bin:$PATH'
 alias lookup="fzf --preview 'highlight -O ansi -l {}'"
-alias vimup="vim \$(fzf)"
+alias vimup="vim \$(lookup)"
 
 # make ls use colors automatically
 alias ls='ls -G'
