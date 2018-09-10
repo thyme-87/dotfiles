@@ -25,13 +25,9 @@
 --regex-latex=/^\s*\\subsection\*\{([^}]*)\}/\1/t,subsection/
 --regex-latex=/^\s*\\subsubsection\*\{([^}]*)\}/\1/u,subsubsection/
 
---langdef=yaml
---langmap=yaml:.yaml
---regex-yaml=/\s*- name: "?(.[^"]+)/\1/t,task/
---languages=+yaml
-
 --langdef=ansible
 --langmap=ansible:.yml
+--langmap=ansible:+.yaml
 --regex-ansible=/\s*roles\:/role-section/r,roles/
 --regex-ansible=/\s*- name: "?(.[^"]+)/\1/t,task/
 --regex-ansible=/^\s*- name: "?(.[^"]+)/\1/t,task/
@@ -39,11 +35,21 @@
 
 --langdef=cloudformation
 --langmap=cloudformation:.json
---regex-cloudformation=/^\s*Metadata/Metadata/d,metadata/
---regex-cloudformation=/^\s*Parameters/Parameters/p,parameters/
---regex-cloudformation=/^\s*Mappings/Mappings/m,mappings/
---regex-cloudformation=/^\s*Conditions/Conditions/c,conditions/
---regex-cloudformation=/^\s*Transform/Transform/t,transform/
---regex-cloudformation=/^\s*Resources/Resources/r,resources/
---regex-cloudformation=/^\s*Outputs/Outputs/o,outputs/
+--langmap=cloudformation:+.yml
+--langmap=cloudformation:+.yaml
+--regex-cloudformation=/.*Metadata/Metadata/c,metadata/
+--regex-cloudformation=/^.."?Description/Description/d,description/
+--regex-cloudformation=/.*Parameters/Parameters/c,parameters/
+--regex-cloudformation=/.*Mappings/Mappings/c,mappings/
+--regex-cloudformation=/.*Conditions/Conditions/c,conditions/
+--regex-cloudformation=/.*Transform/Transform/c,transform/
+--regex-cloudformation=/.*Resources/Resources/c,resources/
+--regex-cloudformation=/.*Outputs/Outputs/c,outputs/
 --languages=+cloudformation
+
+--langdef=yaml
+--langmap=yaml:.yml
+--langmap=yaml:+.yaml
+--regex-yaml=/^[[:blank:]]{2}([[:alnum:]][^:]*)/\1/t,toplevel/e
+--regex-yaml=/^[[:blank:]]{4}([[:alnum:]][^:]*)/\1/s,secondlevel/e
+--languages=+yaml
