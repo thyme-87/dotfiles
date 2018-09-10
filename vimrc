@@ -232,7 +232,7 @@ augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SETTINGS FOR SPECIFIC FILETYPES                   "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Ansible YAML #NOT WORKING!
+"Ansible YAML
 let g:tagbar_type_ansible = {
             \ 'ctagstype' : 'ansible',
             \ 'kinds' : [
@@ -242,15 +242,28 @@ let g:tagbar_type_ansible = {
             \ 'sort' : 0
         \}
 
-au BufNewFile,BufRead *.yml set filetype=yaml.ansible
+au BufNewFile,BufRead *.yml set filetype=ansible syntax=yaml
 
-"YML
+"YML #NOT WORKING?
 let g:tagbar_type_yaml = {
     \ 'ctagstype' : 'yaml',
     \ 'ctagsargs' : '-f- --excmd=number --fields=nksSa',
     \ 'kinds' : [
-        \ 't:tasks',
-        \ 'r:role'
+        \ 't:toplevel',
+        \ 's:secondlevel',
+    \ ],
+    \ 'sort' : 0
+\ }
+
+
+"ClOUDFORMATION (JSON)
+"let g:tagbar_silent=1 "disable infos in statusbar
+let g:tagbar_type_cloudformation = {
+    \ 'ctagstype' : 'json',
+    \ 'ctagsargs' : '-f- --excmd=number --fields=nksSa',
+    \ 'kinds' : [
+        \ 'd:Description',
+        \ 'c:Cloudformation'
     \ ],
     \ 'sort' : 0
 \ }
