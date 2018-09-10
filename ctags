@@ -30,7 +30,7 @@
 --langmap=ansible:+.yaml
 --regex-ansible=/\s*roles\:/role-section/r,roles/
 --regex-ansible=/\s*- name: "?(.[^"]+)/\1/t,task/
---regex-ansible=/^\s*- name: "?(.[^"]+)/\1/t,task/
+--regex-ansible=/\s*- role: (.*)/\1/r, roles/e
 --languages=+ansible
 
 --langdef=cloudformation
