@@ -4,14 +4,14 @@
 [push]
 	default = simple
 [core]
-	excludesfile = /home/timon/.global_ignore
+	excludesfile = /home/timon/.global_gitignore
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
 [difftool]
     tool = vimdiff
 [mergetool]
-	prompt = false
+    #prompt = false
 [log]
 	date = local
 [alias]
