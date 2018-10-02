@@ -310,6 +310,15 @@ let g:tagbar_type_php = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                  SETTINGS FOR SPECIFIC PLUGINS                    "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"VIM neosnippet 2018-10-02
+let g:neosnippet#snippets_directory="~/dotfiles/vim/snippets"
+let g:neosnippet#disable_runtime_snippets= {
+            \ '-' : 1,
+            \ }
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_or_jump)
+
 "VIM youcompleteme
 "add preview for preview scratchpad
 "set completeopt=noinsert,menu
@@ -422,6 +431,9 @@ Plugin 'VundleVim/Vundle.vim'
 " in a FIXED syntax that informs about the date, name, purpose. It CAN be
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
+
+" [2018-10-01] add neosnippet to finally get snippets working
+Plugin 'Shougo/neosnippet.vim'
 
 " [2017-12-14] add basic fzf support so that the command works as expected
 Plugin 'junegunn/fzf'
