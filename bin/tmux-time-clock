@@ -4,9 +4,10 @@
 #echo "Welcome to window $TEST"
 
 
-TMUX_WINDOW_NAME=$(tmux display-message -p -F '#W')
-TIMESTAMP=$(date +%Y-%M-%d:%H:%M)
+TMUX_WINDOW_NAME=$(tmux display-message -p -F '#S;#I;#W')
+TIMESTAMP=$(date +%Y-%m-%d:%H:%M)
+LOGFILE=~/c3_time_clock.log
 
-echo "$TIMESTAMP  -  $TMUX_WINDOW_NAME" >> ~/c3_time_clock.log
+echo "$TIMESTAMP  -  $TMUX_WINDOW_NAME" >> $LOGFILE
 
 
