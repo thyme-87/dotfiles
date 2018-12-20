@@ -4,7 +4,7 @@
 [push]
 	default = simple
 [core]
-	excludesfile = /home/timon/.global_gitignore
+	excludesfile = ~/.gitignore
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
