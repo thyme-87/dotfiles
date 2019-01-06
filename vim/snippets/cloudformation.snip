@@ -1,0 +1,22 @@
+#cloudformation snippets
+snippet comment
+alias   CMNT
+options head
+  #
+  # ${1:Description}
+  #
+
+snippet resource
+abbr    cfn-resource
+alias   RSC
+options head
+     Type: AWS::${3:ResourceType}
+     Properties:
+     ${4:ResourcePropertyName1}: ${5:ResourcePropertyValue1}
+
+snippet output
+abbr    outpt
+alias   OUT
+options head
+  Description: "${1:output description}"
+  Value: ${2:output value}

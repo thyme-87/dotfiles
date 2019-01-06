@@ -1,0 +1,6 @@
+snippet tsk
+alias task
+ - name: "${1:name}"
+   ${2:ansible module}:
+       ${3}: ${4}
+    ${0}
