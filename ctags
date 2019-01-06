@@ -34,17 +34,11 @@
 --languages=+ansible
 
 --langdef=cloudformation
---langmap=cloudformation:.json
---langmap=cloudformation:+.yml
+--langmap=cloudformation:.yml
 --langmap=cloudformation:+.yaml
---regex-cloudformation=/.*Metadata/Metadata/c,metadata/
---regex-cloudformation=/^.."?Description/Description/d,description/
---regex-cloudformation=/.*Parameters/Parameters/c,parameters/
---regex-cloudformation=/.*Mappings/Mappings/c,mappings/
---regex-cloudformation=/.*Conditions/Conditions/c,conditions/
---regex-cloudformation=/.*Transform/Transform/c,transform/
---regex-cloudformation=/.*Resources/Resources/c,resources/
---regex-cloudformation=/.*Outputs/Outputs/c,outputs/
+--regex-cloudformation=/^(^[[:alnum:]]+)/\1/s,section/
+--regex-cloudformation=/^[[:blank:]]{2}([[:alnum:]][^:]*)/\1/r,resource/
+--regex-cloudformation=/^[[:blank:]]{4}Type:(.*)/\1/t,type/
 --languages=+cloudformation
 
 --langdef=yaml
