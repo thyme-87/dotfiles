@@ -70,4 +70,28 @@ set_ssh_agent_socket
 
 source ~/dotfiles/bin/ls-colors
 
+##autocomplete ssh
+#Thanks to: https://gist.github.com/magnetikonline/bcd4186e14ed02145390
+function _completeSSHHosts {
+
+	COMPREPLY=()
+	local currentWord=${COMP_WORDS[COMP_CWORD]}
+
+	local completeHosts=$(
+		cat "$HOME/.ssh/config" | \
+        grep --extended-regexp --regexp "^(Host|host) +[^* ]+? *$" | \
+		tr -s " " | cut -d " " -f 2;
+		cat /etc/hosts | \
+		grep --extended-regexp --regexp "^[0-9]{3}\." | \
+		awk "{print \$2}"
+	)
+
+	COMPREPLY=($(compgen -W "$completeHosts" -- "$currentWord"))
+	return 0
+}
+
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+#this is a dirty workaround to provide both: autocompletion via fzf and custom autocompletion for ssh
+complete -F _fzf_complete_ssh -o default -o bashdefault -F _completeSSHHosts ssh
+complete -F _completeSSHHosts -o default -b bashdefault scp
