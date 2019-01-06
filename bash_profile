@@ -67,7 +67,8 @@ MANPATH="/usr/local/Cellar:$MANPATH"
 export MANPATH
 
 #Add pip3 install folder to PATH
-PATH=~/Library/Python/3.6/bin/:$PATH #for software installed via pip (aws cli)
+#TODO get Python 3.6 and Python 2.7 sorted out correctly
+#PATH=~/Library/Python/3.6/bin/:$PATH #for software installed via pip (aws cli)
 
 #use php@7.1 instead of php56
 export PATH="/usr/local/opt/php@7.1/bin:$PATH"
