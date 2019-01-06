@@ -96,6 +96,10 @@ com! ToggleLineNumbers :set relativenumber!
 com! MakeExecuteable :call setfperm(expand('%:p'), "rwxrwxrw-")
 com! Bash :!./%
 com! AnsiblePlaybookCheck :!ansible-playbook % --check
+com! Cfn :call SetupForCloudformation()
+com! CfnValidate :!cfn-validator validate -f %
+com! CfnLint :!cfn-lint %
+com! CfnNag :!cfn_nag_scan --input-path %
 com! ProvideMysqlPw :call ProvideHashedMysqlPassword()
 com! -nargs=1 MakePasswd :call MakePassword(<q-args>)
 com! -nargs=1 Pwgen :call GenPassword(<q-args>)
@@ -110,6 +114,12 @@ com! Term :call OpenTerminal()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SELF DEFINED FUNCTIONS                            "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! SetupForCloudformation()
+    :setlocal filetype=cloudformation
+    :set syntax=yaml
+    :set foldmethod=indent
+endfunction
+
 function! OpenTerminal()
     :vs|:term ++curwin
 endfunction
@@ -256,17 +266,18 @@ let g:tagbar_type_yaml = {
 \ }
 
 
-"ClOUDFORMATION (JSON)
+"ClOUDFORMATION (YAML)
 "let g:tagbar_silent=1 "disable infos in statusbar
 let g:tagbar_type_cloudformation = {
-    \ 'ctagstype' : 'json',
-    \ 'ctagsargs' : '-f- --excmd=number --fields=nksSa',
+    \ 'ctagstype' : 'cloudformation',
     \ 'kinds' : [
-        \ 'd:Description',
-        \ 'c:Cloudformation'
+        \ 's:Section',
+        \ 'r:Resource',
+        \ 't:Type',
     \ ],
     \ 'sort' : 0
 \ }
+let g:tagbar_foldlevel = 0
 
 "LATEX
 let tlist_tex_settings = 'latex;l:labels;s:sections;t:subsections;u:subsubsections'
