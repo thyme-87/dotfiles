@@ -95,3 +95,4 @@ function _completeSSHHosts {
 #this is a dirty workaround to provide both: autocompletion via fzf and custom autocompletion for ssh
 complete -F _fzf_complete_ssh -o default -o bashdefault -F _completeSSHHosts ssh
 complete -F _completeSSHHosts -o default -b bashdefault scp
+complete -C aws_completer aws #use command completion for bash
