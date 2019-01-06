@@ -243,6 +243,8 @@ augroup END
 "                 SETTINGS FOR SPECIFIC FILETYPES                   "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Ansible YAML
+let g:ansible_unindent_after_newline = 1
+"let g:ansible_no_indents = 1
 let g:tagbar_type_ansible = {
             \ 'ctagstype' : 'ansible',
             \ 'kinds' : [
@@ -252,7 +254,7 @@ let g:tagbar_type_ansible = {
             \ 'sort' : 0
         \}
 
-au BufNewFile,BufRead *.yml set filetype=ansible syntax=yaml
+au BufNewFile,BufRead *.yml set filetype=ansible syntax=yaml foldmethod=indent
 
 "YML #NOT WORKING?
 let g:tagbar_type_yaml = {
