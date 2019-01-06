@@ -371,8 +371,8 @@ let g:ale_sign_warning = '⌕☞'
 let g:ale_echo_msg_error_str = 'Error'
 let g:ale_echo_msg_warning_str  = 'Warning'
 let g:ale_echo_msg_info_str = 'Info'
-nmap <silent> <leader>] <Plug>(ale_previous_wrap)
-nmap <silent> <leader>[ <Plug>(ale_next_wrap)
+nmap <silent> <localleader>m <Plug>(ale_previous_wrap)
+nmap <silent> <localleader>n <Plug>(ale_next_wrap)
 
 " GITGUTTER
 set updatetime=250  "set interval in which gitgutter is updated
