@@ -103,6 +103,7 @@ com! CfnNag :!cfn_nag_scan --input-path %
 com! ProvideMysqlPw :call ProvideHashedMysqlPassword()
 com! -nargs=1 MakePasswd :call MakePassword(<q-args>)
 com! -nargs=1 Pwgen :call GenPassword(<q-args>)
+com! -nargs=+ VaultPasswd :call VaultStringWithID(<q-args>)
 
 "com! -nargs=1 Voc :silent !coproc voc <q-args>
 com! -nargs=1 Voc :call WriteVocToDictionary(<q-args>)
