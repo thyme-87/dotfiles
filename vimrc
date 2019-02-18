@@ -102,6 +102,7 @@ com! Cfn :call SetupForCloudformation()
 com! CfnValidate :!cfn-validator validate -f %
 com! CfnLint :!cfn-lint %
 com! CfnNag :!cfn_nag_scan --input-path %
+com! Vimrc :tabedit ~/.vimrc
 com! ProvideMysqlPw :call ProvideHashedMysqlPassword()
 com! -nargs=1 MakePasswd :call MakePassword(<q-args>)
 com! -nargs=1 Pwgen :call GenPassword(<q-args>)
