@@ -1,0 +1,10 @@
+snippet RSC
+#
+# ${1:ResourceDescription}
+#
+  ${2:ResourceName}:
+    Type: AWS::${3:ResourceType}
+	Properties:
+	  ${4:PropertyKey}: ${5:PropertyValue}
+
+endsnippet

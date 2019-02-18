@@ -1,0 +1,53 @@
+snippet plugin_boilerplate
+#!/usr/bin/python
+
+ANSIBLE_METADATA = {
+	'metadata_version': '0.1'
+	'status': ['preview'],
+	'supported_by': 'community'
+}
+
+DOCUMENTATION = '''
+---
+module: ${1:MODULENAME}
+
+short_description: ${2:SHORTDESCRIPTION}
+
+description:
+	- "${3}"
+
+options:
+	${4:OPTION1}:
+		description:
+		- ${5:DESCRIPTION}:
+		required: ${6:YES/NO}
+author:
+	- @thyme-87
+'''
+
+EXAMPLES = '''
+# ${7:SHORT_EXPLANATION}
+	- name: "${8:DESCRIPTION}"
+	  ${1:MODULENAME}:
+		${9:OPTION}: ${10:VALUE}
+'''
+
+RETURN = '''
+original_message:
+	description: The original name param that was passed in
+	type: str
+message:
+	description: The output message that the module generated
+'''
+
+from ansible.module_utils.basic import AnsibleModule
+
+def run_module():
+
+def main():
+	run_module()
+
+if __name__ == '__main__':
+	main()
+
+endsnippet

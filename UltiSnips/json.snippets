@@ -1,0 +1,30 @@
+snippet policy-body
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "${1:DescriptionInCamelCase}",
+			"Effect": "${2:Effect}",
+			"Action": [
+				"${3:Action}",
+			],
+			"Resource": [
+			"${4:Resource}"
+			]
+		}
+	]
+}
+endsnippet
+
+snippet policy-statement
+		{
+			"Sid": "${1:DescriptionInCamelCase}",
+			"Effect": "${2:Effect}",
+			"Action": [ 
+			"${3:ActionType}"
+			],
+			"Resource": [
+			"${4:Resource}"
+			]
+		}
+endsnippet
