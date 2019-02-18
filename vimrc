@@ -329,18 +329,28 @@ let g:tagbar_type_php = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                  SETTINGS FOR SPECIFIC PLUGINS                    "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"VIM ultisnips 2019-01-14
+let g:UltiSnipsListSnippets="<c-s>"
+let g:UltiSnipsExpandTrigger="<c-k>"
+let g:UltiSnipsJumpForwardTrigger="<c-n>"
+let g:UltiSnipsJumpBackwardTrigger="<c-m>"
+let g:UltiSnipsSnippetsDir='~/.vim/ultisnips' "TODO this needs documentation see https://github.com/SirVer/ultisnips/issues/512#issuecomment-348404673
+let g:UltiSnipsSnippetDirectories=["ultisnips"]
+
+let g:UltiSnipsEditSplit="vertical"
+
 "VIM neosnippet 2018-10-02
-let g:neosnippet#snippets_directory="~/dotfiles/vim/snippets"
-let g:neosnippet#disable_runtime_snippets= {
-            \ '-' : 1,
-            \ }
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_or_jump)
-let g:neosnippet#enable_conceal_markers=0
-if has('conceal')
-    set conceallevel=2 concealcursor=niv
-endif
+"let g:neosnippet#snippets_directory="~/dotfiles/vim/snippets"
+"let g:neosnippet#disable_runtime_snippets= {
+"            \ '-' : 1,
+"            \ }
+"imap <C-k> <Plug>(neosnippet_expand_or_jump)
+"smap <C-k> <Plug>(neosnippet_expand_or_jump)
+"xmap <C-k> <Plug>(neosnippet_expand_or_jump)
+"let g:neosnippet#enable_conceal_markers=0
+"if has('conceal')
+"    set conceallevel=2 concealcursor=niv
+"endif
 
 "VIM youcompleteme
 "add preview for preview scratchpad
@@ -455,8 +465,11 @@ Plugin 'VundleVim/Vundle.vim'
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
 
+" [2019-01-14] all ultisnips to evaluate against neosnippet
+Plugin 'SirVer/ultisnips'
+
 " [2018-10-01] add neosnippet to finally get snippets working
-Plugin 'Shougo/neosnippet.vim'
+"Plugin 'Shougo/neosnippet.vim'
 
 " [2017-12-14] add basic fzf support so that the command works as expected
 Plugin 'junegunn/fzf'
