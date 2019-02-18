@@ -1,2 +1,10 @@
 #!/bin/bash
+set -o history
+
+#Usage:
+# mk-vaulted-pw [secret] [vaultId] [vaultPassword]
+
 vault-password $1 $2 $3 | tail -n +2 | head -n -1 
+
+
+set +o history
