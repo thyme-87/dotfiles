@@ -47,6 +47,8 @@ set noshowmode      "only works when it is at the bottom of the .vimrc - i have 
 
 set timeoutlen=800  "set mapping delays
 set ttimeoutlen=0   "set keycode delays
+set splitbelow      "open new splits below
+set splitright      "open new splits right
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                       COMPATIBILITY
@@ -79,7 +81,7 @@ nnoremap <c-l> :tabnext<CR>
 nnoremap <F12> :NERDTreeToggle<CR>          "<F12> to toggle Nerdtree
 nnoremap <F11> :!detex % \| wc -w<CR>       "<F11> for simple wordcount
 nnoremap <silent> <Leader>t :TagbarToggle<CR>
-nnoremap <silent> <c-t> :call OpenTerminal()<CR>
+nnoremap <silent> <Leader>T :term ++rows=10<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SELF DEFINED COMMANDS                             "
@@ -111,7 +113,8 @@ com! W3m :!w3m %
 "com! ReadHtml :%!w3m %
 com! HtmlParse :call ParseHtml()
 com! ShowPath :call ShowPath()
-com! Term :call OpenTerminal()
+com! SplitTerm :term ++rows=12 "Remember that <ctrl-w>N enters visual mode
+com! Vterm :call OpenTerminal()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SELF DEFINED FUNCTIONS                            "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
