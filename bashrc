@@ -34,7 +34,8 @@ alias awsprofile='__set_aws_profile'
 complete -F __complete_aws_profile awsprofile
 
 # make ls use colors automatically
-alias ls='ls -G'
+alias ls='ls --color=auto'
+alias grep='grep --color'
 #-------------- ALIAS END -----------------
 
 
