@@ -14,6 +14,7 @@ alias ruby-local='PATH=./bin:$PATH'
 alias lookup="fzf --preview 'highlight -O ansi -l {}'"
 alias vimup="vim \$(lookup)"
 alias aws_list_instance_names="aws ec2 describe-instances | jq '.[][].Instances[].Tags[] | {Instance_Name: select(.Key==\"Name\").Value}'"
+alias cleanup_containers="docker rm -v $(docker ps -aq -f status=exited)"
 
 
 function __set_aws_profile {
