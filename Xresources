@@ -90,10 +90,15 @@ Xft.autohint:       true
 
 !New to make vim-airline look good :)
 !URxvt*font: xft:Droid Sans Mono for Powerline-11
-URxvt*font:             xft:Roboto Mono for Powerline:style=Regular:size=11:antialias=true:hinting=false
-URxvt*boldFont:         xft:Roboto Mono for Powerline:style=Bold:size=11:antialias=true:hinting=false
-URxvt*italicFont:       xft:Roboto Mono for Powerline:style=Italic:size=11:antialias=true:hinting=false
-URxvt*bolditalicFont:   xft:Roboto Mono for Powerline:style=Bold Italic:size=11:antialias=true:hinting=false
+!URxvt*font:             xft:Roboto Mono for Powerline:style=Regular:size=11:antialias=true:hinting=false
+!URxvt*boldFont:         xft:Roboto Mono for Powerline:style=Bold:size=11:antialias=true:hinting=false
+!URxvt*italicFont:       xft:Roboto Mono for Powerline:style=Italic:size=11:antialias=true:hinting=false
+!URxvt*bolditalicFont:   xft:Roboto Mono for Powerline:style=Bold Italic:size=11:antialias=true:hinting=false
+!
+URxvt*font: xft:Roboto Mono Nerd Font:size=14:style=Regular
+URxvt*boldFont: xft:Roboto Mono Nerd Font:size=14:style=Bold
+URxvt*italicFont: xft:Roboto Mono Nerd Font:size=14:style=Italic
+URxvt*boldItalicFont: xft:Roboto Mono Nerd Font:size=14:style=Bold Italic
 
 !URxvt.letterSpace: -1
 
