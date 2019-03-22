@@ -109,5 +109,5 @@ URxvt*.urlLauncher: chromium
 URxvt*urgentOnBell: false
 URxvt*visualBell: true
 
-! clipboard
-URxvt*perl-ext-common: selection-to-clipboard
+! clipboard, resize-font
+URxvt*perl-ext-common: default,selection-to-clipboard,resize-font,
