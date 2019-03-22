@@ -24,4 +24,5 @@
     viewbranches = branch -avv
     rmbranch    = branch -D
     st = status
+    br = branch -av
     checkoutbranch = "!sh -c \"git checkout -b $1 --track origin/$1\""
