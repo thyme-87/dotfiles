@@ -464,6 +464,8 @@ Plugin 'VundleVim/Vundle.vim'
 " in a FIXED syntax that informs about the date, name, purpose. It CAN be
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
+" [2019-03-16] tern for vim for javascript
+Plugin 'ternjs/tern_for_vim'
 
 " [2019-01-14] all ultisnips to evaluate against neosnippet
 Plugin 'SirVer/ultisnips'
