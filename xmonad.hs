@@ -139,7 +139,7 @@ myConfig = def {
 
     scratchpad = scratchpadSpawnActionTerminal myTerminal
 
-myTerminal              = "urxvt"
+myTerminal              = "urxvt -ls"
 myModMask               = mod4Mask -- [super]
 myBorderWidth           = 1
 myNormalBorderColor     = "#e0e0e0"
