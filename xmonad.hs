@@ -128,6 +128,7 @@ myConfig = def {
         , ((0, 0x1008FF21), spawn "systemctl suspend")
         , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
         , ((0, xK_Print), spawn "scrot")
+        , ((controlMask, xK_F3), spawn "flameshot gui")
         , ((mod1Mask.|. shiftMask, xK_l), spawn "playerctl next")
         , ((mod1Mask.|. shiftMask, xK_h), spawn "playerctl previous")
         , ((mod1Mask.|. shiftMask, xK_space), spawn "playerctl play-pause")
