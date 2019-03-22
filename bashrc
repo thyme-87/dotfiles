@@ -50,7 +50,7 @@ export GPG_TTY=`tty` #to make gpg work on osx; see https://github.com/deepmind/k
 PATH=/usr/local/bin:$PATH
 PATH=$PATH:~/dotfiles/bin
 PATH=$PATH:~/bin #local bin for personal shell scripts
-PATH=$PATH:~/Library/Python/3.6/bin/ #for software installed via pip (aws cli)
+PATH=$PATH:/home/timon.schroeder/.cargo/bin
 
 export PATH
 
