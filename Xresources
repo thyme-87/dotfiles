@@ -78,22 +78,18 @@ URxvt*.depth: 32
 ! URxvt*font: xft:Bitstream Vera Sans Mono:pixelsize=12
 !
 ! Some general settings for xft:
+Xft.size:           14
 Xft.dpi:            96
 Xft.antialias:      true
 Xft.rgba:           rgb
-Xft.hinting:        true 
+Xft.hinting:        false
 Xft.hintstyle:      hintfull
-Xft.autohint:       true
-!
-! Old standard Droid Sans Mono
-! URxvt*font: xft:Droid Sans Mono-11
+Xft.autohint:	    false
 
-!New to make vim-airline look good :)
-!URxvt*font: xft:Droid Sans Mono for Powerline-11
-URxvt*font:             xft:Roboto Mono for Powerline:style=Regular:size=11:antialias=true:hinting=false
-URxvt*boldFont:         xft:Roboto Mono for Powerline:style=Bold:size=11:antialias=true:hinting=false
-URxvt*italicFont:       xft:Roboto Mono for Powerline:style=Italic:size=11:antialias=true:hinting=false
-URxvt*bolditalicFont:   xft:Roboto Mono for Powerline:style=Bold Italic:size=11:antialias=true:hinting=false
+URxvt*font:             xft:Roboto Mono Nerd Font Mono:style=Regular:size=16:hinting=false
+URxvt*boldFont:         xft:Roboto Mono Nerd Font Mono:style=Bold:size=16:hinting=false
+Rxvt*italicFont:        xft:Roboto Mono Nerd Font Mono:style=Italic:size=16:hinting=false
+Rxvt*boldItalicFont:    xft:Roboto Mono Nerd Font Mono:style=Bold Italic:size=16:hinting=false
 
 !URxvt.letterSpace: -1
 
