@@ -105,4 +105,4 @@ URxvt*urgentOnBell: false
 URxvt*visualBell: true
 
 ! clipboard
-URxvt*perl-ext-common: selection-to-clipboard
+URxvt*perl-ext-common: selection-to-clipboard,default,resize-font
