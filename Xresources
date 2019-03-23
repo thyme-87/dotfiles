@@ -5,7 +5,7 @@ URxvt*.scrollBar: false
 
 URxvt*.internalBorder: 0
 
-URxvt*.background: #313131
+URxvt*.background: [85]#313131
 !URxvt*.foreground: #e0e0e0 
 !URxvt*.transparent: true !fake transparency
 !URxvt*.shading: 20 !fake transparency
