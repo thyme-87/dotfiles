@@ -46,7 +46,7 @@ then
         done
         #END Block to get MFA-TOKEN
     else
-        echo "Could not find mfa_serial for profile ${AWS_PROFILE} in ${AWS_CONFIG_FILE}"
+        echo "Could not find mfa_serial for profile <${AWS_PROFILE}> in <${AWS_CONFIG_FILE}>"
         echo 'Try "aws iam list-mfa-devices" to check if an mfa-device is configured for your account/profile and you have read access for the mfa-device'
         unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
         return 1
