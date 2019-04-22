@@ -10,10 +10,8 @@ AWS_CONFIG_FILE="${HOME}/.aws/config"
 MFA_TOKEN=""
 MFA_TOKEN_ID=""
 
-trap cleanup EXIT
-function cleanup() {
-    stty echo
-}
+#trap ctrl-c, restore tty and quit
+trap 'stty echo && trap - INT && return 1' INT
 
 if [[ -f "${AWS_CONFIG_FILE}" ]]
 then
