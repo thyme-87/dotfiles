@@ -13,6 +13,14 @@ MFA_TOKEN_ID=""
 #trap ctrl-c, restore tty and quit
 trap 'stty echo && trap - INT && return 1' INT
 
+if [[ ! -z $AWS_PROFILE ]]
+then
+    echo "Initiating session for role/profile <${AWS_PROFILE}>"
+else
+    echo "\$AWS_PROFILE not set."
+    return 1
+fi
+
 if [[ -f "${AWS_CONFIG_FILE}" ]]
 then
     MFA_TOKEN_ID=$(sed -nr "/^\[profile ${AWS_PROFILE}\]/ { :l /^mfa_serial[ ]*=/ { s/.*=[ ]*//; p; q;}; n; b l;}" ${AWS_CONFIG_FILE})
