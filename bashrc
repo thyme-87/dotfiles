@@ -10,8 +10,6 @@
 alias tor='~/tor-browser_en-US/start-tor-browser --detach'
 alias bopdf='~/Dropbox/BerlinOnline/4_other/bo_pdf/bopdf.sh'
 alias mychromium='setsid /usr/bin/chromium >& /dev/null &'
-alias aws-get-session='source ~/dotfiles/bin/aws-get-session-token'
-alias aws-unset='unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN'
 alias lookup="fzf --preview 'highlight -O ansi -l {}'"
 alias vimup="vim \$(lookup)"
 alias aws_list_instance_names="aws ec2 describe-instances | jq '.[][].Instances[].Tags[] | {Instance_Name: select(.Key==\"Name\").Value}'"
@@ -93,7 +91,7 @@ function _completeSSHHosts {
 	return 0
 }
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f ~/dotfiles/aws-get-session-token.sh ] && source ~/dotfiles/aws-get-session-token.sh
 
 #this is a dirty workaround to provide both: autocompletion via fzf and custom autocompletion for ssh
 complete -F _fzf_complete_ssh -o default -o bashdefault -F _completeSSHHosts ssh

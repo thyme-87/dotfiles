@@ -12,6 +12,9 @@
 # --help
 # aws-get-session-token 123456 [session duration in seconds]
 
+alias aws-get-session='__aws_get_session_token'
+alias aws-unset='unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN'
+
 function __aws_get_session_token {
     local AWS_CONFIG_FILE="${HOME}/.aws/config"
     local MFA_TOKEN=""
