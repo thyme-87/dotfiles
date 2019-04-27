@@ -10,6 +10,11 @@
 alias tor='~/tor-browser_en-US/start-tor-browser --detach'
 alias bopdf='~/Dropbox/BerlinOnline/4_other/bo_pdf/bopdf.sh'
 alias mychromium='setsid /usr/bin/chromium >& /dev/null &'
+alias b64decode='__base64_decode'
+
+function __base64_decode {
+    echo $(base64 --decode <<< "${1}")
+}
 alias lookup="fzf --preview 'highlight -O ansi -l {}'"
 alias vimup="vim \$(lookup)"
 alias aws_list_instance_names="aws ec2 describe-instances | jq '.[][].Instances[].Tags[] | {Instance_Name: select(.Key==\"Name\").Value}'"
