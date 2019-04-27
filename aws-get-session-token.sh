@@ -87,10 +87,14 @@ function __aws_get_session_token {
         ACCESS_KEY_ID=$(awk '/AccessKeyId/{print $2}' <<< "${RESULT}")
         SECRET_ACCESS_KEY=$(awk '/SecretAccessKey/{print $2}' <<< "${RESULT}")
         SESSION_TOKEN=$(awk '/SessionToken/{print $2}' <<< "${RESULT}")
-        TOKEN_EXPIRATION=$(awk '/Expiration/{print $2}' <<< "${RESULT}")
+        TOKEN_EXPIRATION_DATE=$(awk '/Expiration/{print $2}' <<< "${RESULT}")
+
+        TOKEN_EXPIRATION_DATE=$(sed -e 's/T/ /g' -e 's/Z//g' -e 's/+//g' <<< $TOKEN_EXPIRATION_DATE)
+
+        SESSION_DURATION=$(( ($(date -d "${TOKEN_EXPIRATION_DATE}" +"%s")-$(date +"%s"))/60 ))
 
         #clear
-        echo "Success! Session will expire at: $TOKEN_EXPIRATION"
+        echo "Success! Session will expire at: $TOKEN_EXPIRATION_DATE (in $SESSION_DURATION minutes)"
 
         #export credentials to environment
         export AWS_ACCESS_KEY_ID="${ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${SECRET_ACCESS_KEY}" AWS_SESSION_TOKEN="${SESSION_TOKEN}"
