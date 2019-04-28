@@ -69,11 +69,12 @@ function __aws_get_session_token {
     #unset existing environment variables to make sure that we initiate a new session, regardless if there is an existing (valid) session
     [[ -z "${AWS_SECRET_ACCESS_KEY_ID}" || "${AWS_ACCESS_KEY_ID}" || "${AWS_SESSION_TOKEN}" ]] && unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
 
-
-    if [[ ! -z "$2" ]] && [[ "$2" =~ ^[0-9]{3,}$ ]] && [[ "$2" > 899 ]]
+    if [[ ! -z "$2" ]] && [[ "$2" =~ ^[0-9]{2,}$ ]] && [[ "$2" > 15 ]]
         then
-            echo "Requesting temporary credentials... (session duration: ${2} seconds)"
-            RESULT=$(aws sts get-session-token --serial-number $MFA_TOKEN_ID --token-code $MFA_TOKEN --duration-seconds $2)
+            DURATION=$(expr $2 \* 60)
+            NOW=$(date +%s)
+            echo "Requesting temporary credentials... (session duration: ${2} minutes)"
+            RESULT=$(aws sts get-session-token --serial-number $MFA_TOKEN_ID --token-code $MFA_TOKEN --duration-seconds $DURATION)
         else
             echo "Requesting temporary credentials..."
             RESULT=$(aws sts get-session-token --serial-number $MFA_TOKEN_ID --token-code $MFA_TOKEN)
@@ -89,9 +90,7 @@ function __aws_get_session_token {
         SESSION_TOKEN=$(awk '/SessionToken/{print $2}' <<< "${RESULT}")
         TOKEN_EXPIRATION_DATE=$(awk '/Expiration/{print $2}' <<< "${RESULT}")
 
-        TOKEN_EXPIRATION_DATE=$(sed -e 's/T/ /g' -e 's/Z//g' -e 's/+//g' <<< $TOKEN_EXPIRATION_DATE)
-
-        SESSION_DURATION=$(( ($(date -d "${TOKEN_EXPIRATION_DATE}" +"%s")-$(date +"%s"))/60 ))
+        SESSION_DURATION=$(( ($(date -d "${TOKEN_EXPIRATION_DATE}" +%s)-$NOW)/60 ))
 
         #clear
         echo "Success! Session will expire at: $TOKEN_EXPIRATION_DATE (in $SESSION_DURATION minutes)"
