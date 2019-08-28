@@ -56,8 +56,8 @@ PS1='\[\033[0;32m\]\[\033[0m\033[1m\]\u\[\033[1;34m\]@\[\033[1;34m\]\h \w \[\033
 
 #TERM='rxvt-unicode'
 #try to  set term for tmux:
-TERM='xterm-256color'
-COLORTERM='xrv-unicode-256color'
+#TERM='xterm-256color'
+COLORTERM='rxvt-unicode-256color'
 
 
 # find running ssh-agent and use it
