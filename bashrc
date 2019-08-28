@@ -26,6 +26,10 @@ alias lookup="fzf --preview 'highlight -O ansi -l {}'"
 alias vimup="vim \$(lookup)"
 alias aws_list_instance_names="aws ec2 describe-instances | jq '.[][].Instances[].Tags[] | {Instance_Name: select(.Key==\"Name\").Value}'"
 
+# make ls use colors automatically
+alias ls='ls --color'
+alias grep='grep --color'
+#-------------- ALIAS END -----------------
 
 function __set_aws_profile {
     export AWS_PROFILE=$1
