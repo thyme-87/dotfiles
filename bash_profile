@@ -16,6 +16,14 @@ PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:$PATH
 PATH=$PATH:~/dotfiles/bin
 export PATH
 
+#########################
+# START CUSTOM ENV VARS #
+#########################
+export TIME_TRACKING_LOGFILE=~/.task.log
+#########################
+#  END CUSTOM ENV VARS  #
+#########################
+
 # make sure that .bashrc is also executed
 source  ~/.bashrc
 
