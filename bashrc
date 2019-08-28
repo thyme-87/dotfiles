@@ -14,6 +14,7 @@ alias weather='weather-report eddb'
 alias csv-view='__csv_view'
 alias b64decode='__base64_decode'
 
+#convenience for fzf
 alias lookup="fzf --preview 'highlight -O ansi -l {}'"
 alias vimup="vim \$(lookup)"
 
@@ -65,6 +66,8 @@ COLORTERM='xrv-unicode-256color'
 source ~/dotfiles/bin/ssh-find-agent -a || eval $(ssh-agent) > /dev/null    # automatically start an ssh-agent if none is found
 set_ssh_agent_socket
 
+
+#TODO is this for osx?
 source ~/dotfiles/bin/ls-colors
 
 ##autocomplete ssh
