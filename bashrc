@@ -44,10 +44,13 @@ export LC_ALL=en_US.UTF-8
 #PATH=$PATH:~/bin #local bin for personal shell scripts
 export PATH
 
+#indication via ~/dotfiles/bingit-prompt.sh:
+GIT_PS1_SHOWDIRTYSTATE=1
+
 #PS1='[\u@\h \W]\$ ' #old prompt config
 # evaluate how to tweak this:
-#PS1='\[\033[0;32m\]\[\033[0m\033[1m\]\u\[\033[1;34m\]@\[\033[1;34m\]\h \w\[\033[0;31m\]$(__git_ps1)\n\[\033[0;32m\]└─\[\033[0m\033[0m\] \$\[\033[0;31m\]$(__awsenv_ps1 2>/dev/null)\[\033[0m\033[0m\]:\[\033[0m\] '
-PS1='\[\033[0;32m\]\[\033[0m\033[1m\]\u\[\033[1;34m\]@\[\033[1;34m\]\h \w\[\033[1;31m\]$(__git_ps1)\n\[\033[0;32m\]└─\[\033[0m\033[0m\] \[\033[0;31m\](\[\033[0;45m\]$AWS_PROFILE\[\033[0;31m\])\[\033[0m\033[0m\]\$:\[\033[0m\] '
+#PS1='\[\033[0;32m\]\[\033[0m\033[1m\]\u\[\033[1;34m\]@\[\033[1;34m\]\h \w\[\033[0;31m\]\]$(__git_ps1)\n\[\033[0;32m\]└─\[\033[0m\033[0m\] \$\[\033[0;31m\]$(__awsenv_ps1 2>/dev/null)\[\033[0m\033[0m\]:\[\033[0m\] '
+PS1='\[\033[0;32m\]\[\033[0m\033[1m\]\u\[\033[1;34m\]@\[\033[1;34m\]\h \w \[\033[0;41m\]\]$(__git_ps1 "%s")\[\033[0;31m\]\]\n\[\033[0;32m\]└─\[\033[0m\033[0m\] \[\033[0;31m\](\[\033[0;41m\]$AWS_PROFILE\[\033[0;31m\])\[\033[0m\033[0m\]\$:\[\033[0m\] '
 #export PS1
 
 #TERM='rxvt-unicode'
@@ -86,9 +89,19 @@ function _completeSSHHosts {
 	return 0
 }
 
+#[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_DEFAULT_OPTS='
+    --color fg:252,bg:#2a2a2a,hl:67,fg+:252,bg+:235,hl+:81
+    --color info:144,prompt:161,spinner:135,pointer:135,marker:118
+'
 [ -f ~/dotfiles/aws-get-session-token.sh ] && source ~/dotfiles/aws-get-session-token.sh #TODO rename to aws-functions.sh
+[ -f /usr/share/fzf/completion.bash ] && source /usr/share/fzf/completion.bash
+[ -f /usr/share/fzf/key-bindings.bash ] && source /usr/share/fzf/key-bindings.bash
+[ -f /usr/share/bash-completion/completions/git ] && source /usr/share/bash-completion/completions/git
+[ -f /usr/share/bash-completion/completions/docker ] && source /usr/share/bash-completion/completions/docker
+
 
 #this is a dirty workaround to provide both: autocompletion via fzf and custom autocompletion for ssh
 complete -F _fzf_complete_ssh -o default -o bashdefault -F _completeSSHHosts ssh
 complete -F _completeSSHHosts -o default -b bashdefault scp
-complete -C aws_completer aws #use command completion for bash
+complete -C /usr/bin/aws_completer aws #use command completion for bash
