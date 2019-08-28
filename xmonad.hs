@@ -122,6 +122,8 @@ myConfig = def {
         , ((mod4Mask            , xK_m), sendMessage ToggleStruts)
         , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +1%")
         , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ -1%")
+        , ((mod1Mask.|. shiftMask, xK_j), spawn "pactl set-sink-volume @DEFAULT_SINK@ -1%")
+        , ((mod1Mask.|. shiftMask, xK_k), spawn "pactl set-sink-volume @DEFAULT_SINK@ +1%")
         , ((0, xF86XK_AudioMute), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
         , ((controlMask .|. mod1Mask, xK_t), spawn myTerminal)
         , ((mod1Mask .|. shiftMask, xK_comma), scratchpad) --urxvt quake-style
@@ -147,7 +149,7 @@ myConfig = def {
 
     scratchpad = scratchpadSpawnActionTerminal myTerminal
 
-myTerminal              = "urxvt"
+myTerminal              = "urxvt -ls" --spawn urxvt as a login_shell and parse ~/.bash_profile
 myModMask               = mod4Mask -- [super]
 myBorderWidth           = 1
 myNormalBorderColor     = "#e0e0e0"
