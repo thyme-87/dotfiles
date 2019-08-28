@@ -133,9 +133,9 @@ myConfig = def {
         , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
         , ((controlMask, xK_F3), spawn "flameshot gui")
         , ((0, xK_Print), spawn "scrot")
-        , ((mod1Mask.|. shiftMask, xK_l), spawn "playerctl next")
-        , ((mod1Mask.|. shiftMask, xK_h), spawn "playerctl previous")
-        , ((mod1Mask.|. shiftMask, xK_space), spawn "playerctl play-pause")
+        , ((mod1Mask .|. shiftMask, xK_l), spawn "playerctl next")
+        , ((mod1Mask .|. shiftMask, xK_h), spawn "playerctl previous")
+        , ((mod1Mask .|. shiftMask, xK_space), spawn "playerctl play-pause")
         , ((0, xK_Insert), pasteSelection) -- there is a problem here, as it seems to escape some characters
         ]
         ++
