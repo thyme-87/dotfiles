@@ -107,7 +107,7 @@ function _completeSSHHosts {
 	return 0
 }
 
-[ -f ~/dotfiles/aws-get-session-token.sh ] && source ~/dotfiles/aws-get-session-token.sh
+[ -f ~/dotfiles/aws-get-session-token.sh ] && source ~/dotfiles/aws-get-session-token.sh #TODO rename to aws-functions.sh
 
 #this is a dirty workaround to provide both: autocompletion via fzf and custom autocompletion for ssh
 complete -F _fzf_complete_ssh -o default -o bashdefault -F _completeSSHHosts ssh
