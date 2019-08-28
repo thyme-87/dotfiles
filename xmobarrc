@@ -24,13 +24,23 @@ Config {
         , pickBroadest      =   True    -- choose display dynamically by width (multi-monitor)
         , persistent        =   True    -- enable/disable hiding (True = disabled)
 
+        -- LAYOUT
+        , sepChar   = "%"   -- delineator between plugin and text
+        , alignSep  = "}{"  -- separator between left-right alignment
+
+        --for now, deactivate the weather plugin, as it is not working (see below)
+        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ <fc=#e0e0e0>Vol: </fc>%volume%  | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
+
+        --template with build in plugin for weather
+        --, template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ <fc=#e0e0e0>volume</fc>%volume%   %EDDT% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
+        --template with custom command for weather
+        --, template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %volume%   %weather% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
+
         -- PLUGINS
         , commands = 
-        -- weather monitor
-        [ Run Weather "EDDT" [  "--template", "<skyCondition> | <fc=#F92672><tempC></fc>°C | <fc=#F92672><rh></fc>% | <fc=#F92672><pressure></fc> hPa"] 36000
 
         -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork    [   "--template",   "<dev>: <tx>kB/s|<rx>kB/s"
+        [ Run DynNetwork    [   "--template",   "<dev>: <tx>kB/s|<rx>kB/s"
                             ,   "--Low"     ,   "1000"        --units: kB/s
                             ,   "--High"    ,   "5000"        --units: kB/s
                             ,   "--high"    ,   "#00FFDD" 
@@ -56,7 +66,7 @@ Config {
                             ,   "--normal"  ,   "#66aa11" 
                             ,   "--low"     ,   "#00FFDD" 
                             ] 10
-        
+                          
         -- memory usage monitor
         , Run Memory        [   "--template",   "Mem: <usedratio>%"
                             ,   "--Low"     ,   "20"        --units: %
@@ -65,9 +75,8 @@ Config {
                             ,   "--normal"  ,   "#66aa11" 
                             ,   "--low"     ,   "#00FFDD" 
                             ] 10
-
         -- swap monitor
-        --, Run Swap          [] 10
+        , Run Swap          [] 10
 
         -- battery monitor
         , Run Battery       [   "--template",   "Batt: <acstatus>"
@@ -86,8 +95,8 @@ Config {
                                     , "-i"  , "<fc=#66aa11>Charged</fc>"
                             ] 50
 
-        -- time and date indicator
-        --, Run Date "<fc=#0000FF>%a %b %_d %Y %H:%M:%S</fc>" "date" 10
+        -- time and date indicator 
+        --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
         , Run Date "<fc=#66aa11>%F (%a) %T</fc>" "date" 10
 
         -- keyboard layout indicator
@@ -96,12 +105,13 @@ Config {
                             ,   ("fr",  "<fc=#3579a8>FR </fc>")
                             ,   ("es",  "<fc=#3579a8>ES </fc>")
                             ]
+        , Run ComX "pamixer" [ "--get-volume-human" ] "N/A" "volume" 10
         , Run StdinReader
-        , Run Volume "default" "Master" [ "--", "-O", "<fc=#66aa11>[on]</fc>"] 10
-
+        -- weather monitor
+        -- currently broken; see https://github.com/jaor/xmobar/issues/270
+        --, Run Weather "EDDT" [ "--template", "<skyCondition> | <fc=#F92672><tempC></fc>°C | <fc=#F92672><rh></fc>% | <fc=#F92672><pressure></fc> hPa"
+                            ] 36000
+        -- not quite ready yet
+        --, Run ComX "weather" [ "-mq" ] "N/A" "weather" 600
         ]
-        -- LAYOUT
-        , sepChar   = "%"   -- delineator between plugin and text
-        , alignSep  = "}{"  -- separator between left-right alignment
-        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %default:Master%  %EDDT% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
-        }
+    }
