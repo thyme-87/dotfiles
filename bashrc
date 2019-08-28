@@ -24,6 +24,8 @@ alias ls='ls --color'
 alias grep='grep --color'
 #-------------- ALIAS END -----------------
 
+function __base64_decode {
+    echo $(base64 --decode <<< "${1}")
 }
 
 function __csv_view {
