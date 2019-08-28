@@ -16,6 +16,7 @@ export EDITOR="$VISUAL"
 
 PATH=/Library/Tex/texbin:$PATH
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:$PATH
+PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/X11/bin:$PATH
 PATH=$PATH:~/dotfiles/bin
 export PATH
 
