@@ -1,7 +1,9 @@
 import XMonad
 import XMonad.Config.Gnome
+import XMonad.Config.Desktop
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.ManageHelpers
@@ -17,7 +19,7 @@ import XMonad.Layout.NoBorders(noBorders, smartBorders)
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.ToggleLayouts
-import XMonad.StackSet as W
+import qualified XMonad.StackSet as W
 --import XMonad.Hooks.EwmhDesktops --ambigous with fullscreenEventHook
 import Graphics.X11.ExtraTypes.XF86
 import System.IO
@@ -115,7 +117,7 @@ myConfig = def {
         , normalBorderColor     = myNormalBorderColor
         , focusedBorderColor    = myFocusedBorderColor
         } `additionalKeys`
-        [ ((mod4Mask .|. shiftMask, xK_l), spawn "physlock -ds")
+        ([ ((mod4Mask .|. shiftMask, xK_l), spawn "physlock -ds")
         , ((mod1Mask        , xK_space), spawn "/home/timon/dotfiles/bin/layout_switch")
         , ((mod4Mask            , xK_m), sendMessage ToggleStruts)
         , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +1%")
@@ -133,6 +135,13 @@ myConfig = def {
         , ((mod1Mask.|. shiftMask, xK_space), spawn "playerctl play-pause")
         , ((0, xK_Insert), pasteSelection) -- there is a problem here, as it seems to escape some characters
         ]
+        ++
+        [
+        ((m .|. mod4Mask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+        | (key, sc) <- zip [xK_w, xK_e] [1,0] --adjust to match screen order
+        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
+        ]
+        )
 
     where
 
