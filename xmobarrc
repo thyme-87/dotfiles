@@ -2,13 +2,15 @@ Config {
 
         -- APPEARANCE
         --font = "xft:RobotoMono-Regular:size=9:antialiasing=false"
-        font = "xft:Roboto Mono for Powerline:size=8:antialiasing=true"
+        --font = "xft:Roboto Mono for Powerline:size=8:antialiasing=true"
+        font = "xft:RobotoMono Nerd Font:style=Regular:size=10:antialiasing=true"
         , additionalFonts = []
         , textOffset = -1
         , iconOffset = -1
         , iconRoot = "."
         , alpha = 255
         , position = TopW L 100
+
         --font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
         , bgColor = "#272822"
         , fgColor = "#e0e0e0"
