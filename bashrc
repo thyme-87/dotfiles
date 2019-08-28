@@ -14,16 +14,9 @@ alias weather='weather-report eddb'
 alias csv-view='__csv_view'
 alias b64decode='__base64_decode'
 
-function __base64_decode {
-    echo $(base64 --decode <<< "${1}")
-}
-
-function __csv_view {
-    column -s, -t $1 | less -#2 -N -S
-}
-
 alias lookup="fzf --preview 'highlight -O ansi -l {}'"
 alias vimup="vim \$(lookup)"
+
 alias aws_list_instance_names="aws ec2 describe-instances | jq '.[][].Instances[].Tags[] | {Instance_Name: select(.Key==\"Name\").Value}'"
 
 # make ls use colors automatically
@@ -31,26 +24,11 @@ alias ls='ls --color'
 alias grep='grep --color'
 #-------------- ALIAS END -----------------
 
-function __set_aws_profile {
-    export AWS_PROFILE=$1
 }
 
-function __complete_aws_profile {
-	local currentWord=${COMP_WORDS[COMP_CWORD]}
-    AWS_PROFILES_COMPLETION_LIST=$(cat "$HOME/.aws/config" | \
-        grep --extended-regexp "\[(profile|Profile)" | \
-        sed -E "s/^\[(Profile|profile)\s+(.*)\].?*/\2/g")
-    COMPREPLY=($(compgen -W "$AWS_PROFILES_COMPLETION_LIST" "$currentWord"))
-    return 0
+function __csv_view {
+    column -s, -t $1 | less -#2 -N -S
 }
-
-alias awsprofile='__set_aws_profile'
-complete -F __complete_aws_profile awsprofile
-
-# make ls use colors automatically
-alias ls='ls -G'
-#-------------- ALIAS END -----------------
-
 
 source ~/dotfiles/bin/git-prompt.sh
 
