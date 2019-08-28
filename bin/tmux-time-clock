@@ -6,8 +6,10 @@
 
 TMUX_WINDOW_NAME=$(tmux display-message -p -F '#S;#I;#W')
 TIMESTAMP=$(date +%Y-%m-%d:%H:%M)
-LOGFILE=~/c3_time_clock.log
+#LOGFILE=${TIME_TRACKING_LOGFILE:=~/.time_tracking.log}
+LOGFILE=${TIME_TRACKING_LOGFILE:-~/.time_tracking.log}
 
 echo "$TIMESTAMP  -  $TMUX_WINDOW_NAME" >> $LOGFILE
 
-
+#FILE FORMAT:
+#TIME; TMUX_WINDOW_NAME
