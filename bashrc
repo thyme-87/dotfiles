@@ -39,6 +39,7 @@ source ~/dotfiles/bin/git-prompt.sh
 export EDITOR="vim" 
 export JAVA_HOME=/usr/bin/java
 export LC_ALL=en_US.UTF-8
+#export XDG_CURRENT_DESKTOP=GNOME
 
 
 #PATH=$PATH:~/bin #local bin for personal shell scripts
