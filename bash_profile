@@ -18,6 +18,8 @@ PATH=/Library/Tex/texbin:$PATH
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:$PATH
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/X11/bin:$PATH
 PATH=$PATH:~/dotfiles/bin
+PATH=$PATH:~/bin #local scripts
+PATH=$PATH:~/.local/bin #pip --user installed scripts
 export PATH
 
 #########################
