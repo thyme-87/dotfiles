@@ -8,6 +8,9 @@
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
+#use vi keybindings for bash
+#set -o vi
+
 #add dotfiles/bin to PATH
 #NOTE that this will not affect root!
 
