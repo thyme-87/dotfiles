@@ -9,11 +9,32 @@
 
 
 #TODO improve support for aws sts get-session-token --duration-seconds [value] (use -d [time in seconds])
+#TODO provide feedback if provided value for session duration is below 900 seconds
+#TODO find a more elegant way to provide an alias for __aws_get_session_token
+#TODO find a more elegant way to provide an alias for __set_aws_profile
+#TODO provide usage instructions with -h flag
+
 # --help
 # aws-get-session-token 123456 [session duration in seconds]
 
 alias aws-get-session='__aws_get_session_token'
 alias aws-unset='unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN'
+
+alias awsprofile='__set_aws_profile'
+complete -F __complete_aws_profile awsprofile
+
+function __set_aws_profile {
+    export AWS_PROFILE=$1
+}
+
+function __complete_aws_profile {
+	local currentWord=${COMP_WORDS[COMP_CWORD]}
+    AWS_PROFILES_COMPLETION_LIST=$(cat "$HOME/.aws/config" | \
+        grep --extended-regexp "\[(profile|Profile)" | \
+        sed -E "s/^\[(Profile|profile)\s+(.*)\].?*/\2/g")
+    COMPREPLY=($(compgen -W "$AWS_PROFILES_COMPLETION_LIST" "$currentWord"))
+    return 0
+}
 
 function __aws_get_session_token {
     local AWS_CONFIG_FILE="${HOME}/.aws/config"
@@ -69,10 +90,10 @@ function __aws_get_session_token {
     #unset existing environment variables to make sure that we initiate a new session, regardless if there is an existing (valid) session
     [[ -z "${AWS_SECRET_ACCESS_KEY_ID}" || "${AWS_ACCESS_KEY_ID}" || "${AWS_SESSION_TOKEN}" ]] && unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
 
+    NOW=$(date +%s)
     if [[ ! -z "$2" ]] && [[ "$2" =~ ^[0-9]{2,}$ ]] && [[ "$2" > 15 ]]
         then
             DURATION=$(expr $2 \* 60)
-            NOW=$(date +%s)
             echo "Requesting temporary credentials... (session duration: ${2} minutes)"
             RESULT=$(aws sts get-session-token --serial-number $MFA_TOKEN_ID --token-code $MFA_TOKEN --duration-seconds $DURATION)
         else
@@ -90,7 +111,7 @@ function __aws_get_session_token {
         SESSION_TOKEN=$(awk '/SessionToken/{print $2}' <<< "${RESULT}")
         TOKEN_EXPIRATION_DATE=$(awk '/Expiration/{print $2}' <<< "${RESULT}")
 
-        SESSION_DURATION=$(( ($(date -d "${TOKEN_EXPIRATION_DATE}" +%s)-$NOW)/60 ))
+        SESSION_DURATION=$(( ($(date -d "${TOKEN_EXPIRATION_DATE}" +%s) - $NOW) / 60 ))
 
         #clear
         echo "Success! Session will expire at: $TOKEN_EXPIRATION_DATE (in $SESSION_DURATION minutes)"
