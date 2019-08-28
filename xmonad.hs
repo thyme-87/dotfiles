@@ -131,6 +131,7 @@ myConfig = def {
         , ((0, xF86XK_Tools), spawn "systemctl suspend")
         , ((0, 0x1008FF21), spawn "systemctl suspend")
         , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
+        , ((controlMask, xK_F3), spawn "flameshot gui")
         , ((0, xK_Print), spawn "scrot")
         , ((mod1Mask.|. shiftMask, xK_l), spawn "playerctl next")
         , ((mod1Mask.|. shiftMask, xK_h), spawn "playerctl previous")
