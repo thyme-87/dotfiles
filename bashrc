@@ -13,6 +13,9 @@ alias mychromium='setsid /usr/bin/chromium >& /dev/null &'
 alias weather='weather-report eddb'
 alias csv-view='__csv_view'
 alias b64decode='__base64_decode'
+alias ll='ls -l'
+alias gnome-settings='XDG_CURRENT_DESKTOP=GNOME gnome-control-center'
+alias gitp='git push'
 
 #convenience for fzf
 alias lookup="fzf --preview 'highlight -O ansi -l {}'"
