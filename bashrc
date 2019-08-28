@@ -41,6 +41,7 @@ export JAVA_HOME=/usr/bin/java
 export LC_ALL=en_US.UTF-8
 
 
+#PATH=$PATH:~/bin #local bin for personal shell scripts
 export PATH
 
 #PS1='[\u@\h \W]\$ ' #old prompt config
