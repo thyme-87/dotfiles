@@ -2,7 +2,7 @@ Config {
 
         -- APPEARANCE
         --font = "xft:RobotoMono-Regular:size=9:antialiasing=false"
-        font = "xft:Roboto Mono for Powerline:size=8:antialiasing=true"
+        font = "xft:RobotoMono Nerd Font:size=11:antialiasing=true"
         , additionalFonts = []
         , textOffset = -1
         , iconOffset = -1
@@ -15,6 +15,10 @@ Config {
         , border = TopB 0
         , borderColor = "#272822"
 
+        -- LAYOUT
+        , sepChar   = "%"   -- delineator between plugin and text
+        , alignSep  = "}{"  -- separator between left-right alignment
+        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
 
         -- GENERAL BEHAVIOR
         , lowerOnStart      =   True    -- send to bottom of window stack on start
@@ -26,11 +30,8 @@ Config {
 
         -- PLUGINS
         , commands = 
-        -- weather monitor
-        [ Run Weather "EDDT" [  "--template", "<skyCondition> | <fc=#F92672><tempC></fc>°C | <fc=#F92672><rh></fc>% | <fc=#F92672><pressure></fc> hPa"] 36000
-
         -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork    [   "--template",   "<dev>: <tx>kB/s|<rx>kB/s"
+        [ Run DynNetwork    [   "--template",   "<dev>: <tx>kB/s|<rx>kB/s"
                             ,   "--Low"     ,   "1000"        --units: kB/s
                             ,   "--High"    ,   "5000"        --units: kB/s
                             ,   "--high"    ,   "#00FFDD" 
@@ -97,11 +98,7 @@ Config {
                             ,   ("es",  "<fc=#3579a8>ES </fc>")
                             ]
         , Run StdinReader
-        , Run Volume "default" "Master" [ "--", "-O", "<fc=#66aa11>[on]</fc>"] 10
+        --, Run ComX "pamixer" "Master" [ "--", "-O", "<fc=#66aa11>[on]</fc>"] 10
 
         ]
-        -- LAYOUT
-        , sepChar   = "%"   -- delineator between plugin and text
-        , alignSep  = "}{"  -- separator between left-right alignment
-        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %default:Master%  %EDDT% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
         }
