@@ -21,9 +21,11 @@
     review      = log --date=local --pretty=format:\"%C(yellow)%h%C(blue) %ae:%Creset%<|(146) %C(bold)%s%Creset%<(24)authored: %C(bold green)%ad %Cresetcommit: %C(bold green)%cd\"
     filediff    = diff --name-status
     filelog     = log --follow --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\"
+    diffIgnoreCR = diff --ignore-cr-at-eol
     viewbranches = branch -avv
     rmbranch    = branch -D
     st = status
     br = branch -av
     rewritehistory = "rebase -i @~10"
     checkoutbranch = "!sh -c \"git checkout -b $1 --track origin/$1\""
+    chck = checkout
