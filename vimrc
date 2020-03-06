@@ -247,6 +247,27 @@ augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SETTINGS FOR SPECIFIC FILETYPES                   "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"JavaScript
+"let g:tagbar_type_javascript = {
+"  \ 'ctagstype': 'javascript',
+"  \ 'ctagsbin' : 'jsctags',
+"  \ 'ctagsargs': '-f',
+"  \ 'kinds': [
+"      \ 'A:arrays',
+"      \ 'P:properties',
+"      \ 'T:tags',
+"      \ 'O:objects',
+"      \ 'G:generator functions',
+"      \ 'F:functions',
+"      \ 'C:constructors/classes',
+"      \ 'M:methods',
+"      \ 'V:variables',
+"      \ 'I:imports',
+"      \ 'E:exports',
+"      \ 'S:styled components'
+"      \ ]}
+"\}
+
 "Ansible YAML
 let g:ansible_unindent_after_newline = 1
 "let g:ansible_no_indents = 1
@@ -308,6 +329,7 @@ au BufNewFile,BufRead,BufEnter      README      setlocal spell  spelllang=en_us 
 autocmd BufNewFile,BufRead,BufEnter *.md setlocal filetype=markdown textwidth=80 
 autocmd BufNewFile,BufRead,BufEnter *.md nnoremap <buffer> <silent><Leader>t :Voomtoggle<CR>
 autocmd BufNewFile,BufRead,BufEnter *.tex nnoremap <buffer> <silent><Leader>t :VoomToggle<CR>
+autocmd BufNewFile,BufRead,BufEnter *.js setlocal shiftwidth=2
 "set Voomtoggle only for md files; TODO: set also for .tex file: set also for .tex files
 autocmd BufNewFile,BufReadPost *.md call voom#Init('markdown',1)    "use voom#Init function to generate Tree
 autocmd BufWritePost,BufEnter *.md call voom#BodyUpdateTree()     "update the tree after the file has been saved
