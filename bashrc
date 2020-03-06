@@ -93,6 +93,11 @@ PATH=$PATH:~/dotfiles/bin
 PATH=$PATH:~/bin #local bin for personal shell scripts
 PATH=$PATH:/home/timon.schroeder/.cargo/bin
 
+#For go
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+
 export PATH
 
 #PS1='[\u@\h \W]\$ ' #old prompt config
