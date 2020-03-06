@@ -16,6 +16,29 @@ alias vimup="vim \$(lookup)"
 alias aws_list_instance_names="aws ec2 describe-instances | jq '.[][].Instances[].Tags[] | {Instance_Name: select(.Key==\"Name\").Value}'"
 alias cleanup_containers="docker rm -v $(docker ps -aq -f status=exited)"
 alias b64decode="base64-decode"
+alias parsedate="date -d "
+alias show-devices="xinput --list"
+alias makepackagejson="rm package-lock.json && npm install --package-lock-only"
+#alias disable-device="xinput set-int-prop {} \"Device Enabled\" 8 0"
+
+function ten_times()
+{
+    for i in {1..10}; do $1; done;
+}
+
+function enable_device()
+{
+    xinput set-int-prop $1 "Device Enabled" 8 1
+}
+
+function disable_device()
+{
+    xinput set-int-prop $1 "Device Enabled" 8 0
+}
+
+function jwt-decode() {
+  sed 's/\./\n/g' <<< $(cut -d. -f1,2 <<< $1) | base64 -i --decode | jq
+}
 
 function base64-decode {
     if [[ ! -z $1 ]]
@@ -50,6 +73,8 @@ complete -F __complete_aws_profile awsprofile
 # make ls use colors automatically
 alias ls='ls --color=auto'
 alias grep='grep --color'
+alias ll='ls -l'
+alias diff='diff --color'
 #-------------- ALIAS END -----------------
 
 
