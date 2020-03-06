@@ -366,6 +366,23 @@ let g:tagbar_type_php = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                  SETTINGS FOR SPECIFIC PLUGINS                    "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"VIM devicons
+let g:WebDevIconsUnicodeByteOrderMarkerDefaultSymbol = ''
+let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['md'] = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['js'] = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['yml,yaml'] = ''
+
+" enable folder/directory glyph flag (disabled by default with 0)
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+
+" enable open and close folder/directory glyph flags (disabled by default with 0)
+let g:DevIconsEnableFoldersOpenClose = 1
+
+" enable pattern matching glyphs on folder/directory (enabled by default with 1)
+let g:DevIconsEnableFolderPatternMatching = 1
+
 "VIM ultisnips 2019-01-14
 let g:UltiSnipsListSnippets="<c-s>"
 let g:UltiSnipsExpandTrigger="<c-k>"
