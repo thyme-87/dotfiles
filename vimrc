@@ -518,6 +518,13 @@ Plugin 'VundleVim/Vundle.vim'
 " in a FIXED syntax that informs about the date, name, purpose. It CAN be
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
+"
+" [2020-02-06] python debugging
+Plugin 'vim-vdebug/vdebug'
+
+" [2019-11-18] GV git commit browser
+Plugin 'junegunn/gv.vim'
+
 " [2019-03-16] tern for vim for javascript
 Plugin 'ternjs/tern_for_vim'
 
