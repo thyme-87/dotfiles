@@ -15,7 +15,21 @@ alias lookup="fzf --preview 'highlight -O ansi -l {}'"
 alias vimup="vim \$(lookup)"
 alias aws_list_instance_names="aws ec2 describe-instances | jq '.[][].Instances[].Tags[] | {Instance_Name: select(.Key==\"Name\").Value}'"
 alias cleanup_containers="docker rm -v $(docker ps -aq -f status=exited)"
+alias b64decode="base64-decode"
 
+function base64-decode {
+    if [[ ! -z $1 ]]
+    then
+        string=$1
+        if [ ! "${1: -1}" == "=" ]
+        then
+            string="${1}="
+        fi
+        echo `echo $string | base64 --decode -i`;
+    else
+        return 1
+    fi
+}
 
 function __set_aws_profile {
     export AWS_PROFILE=$1
