@@ -385,11 +385,11 @@ let g:DevIconsEnableFolderPatternMatching = 1
 
 "VIM ultisnips 2019-01-14
 let g:UltiSnipsListSnippets="<c-s>"
-let g:UltiSnipsExpandTrigger="<c-k>"
+let g:UltiSnipsExpandTrigger="<c-x><c-k>"
 let g:UltiSnipsJumpForwardTrigger="<c-n>"
 let g:UltiSnipsJumpBackwardTrigger="<c-m>"
-let g:UltiSnipsSnippetsDir='~/.vim/ultisnips' "TODO this needs documentation see https://github.com/SirVer/ultisnips/issues/512#issuecomment-348404673
-let g:UltiSnipsSnippetDirectories=["ultisnips"]
+let g:UltiSnipsSnippetsDir='~/.vim/UltiSnips' "TODO this needs documentation see https://github.com/SirVer/ultisnips/issues/512#issuecomment-348404673
+let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 
 let g:UltiSnipsEditSplit="vertical"
 
