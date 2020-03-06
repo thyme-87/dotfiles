@@ -82,7 +82,9 @@ source ~/dotfiles/bin/git-prompt.sh
 
 
 export EDITOR="vim" 
-export JAVA_HOME=/usr/bin/java
+#export JAVA_HOME=/usr/bin/java
+#groovy needs this like so:
+export JAVA_HOME=/usr
 export LC_ALL=en_US.UTF-8
 export GPG_TTY=`tty` #to make gpg work on osx; see https://github.com/deepmind/kapitan/issues/69
 
