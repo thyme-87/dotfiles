@@ -1,0 +1,36 @@
+#!/bin/bash
+
+#IMPORTANT this file needs to be symlinked to /usr/local/bin
+
+#log working hours by logging the DATE (YYYY-MM-DD:HH:MM:SS) before/after performing the following actions:
+# systemctl sleep
+# shutdown(?)
+# boot(?)
+# wakeup
+# screenlock
+# login/logout (is this maybe the better subset for boot/shutdown?)
+
+# EXAMPLES
+# 2023-05-23:23:23:23,SLEEP;
+# 2023-05-23:23:23:23,SHUTDOWN;
+# 2023-05-23:23:23:23,BOOT;
+# 2023-05-23:23:23:23,WAKEUP;
+# 2023-05-23:23:23:23,LOCKSCREEN;
+# 2023-05-23:23:23:23,LOGIN_FROM_LOCKSCREEN;
+
+
+#IMPORTANT! this is the SAME file, that tmux saves the tmux pane names to!
+#LOGFILE=${TIME_TRACKNG_LOGFILE:-~/.time_tracking.log}
+#IMPORTANT! the usage of ${HOME} implies, that the user who calls the program matches the user for whom we want to write the logfile
+LOGFILE=${TIME_TRACKNG_LOGFILE:-${HOME}/.time_tracking.log.DEBUG} #FIXME log this into a debug file until it works as intended
+DATEFORMAT='%Y-%m-%d:%H:%M:%S'
+TIMESTAMP=$(date +"$DATEFORMAT")
+
+EVENT="${1:-EVENT is UNDEFINED}"
+
+echo "\"${TIMESTAMP}\",\"${EVENT}\";" >> "${LOGFILE}"
+
+#IMPORTANT! we will use three locations to achieve this:
+# 1. log-working-hours.service (log startup and shutdown)
+# 2. xmonad.hs (log before lockscreen and before suspend)
+# 3. physlock.service (log after lockscreen)

@@ -84,7 +84,7 @@ manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
 myStartupHook ::X ()
 myStartupHook = do
      spawn "compton -f -I 0.10 -O 0.10 --backend glx --vsync opengl"
- 
+
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
 --withUrgencyHook LibNotifyUrgencyHook <- This still is ToDo!
 
@@ -95,8 +95,8 @@ myPP = xmobarPP
 --myPP = xmobarPP
 --             { ppTitle = xmobarColor "#F92672" "#272822" . shorten myTitleLength
 --             , ppCurrent =   xmobarColor myCurrentWSColor "" . wrap myCurrentWSLeft myCurrentWSRight
---             , ppVisible =   xmobarColor myVisibleWSColor "" . wrap myVisibleWSLeft myVisibleWSRight 
---             , ppUrgent  =   xmobarColor myUrgentWSColor  "" . wrap myUrgentWSLeft myUrgentWSRight 
+--             , ppVisible =   xmobarColor myVisibleWSColor "" . wrap myVisibleWSLeft myVisibleWSRight
+--             , ppUrgent  =   xmobarColor myUrgentWSColor  "" . wrap myUrgentWSLeft myUrgentWSRight
 --             }
 
 myBar = "xmobar ~/dotfiles/xmobarrc"
@@ -111,13 +111,13 @@ myConfig = def {
         , modMask                 = myModMask
         , terminal                = myTerminal
         , XMonad.workspaces       = myWorkSpaces
-    
+
         --appearance
         , borderWidth           = myBorderWidth
         , normalBorderColor     = myNormalBorderColor
         , focusedBorderColor    = myFocusedBorderColor
         } `additionalKeys`
-        ([ ((mod4Mask .|. shiftMask, xK_l), spawn "physlock -ds")
+        ([ ((mod4Mask .|. shiftMask, xK_l), spawn "log-working-hours LOCKSCREEN && physlock -ds")
         , ((mod1Mask        , xK_space), spawn "/home/timon/dotfiles/bin/layout_switch")
         , ((mod4Mask            , xK_m), sendMessage ToggleStruts)
         , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +1%")
@@ -129,7 +129,8 @@ myConfig = def {
         , ((mod1Mask .|. shiftMask, xK_comma), scratchpad) --urxvt quake-style
         , ((controlMask, xK_space), spawn "synapse")
         , ((0, xF86XK_Tools), spawn "systemctl suspend")
-        , ((0, 0x1008FF21), spawn "systemctl suspend")
+        , ((mod1Mask, xK_Num_Lock), spawn "log-working-hours SUSPEND && systemctl suspend")
+        , ((0, 0x1008FF21), spawn "log-working-hours SUSPEND && systemctl suspend")
         , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
         , ((controlMask, xK_F3), spawn "flameshot gui")
         , ((0, xK_Print), spawn "scrot")

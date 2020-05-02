@@ -1,0 +1,15 @@
+[Unit]
+Description=Log Startup and Shutdown with timestamp for working hours
+StopWhenUnneeded=yes
+
+[Service]
+Type=oneshot
+User=timon
+RemainAfterExit=yes
+ExecStart=log-working-hours BOOT
+ExecStop=log-working-hours SHUTDOWN
+
+[Install]
+WantedBy=sleep.target
+
+#TODO determine where to place this
