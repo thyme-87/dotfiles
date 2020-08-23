@@ -116,6 +116,8 @@ com! HtmlParse :call ParseHtml()
 com! ShowPath :call ShowPath()
 com! SplitTerm :term ++rows=12 "Remember that <ctrl-w>N enters visual mode
 com! Vterm :call OpenTerminal()
+"Breakout split to new tab
+com! BreakOutSplit :call feedkeys("\<c-w>T")
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SELF DEFINED FUNCTIONS                            "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
