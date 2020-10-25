@@ -17,6 +17,35 @@ alias ll='ls -l'
 alias gnome-settings='XDG_CURRENT_DESKTOP=GNOME gnome-control-center'
 alias gitp='git push'
 
+#alias ansdoc='ansible-doc $(rg -g "!test/" -g "!tests/" -g "!module_utils/" -g "!doc_fragments/" -g "!cliconf/" -g "!terminal/" -g "!action/" -g "!httpapi/" -g "!callback/" --iglob "*.py" --iglob "!__init__.py" --files /usr/lib/python3.8/site-packages/ansible_collections/ /usr/lib/python3.8/site-packages/ansible/modules/ | grep -oP "(ansible_collections/|ansible/modules/)\K.*" | sed -e 's!plugins/modules/!!' -e 's!/!.!g' -e "s!\.py!!" | fzf -e)'
+alias ansdoc='__ansdoc'
+
+function __ansdoc {
+    if [ "${1}X" != "X" ]; then
+        ansible-doc "${1}"
+    else
+      ansible-doc $(rg \
+      -g "!test/" \
+      -g "!tests/" \
+      -g "!module_utils/" \
+      -g "!doc_fragments/" \
+      -g "!cliconf/" \
+      -g "!terminal/" \
+      -g "!action/" \
+      -g "!httpapi/" \
+      -g "!callback/" \
+      --iglob "*.py" \
+      --iglob "!__init__.py" \
+      --files  \
+      /home/timon/.ansible/collections/ansible_collections \
+      /home/timon/.local/lib/python3.8/site-packages/ansible \
+      /home/timon/.local/lib/python3.8/site-packages/ansible_collections \
+      | grep -oP "^.*(collections/|ansible/modules/)\K.*" \
+      | sed -e 's!plugins/modules/!!' -e 's!/!.!g' -e 's!\.py!!' \
+      | fzf --preview 'ansible-doc {}' -e)
+    fi
+}
+
 #convenience for fzf
 alias lookup="fzf --preview 'highlight -O ansi -l {}'"
 alias vimup="vim \$(lookup)"
