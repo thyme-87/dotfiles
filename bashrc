@@ -49,7 +49,7 @@ export LC_ALL=en_US.UTF-8
 export PATH
 
 #indication via ~/dotfiles/bingit-prompt.sh:
-GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWDIRTYSTATE=1
 
 #PS1='[\u@\h \W]\$ ' #old prompt config
 # evaluate how to tweak this:
