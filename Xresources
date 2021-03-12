@@ -1,12 +1,12 @@
 ! make scrollbar compact:
-URxvt*.scrollstyle: plain 
+URxvt*.scrollstyle: plain
 URxvt*.scrollBar_right: true
 URxvt*.scrollBar: false
 
 URxvt*.internalBorder: 0
 
 URxvt*.background: [85]#313131
-!URxvt*.foreground: #e0e0e0 
+!URxvt*.foreground: #e0e0e0
 !URxvt*.transparent: true !fake transparency
 !URxvt*.shading: 20 !fake transparency
 URxvt*.depth: 32
@@ -86,14 +86,20 @@ Xft.hinting:        false
 Xft.hintstyle:      hintfull
 Xft.autohint:	    false
 
-URxvt*font:             xft:Roboto Mono Nerd Font Mono:style=Regular:size=16:hinting=false
-URxvt*boldFont:         xft:Roboto Mono Nerd Font Mono:style=Bold:size=16:hinting=false
-Rxvt*italicFont:        xft:Roboto Mono Nerd Font Mono:style=Italic:size=16:hinting=false
-Rxvt*boldItalicFont:    xft:Roboto Mono Nerd Font Mono:style=Bold Italic:size=16:hinting=false
+!URxvt*font:             xft:RobotoMono Nerd Font:style=Regular:size=16:hinting=false;autohint=true
+!URxvt*boldFont:         xft:RobotoMono Nerd Font:style=Bold:size=16:hinting=false;autohint=true
+!Rxvt*italicFont:        xft:RobotoMono Nerd Font:style=Italic:size=16:hinting=false;autohint=true
+!Rxvt*boldItalicFont:    xft:RobotoMono Nerd Font:style=Bold Italic:size=16:hinting=false;autohint=true
 
-!URxvt.letterSpace: -1
+URxvt*font:             xft:RobotoMono Nerd Font Mono:style=Regular:size=16:hinting=false;autohint=true
+URxvt*boldFont:         xft:RobotoMono Nerd Font Mono:style=Bold:size=16:hinting=false;autohint=true
+Rxvt*italicFont:        xft:RobotoMono Nerd Font Mono:style=Italic:size=16:hinting=false;autohint=true
+Rxvt*boldItalicFont:    xft:RobotoMono Nerd Font Mono:style=Bold Italic:size=16:hinting=false;autohint=true
 
-URxvt*.saveLines: 1000
+!fix spacing
+!URxvt.letterSpace: -2
+
+URxvt*.saveLines: 10000
 URxvt*.urlLauncher: chromium
 
 ! use visual bell instead of beep:
