@@ -33,7 +33,7 @@ function __base64_decode {
 }
 
 function __csv_view {
-    column -s, -t $1 | less -#2 -N -S
+    column -s, -t "${1}" | less -#2 -N -S
 }
 
 source ~/dotfiles/bin/git-prompt.sh
