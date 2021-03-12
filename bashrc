@@ -76,14 +76,14 @@ source ~/dotfiles/bin/ls-colors
 ##autocomplete ssh
 #Thanks to: https://gist.github.com/magnetikonline/bcd4186e14ed02145390
 function _completeSSHHosts {
-
 	COMPREPLY=()
 	local currentWord=${COMP_WORDS[COMP_CWORD]}
 
+    #TODO exclude hosts that end on "*"
 	local completeHosts=$(
 		cat "$HOME/.ssh/config" | \
-        grep --extended-regexp --regexp "^(Host|host) +[^* ]+? *$" | \
-		tr -s " " | cut -d " " -f 2;
+        grep --extended-regexp --regexp "^(Host|host) +[^* ].+$" | \
+        cut -d ' ' -f 2-;
 		cat /etc/hosts | \
 		grep --extended-regexp --regexp "^[0-9]{3}\." | \
 		awk "{print \$2}"
