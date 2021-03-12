@@ -22,12 +22,14 @@
 #IMPORTANT! this is the SAME file, that tmux saves the tmux pane names to!
 #LOGFILE=${TIME_TRACKNG_LOGFILE:-~/.time_tracking.log}
 #IMPORTANT! the usage of ${HOME} implies, that the user who calls the program matches the user for whom we want to write the logfile
-LOGFILE=${TIME_TRACKNG_LOGFILE:-${HOME}/.time_tracking.log.DEBUG} #FIXME log this into a debug file until it works as intended
+LOGFILE=${TIME_TRACKNG_LOGFILE:-${HOME}/.time_tracking.log}
+TIMEFORMAT='%H:%M:%S'
 DATEFORMAT='%Y-%m-%d:%H:%M:%S'
 TIMESTAMP=$(date +"$DATEFORMAT")
 
 EVENT="${1:-EVENT is UNDEFINED}"
 
+#TODO separate date and time of the day for easier processing
 echo "\"${TIMESTAMP}\",\"${EVENT}\";" >> "${LOGFILE}"
 
 #IMPORTANT! we will use three locations to achieve this:
