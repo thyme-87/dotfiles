@@ -118,7 +118,9 @@ myConfig = def {
         , normalBorderColor     = myNormalBorderColor
         , focusedBorderColor    = myFocusedBorderColor
         } `additionalKeys`
-        ([ ((mod4Mask .|. shiftMask, xK_l), spawn "log-working-hours LOCKSCREEN && physlock -ds")
+        -- I guesse the real solution would be to run physlock.service as a user
+        ([ ((mod4Mask .|. shiftMask, xK_l), spawn "log-working-hours LOCKSCREEN && physlock -s && log-working-hours LOGIN_FROM_LOCKSCREEN")
+        , ((mod4Mask .|. shiftMask, xK_space), spawn "log-working-hours SCREEN_PAUSE_BEGIN &&  physlock -s && log-working-hours SCREEN_SCREEN_PAUSE_END")
         , ((mod1Mask        , xK_space), spawn "/home/timon/dotfiles/bin/layout_switch")
         , ((mod4Mask            , xK_m), sendMessage ToggleStruts)
         , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +1%")
