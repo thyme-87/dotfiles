@@ -1,0 +1,16 @@
+[Unit]
+Description=Log Startup and Shutdown with timestamp for working hours
+StopWhenUnneeded=yes
+
+[Service]
+Type=oneshot
+User=timon
+RemainAfterExit=yes
+ExecStart=log-working-hours STARTUP
+#TODO apparantly this is not working yet :/
+ExecStop=log-working-hours SHUTDOWN
+
+[Install]
+WantedBy=multi-user.target
+
+#TODO determine where to place this
