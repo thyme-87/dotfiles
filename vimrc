@@ -78,17 +78,23 @@ nnoremap <c-l> :tabnext<CR>
 " nnoremap gk k
 
 " Keymappings for actions
-nnoremap <F12> :NERDTreeToggle<CR>          "<F12> to toggle Nerdtree
-nnoremap <F11> :!detex % \| wc -w<CR>       "<F11> for simple wordcount
+"<F12> to toggle Nerdtree
+nnoremap <F8> :NERDTreeToggle<CR>
+"<F12> to toggle Nerdtree
+nnoremap <F12> :NERDTreeToggle<CR>
+"<F11> for simple wordcount
+nnoremap <F11> :!detex % \| wc -w<CR>
 nnoremap <silent> <Leader>t :TagbarToggle<CR>
 nnoremap <silent> <Leader>T :term ++rows=10<CR>
+"show full path
+nnoremap <c-g> :ShowPath<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SELF DEFINED COMMANDS                             "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 com! FormatJSON %!python -m json.tool   "reformat current buffer as JSON file
-com! DotDisplay :call DotDisplay()                                      
-com! DotToPdf   :call DotToPdf()                                        
+com! DotDisplay :call DotDisplay()
+com! DotToPdf   :call DotToPdf()
 com! MarkdownRender :call MarkdownRender()                              "render markdown using pandoc
 com! MarkdownDisplay :call MarkdownDisplay()                            "open the according .pdf-file with zathura
 com! UpdateDictonaries :call UpdateDictionaries()                       "call self defined function to update all dictonaries based on .add files in dotfiles/vim/spell
@@ -107,6 +113,17 @@ com! ProvideMysqlPw :call ProvideHashedMysqlPassword()
 com! -nargs=1 MakePasswd :call MakePassword(<q-args>)
 com! -nargs=1 Pwgen :call GenPassword(<q-args>)
 com! -nargs=+ VaultPasswd :call VaultStringWithID(<q-args>)
+"Break out a split into a new tab
+com! BreakeOut :exe "normal \<c-w>T"
+
+"Search in directory for content in files (using ripgrep) see:
+"https://sidneyliebrand.io/blog/how-fzf-and-ripgrep-improved-my-workflow
+com! -bang -nargs=* Rg
+            \ call fzf#vim#grep(
+            \   'rg --column --line-number --hidden --ignore-case --no-heading --color=always '.shellescape(<q-args>), 1,
+            \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+            \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+            \   <bang>0)
 
 "com! -nargs=1 Voc :silent !coproc voc <q-args>
 com! -nargs=1 Voc :call WriteVocToDictionary(<q-args>)
@@ -114,6 +131,8 @@ com! W3m :!w3m %
 "com! ReadHtml :%!w3m %
 com! HtmlParse :call ParseHtml()
 com! ShowPath :call ShowPath()
+com! SwitchToHorizontal :windo wincmd K
+com! SwitchToVertical :windo wincmd H
 com! SplitTerm :term ++rows=12 "Remember that <ctrl-w>N enters visual mode
 com! Vterm :call OpenTerminal()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -244,6 +263,11 @@ augroup numbertoggle
     autocmd BufLeave,FocusLost,InsertEnter  * set nornu
 augroup END
 
+augroup HighlightKeywords
+    autocmd!
+    autocmd WinEnter,VimEnter * :silent! call matchadd('todo', '^BUG\|PROBLEM\|DECIDE\|DECISION\|FIXME\|IMPORTANT\|TASK\|INFO\|OPTIONAL\|VERIFY\|RESEARCH\|EXPLORE\|EVALUATE', -1)
+augroup END
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SETTINGS FOR SPECIFIC FILETYPES                   "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -305,7 +329,7 @@ let g:tagbar_type_markdown = {
 \ }
 au BufNewFile,BufRead,BufEnter      README      setlocal spell  spelllang=en_us "set spell check for README files
 " au BufNewFile,BufRead,BufEnter      *.md        setlocal spell  spelllang=de_de "set spellcheck with language de_de for markdown files currently deactivated as I assume that it would break settings for markdown beneath
-autocmd BufNewFile,BufRead,BufEnter *.md setlocal filetype=markdown textwidth=80 
+autocmd BufNewFile,BufRead,BufEnter *.md setlocal filetype=markdown textwidth=80
 autocmd BufNewFile,BufRead,BufEnter *.md nnoremap <buffer> <silent><Leader>t :Voomtoggle<CR>
 autocmd BufNewFile,BufRead,BufEnter *.tex nnoremap <buffer> <silent><Leader>t :VoomToggle<CR>
 "set Voomtoggle only for md files; TODO: set also for .tex file: set also for .tex files
@@ -330,10 +354,14 @@ let g:tagbar_type_php = {
 "                  SETTINGS FOR SPECIFIC PLUGINS                    "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "VIM ultisnips 2019-01-14
-let g:UltiSnipsListSnippets="<c-s>"
-let g:UltiSnipsExpandTrigger="<c-k>"
-let g:UltiSnipsJumpForwardTrigger="<c-n>"
-let g:UltiSnipsJumpBackwardTrigger="<c-m>"
+let g:UltiSnipsExpandTrigger="<F8>"
+let g:UltiSnipsListSnippets="<c-#>"
+let g:UltiSnipsJumpForwardTrigger="<c-m>"
+let g:UltiSnipsJumpBackwardTrigger="<c-n>"
+"let g:UltiSnipsListSnippets="<c-c>"
+"let g:UltiSnipsExpandTrigger="<c-k>"
+"let g:UltiSnipsJumpForwardTrigger="<c-n>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-m>"
 let g:UltiSnipsSnippetsDir='~/.vim/ultisnips' "TODO this needs documentation see https://github.com/SirVer/ultisnips/issues/512#issuecomment-348404673
 let g:UltiSnipsSnippetDirectories=["ultisnips"]
 
@@ -364,7 +392,7 @@ let g:ycm_filetype_blacklist = {
 
 " VIM VOom
 let g:voom_ft_modes = {'markdown': 'markdown', 'tex': 'latex'}
-let g:voom_python_versions = [2]
+let g:voom_python_versions = [3]
 
 " VIM ALE
 "let g:airline_section_error = '%{ALEGetStatusLine()}' "ALE output in vim-airline
@@ -374,15 +402,15 @@ let g:ale_linters = {
     \'yaml': ['ansible-lint'],
     \    }
 let g:ale_php_phpcs_standard = 'PSR2'
-let g:ale_statusline_format = ['✗%d', '⚠%d', '☼ok']
+"let g:ale_statusline_format = ['x%d', '!%d', '☼ok']
 let g:ale_echo_cursor = 1
 let g:ale_echo_delay = 0
 let g:ale_enabled = 1
 let g:ale_echo_msg_format = '[%linter%]: %s [%severity%]'
 let g:ale_set_loclist = 1
 let g:ale_sign_column_always = 1
-let g:ale_sign_error = '✗»'
-let g:ale_sign_warning = '⌕☞'
+let g:ale_sign_error = 'x»'
+let g:ale_sign_warning = '!»'
 let g:ale_echo_msg_error_str = 'Error'
 let g:ale_echo_msg_warning_str  = 'Warning'
 let g:ale_echo_msg_info_str = 'Info'
@@ -402,8 +430,8 @@ let g:airline_theme="dark"              "use dark theme
 let g:airline#extensions#tagbar#enabled = 0 "disable tagbar integration (performance issue)
 
 let g:airline#extensions#ale#enabled = 1
-let airline#extensions#ale#error_symbol = '✗'
-let airline#extensions#ale#warning_symbol = '⚠'
+let airline#extensions#ale#error_symbol = 'x'
+let airline#extensions#ale#warning_symbol = 'ⅲ'
 set laststatus=2
 
 " VIM LATEX SUITE
@@ -435,6 +463,7 @@ autocmd FileType tex let b:tagbar_ignore = 1    "disable tagbar for tex files
 autocmd FileType tex let g:neocomplete#enable_at_startup = 0 "disable neocomplete for tex files
 autocmd BufEnter * :syn sync minlines=250   "for t400 don't parse whole file for syntax hightlighting
 autocmd BufEnter * :syn sync maxlines=500   "fix syntax hightlighting with `: syntax sync fromstart`
+autocmd FileType markdown let g:vim_markdown_folding_disabled = 1
 " for more infos see http://vim.wikia.com/wiki/Fix_syntax_highlighting
 " MATCHIT PLUGIN
 runtime macros/matchit.vim  "extend functionality of "%"
