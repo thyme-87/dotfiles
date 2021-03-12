@@ -109,3 +109,5 @@ export FZF_DEFAULT_OPTS='
 complete -F _fzf_complete_ssh -o default -o bashdefault -F _completeSSHHosts ssh
 complete -F _completeSSHHosts -o default -b bashdefault scp
 complete -C /usr/bin/aws_completer aws #use command completion for bash
+
+alias screenkey='screenkey --no-systray --mods-only --vis-shift --opacity 0.5 --timeout 0.3 --compr-cnt 1 --scr 1'
