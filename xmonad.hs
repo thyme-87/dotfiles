@@ -83,7 +83,8 @@ manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
 
 myStartupHook ::X ()
 myStartupHook = do
-     spawn "compton -f -I 0.10 -O 0.10 --backend glx --vsync opengl"
+       spawn "picom -f -I 0.10 -O 0.10 --config ~/.picom.conf"
+       spawn "feh --no-fehbg --bg-scale '/home/timon/arch_wallpaper_xxl.jpg'"
 
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
 --withUrgencyHook LibNotifyUrgencyHook <- This still is ToDo!
