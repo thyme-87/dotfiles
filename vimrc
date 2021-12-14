@@ -556,6 +556,27 @@ Plugin 'VundleVim/Vundle.vim'
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
 
+" [2021-12-05] add autocompletion for terraform
+Plugin 'junegunn/vader.vim'
+
+" [2021-12-05] add autocompletion for terraform
+Plugin 'juliosueiras/vim-terraform-completion'
+
+" [2021-12-05] add syntax hightlighting for terraform/hcl
+Plugin 'hashivim/vim-terraform'
+
+" [2020-03-22] Use tern for vim for javascript
+Plugin 'pangloss/vim-javascript'
+
+" [2020-03-22] Use tern for vim for javascript
+Plugin 'ternjs/tern_for_vim'
+
+" [2019-11-23] Use GV for better navigation throug git commits
+Plugin 'junegunn/gv.vim'
+
+"[2019-03-10] Use plugin to provide extended matchit functionality
+Plugin 'adelarsq/vim-matchit'
+
 " [2019-01-14] all ultisnips to evaluate against neosnippet
 Plugin 'SirVer/ultisnips'
 
