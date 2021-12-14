@@ -45,8 +45,8 @@ function __ansdoc {
       --iglob "!__init__.py" \
       --files  \
       /home/timon/.ansible/collections/ansible_collections \
-      /home/timon/.local/lib/python3.8/site-packages/ansible \
-      /home/timon/.local/lib/python3.8/site-packages/ansible_collections \
+      /home/timon/.local/lib/python3.9/site-packages/ansible \
+      /home/timon/.local/lib/python3.9/site-packages/ansible_collections \
       | grep -oP "^.*(collections/|ansible/modules/)\K.*" \
       | sed -e 's!plugins/modules/!!' -e 's!/!.!g' -e 's!\.py!!' \
       | fzf --preview 'ansible-doc {}' -e)
@@ -79,7 +79,7 @@ function __csv_view {
 source ~/dotfiles/bin/git-prompt.sh
 
 
-export EDITOR="vim" 
+export EDITOR="vim"
 export JAVA_HOME=/usr/bin/java
 export LC_ALL=en_US.UTF-8
 #export XDG_CURRENT_DESKTOP=GNOME
@@ -117,27 +117,29 @@ source ~/dotfiles/bin/ls-colors
 #Thanks to: https://gist.github.com/magnetikonline/bcd4186e14ed02145390
 function _completeSSHHosts {
 
-	COMPREPLY=()
-	local currentWord=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=()
+    local currentWord=${COMP_WORDS[COMP_CWORD]}
 
-	local completeHosts=$(
-		cat "$HOME/.ssh/config" | \
+    local completeHosts=$(
+        cat "$HOME/.ssh/config" | \
         grep --extended-regexp --regexp "^(Host|host) +[^* ]+? *$" | \
-		tr -s " " | cut -d " " -f 2;
-		cat /etc/hosts | \
-		grep --extended-regexp --regexp "^[0-9]{3}\." | \
-		awk "{print \$2}"
-	)
+        tr -s " " | cut -d " " -f 2;
+        cat /etc/hosts | \
+        grep --extended-regexp --regexp "^[0-9]{3}\." | \
+        awk "{print \$2}"
+    )
 
-	COMPREPLY=($(compgen -W "$completeHosts" -- "$currentWord"))
-	return 0
+    COMPREPLY=($(compgen -W "$completeHosts" -- "$currentWord"))
+    return 0
 }
 
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export FZF_DEFAULT_OPTS='
     --color fg:252,bg:#2a2a2a,hl:67,fg+:252,bg+:235,hl+:81
-    --color info:144,prompt:161,spinner:135,pointer:135,marker:118
-'
+    --color info:144,prompt:161,spinner:135,pointer:135,marker:118'
+#see https://sidneyliebrand.io/blog/how-fzf-and-ripgrep-improved-my-workflow
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
+
 [ -f ~/dotfiles/aws-get-session-token.sh ] && source ~/dotfiles/aws-get-session-token.sh #TODO rename to aws-functions.sh
 [ -f /usr/share/fzf/completion.bash ] && source /usr/share/fzf/completion.bash
 [ -f /usr/share/fzf/key-bindings.bash ] && source /usr/share/fzf/key-bindings.bash
