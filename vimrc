@@ -507,7 +507,7 @@ Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'jalvesaq/Nvim-R'
 
 " [2017-06-14] Linter for various languages
-Plugin 'w0rp/ale'
+Plugin 'dense-analysis/ale'
 
 " [2016-05-24] plugin to display tags in a window (ordered by scope)
 " deactivatet to check performance
