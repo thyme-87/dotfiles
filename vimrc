@@ -87,6 +87,9 @@ nnoremap <F11> :!detex % \| wc -w<CR>
 nnoremap <silent> <Leader>t :TagbarToggle<CR>
 nnoremap <silent> <Leader>T :term ++rows=10<CR>
 
+"show full path for <c-g>
+nnoremap <c-g> :call ShowPath()<CR>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 SELF DEFINED COMMANDS                             "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
