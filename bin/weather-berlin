@@ -1,10 +1,34 @@
 #!/bin/sh
 
-URL='http://www.accuweather.com/en/de/berlin/10178/weather-forecast/178087'
+URL='https://www.accuweather.com/en/de/berlin/10178/weather-forecast/178087'
 
-wget -q -O- "$URL" | awk -F\' '/acm_RecentLocationsCarousel\.push/{print "In Berlin it is " $2". The temperature is " $10"° celsius. " "It feels like "  $12"° celsius.",  "The sky is "  $14 "."}'| head -1
+#wget -q -O- "$URL" | awk -F\' '/acm_RecentLocationsCarousel\.push/{print "In Berlin it is " $2". The temperature is " $10"° celsius. " "It feels like "  $12"° celsius.",  "The sky is "  $14 "."}'| head -1
 
 #wget -q -O- "$URL" | awk -F\' '/acm_RecentLocationsCarousel\.push/{print "In Berlin: it is", "\033[0;31m" $2, "\033[0m" "|" "temperature is " "\033[0;31m" $10"° C" "\033[0m" "| it feels like: " "\033[0;31m" $12"° C", "\033[0m" "| sky is: \033[0;31m"  $14 "\033[0m |"}'| head -1
 
 #echo -e '\033[0m'
 #wget -q -O- "$URL" | awk -F\' '/acm_RecentLocationsCarousel\.push/{print $2": "$16", "$12"°" }'| head -1
+
+result=$(curl "${URL}" \
+    -H 'authority: www.accuweather.com' \
+    -H 'cache-control: max-age=0' \
+    -H 'sec-ch-ua-mobile: ?0' \
+    -H 'dnt: 1' \
+    -H 'upgrade-insecure-requests: 1' \
+    -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36' \
+    -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
+    -H 'sec-fetch-site: none' \
+    -H 'sec-fetch-mode: navigate' \
+    -H 'sec-fetch-user: ?1' \
+    -H 'sec-fetch-dest: document' \
+    -H 'accept-language: de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7' \
+    --silent)
+
+temp=$(grep -Po "\"temp\":\K(.*)\"" --color=none <<< "${result}" | tr -d '"' )
+#echo $temp
+description=$(grep -Po "span class=\"phrase\">\K(.*)(?=<\/span>)" <<< "${result}")
+#echo $description
+realfeelFahrenheit=$(grep -Po "adInfo.*realfeel\":\"\K(\d+)" <<< "${result}")
+#echo $realfeelFahrenheit
+realfeelCelsius=$(awk "BEGIN {print (${realfeelFahrenheit}-32)/2}")
+printf "In Berlin it is ${description}. The temperature is ${temp}C. It feels like ${realfeelCelsius}°C\n"
