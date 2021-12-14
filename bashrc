@@ -225,6 +225,22 @@ function _completeSSHHosts {
     return 0
 }
 
+#FIXME this is not working yet
+alias ansible_vim="vim"
+function _complete_ansible_modules {
+    COMPREPLY=()
+    local currentWord="${COMP_WORDS[COMP_CWORD]}"
+    local previousWord="${COMP_WORDS[COMP_CWORD-1]}"
+
+    local ansible_python_module_location=$(ansible --version | grep -Po "ansible python module location = \K.*")
+
+    local completeAnsibleModule=$(ls -1QD --color=never "${ansible_python_module_location}")
+    COMPREPLY=($(compgen -W "${completeAnsibleModule}" -- "${currentWord}"))
+    return 0
+}
+complete -o nospace -F _complete_ansible_modules -o filenames default ansible_vim
+#complete -F _complete_ansible_modules -o filenames default ansible_vim
+
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export FZF_DEFAULT_OPTS='
     --color fg:252,bg:#2a2a2a,hl:67,fg+:252,bg+:235,hl+:81
