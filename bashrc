@@ -15,6 +15,10 @@ alias csv-view='__csv_view'
 alias b64decode='__base64_decode'
 alias ll='ls -l'
 alias gnome-settings='XDG_CURRENT_DESKTOP=GNOME gnome-control-center'
+
+#if gnome-settings isn't working, reset current "pane"(?) via dconf
+#TODO this should be part of system setup
+alias fix-gnome-lockscreen='sudo vim /etc/gdm/custom.conf'
 alias gitp='git push'
 alias cal='cal -w'
 alias nextmonths='cal -3wm $(expr $(date +%m) + 1) $(date +%Y)'
