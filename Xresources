@@ -93,7 +93,7 @@ Rxvt*boldItalicFont:    xft:Roboto Mono Nerd Font Mono:style=Bold Italic:size=16
 
 !URxvt.letterSpace: -1
 
-URxvt*.saveLines: 1000
+URxvt*.saveLines: 2000
 URxvt*.urlLauncher: chromium
 
 ! use visual bell instead of beep:
