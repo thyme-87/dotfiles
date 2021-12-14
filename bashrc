@@ -16,6 +16,10 @@ alias b64decode='__base64_decode'
 alias ll='ls -l'
 alias gnome-settings='XDG_CURRENT_DESKTOP=GNOME gnome-control-center'
 alias gitp='git push'
+alias cal='cal -w'
+alias nextmonths='cal -3wm $(expr $(date +%m) + 1) $(date +%Y)'
+alias get_audio_sources="pacmd list-sinks | grep -e 'name:' -e 'index:'"
+alias set_default_audio_sink="pactl set-default-sink {}"
 
 #alias ansdoc='ansible-doc $(rg -g "!test/" -g "!tests/" -g "!module_utils/" -g "!doc_fragments/" -g "!cliconf/" -g "!terminal/" -g "!action/" -g "!httpapi/" -g "!callback/" --iglob "*.py" --iglob "!__init__.py" --files /usr/lib/python3.8/site-packages/ansible_collections/ /usr/lib/python3.8/site-packages/ansible/modules/ | grep -oP "(ansible_collections/|ansible/modules/)\K.*" | sed -e 's!plugins/modules/!!' -e 's!/!.!g' -e "s!\.py!!" | fzf -e)'
 alias ansdoc='__ansdoc'
@@ -46,9 +50,13 @@ function __ansdoc {
     fi
 }
 
+#update all pip packages
+alias pip-update-all="pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
+
 #convenience for fzf
 alias lookup="fzf --preview 'highlight -O ansi -l {}'"
 alias vimup="vim \$(lookup)"
+alias vimfzf="vimup"
 
 alias aws_list_instance_names="aws ec2 describe-instances | jq '.[][].Instances[].Tags[] | {Instance_Name: select(.Key==\"Name\").Value}'"
 
