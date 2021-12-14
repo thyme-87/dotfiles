@@ -1,4 +1,4 @@
-snippet policy-body
+snippet policy-body "skeleton for AWS IAM policy"
 {
 	"Version": "2012-10-17",
 	"Statement": [
@@ -16,15 +16,15 @@ snippet policy-body
 }
 endsnippet
 
-snippet policy-statement
-		{
-			"Sid": "${1:DescriptionInCamelCase}",
-			"Effect": "${2:Effect}",
-			"Action": [ 
-			"${3:ActionType}"
-			],
-			"Resource": [
-			"${4:Resource}"
-			]
-		}
+snippet policy-statement "add IAM policy statement"
+{
+	"Sid": "${1:DescriptionInCamelCase}",
+	"Effect": "${2:Effect}",
+	"Action": [
+	"${3:ActionType}"
+	],
+	"Resource": [
+	"${4:Resource}"
+	]
+}
 endsnippet
