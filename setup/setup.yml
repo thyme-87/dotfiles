@@ -1,0 +1,154 @@
+---
+#Use ansible to setup new machines
+#run with: ansible-playbook setup.yml -K
+
+- hosts: 127.0.0.1
+  connection: local
+  become: yes
+  vars:
+    offical_packages:
+      - ansible
+      - vim
+      - git
+      - tree
+      - calcurse
+      - ansible-lint
+      - aws-cli
+      - python-boto3
+      - base
+      - base-devel
+      - alsa-utils
+      - bind-utils
+      - compton
+      - calc
+      - chromium
+      - curl
+      - docker
+      - gnome
+      - gist
+      - evolution
+      - feh
+      - firefox
+      - fzf
+      - the_silver_searcher
+      - r
+      - ranger
+      - ghc
+      - jq
+      - go
+      - graphviz
+      - grub
+      - pandoc
+      - pandoc-citeproc
+      - pandoc-crossref
+      - whois
+      - xmonad
+      - xmonad-contrib
+      - xmonad-utils
+      - texlive-most
+      - iputils
+      - inetutils
+      - rxvt-unicode
+      - urxvt-perls
+      - NetworkManager
+      - keepassx2
+      - lame
+      - seahorse
+      - grub
+      - linux-headers
+      - mumble
+      - mplayer
+      - net-tools
+      - physlock
+      - playerctl
+      - pinentry
+      - pwgen
+      - pip
+      - pip2
+      - redshift 
+      - scrot
+      - tmux
+      - unzip
+      - vlc
+      - wget
+      - xsel
+      - zathura
+      - zathura-pdf-mupdf
+      - zathura-ps
+      - synapse
+
+    aur_packages:
+      - dropbox
+      - nautilus-dropbox
+      - dropbox-cli
+      - spotify
+      - slack-desktop-dark
+      - nerd-fonts-roboto-mono
+      - ttf-ms-fonts
+      - google-chrome
+      - ttf-font-awesome
+      - urxvt-resize-font-git
+      - weather
+      - xmobar-git
+
+  pre_tasks:
+          - name: "Update packages"
+            pacman:
+                    update_cache: yes
+  tasks:
+          - name: "Verify EFI vars"
+            command: ls /sys/firmware/efi/efivars
+
+          - name: "Set timezone"
+            command: ln -sf /usr/share/zoneinfo/Europe/Berlin/ /etc/localtime
+
+          - name: "Run hwclock"
+            command: hwclock --systohc
+
+          - name: "Set hostname"
+            command: cat "{{ hostname }}" > /etc/hostname
+            when: hostname is defined
+
+          - name: "Set hosts accordingly"
+            command: cat "127.0.1.1     {{ hostname }}.localdomain     {{ hostname }}" >> /etc/hosts
+            when: hostname is defined
+
+          - name: "Create initramfs"
+            command: mkinitcpio -p linux
+
+          - name: "Install packages from offical sources:"
+            pacman: 
+              name: "{{ offical_packages }}"
+              state: present
+             
+          - name: "Fetch yay"
+            git:
+              repo: https://aur.archlinux.org/yay.git
+              dest: /tmp/yay
+
+          - name: "Install yay"
+            command: cd /tmp/yay && makepkg -si
+
+  post_tasks:
+          - name: "Install Vundle"
+            #make ~/.vim/bundle
+            #clone https://github.com/VundleVim/Vundle.vim.git to ~/.vim/bundle/Vundle.vim
+          - name: "Link vimrc"
+          - name: "Link Ultisnips"
+            #link ~/.vim/UltiSnips -> ~/dotfiles/UltiSnips
+          - name: "Install tmux plugin manager"
+            #git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+          - name: "Link tmux.conf"
+
+          - name: "Link Xresources"
+          - name: "Link bashrc"
+          - name: "Link bash_profile"
+          - name: "Link compton.conf"
+          - name: "Link ctags"
+          - name: "Link gitconfig"
+            #ln -s ~/dotfiles/gitconfig ~/.gitconfig
+          - name: "Link curlrc"
+          - name: "Link redshift.conf"
+          - name: "Link xmonad.hs"
+          - name: "Link xmobarrc"
+          - name: "Link zathurarc"
