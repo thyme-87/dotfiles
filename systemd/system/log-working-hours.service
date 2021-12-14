@@ -10,6 +10,6 @@ ExecStart=log-working-hours BOOT
 ExecStop=log-working-hours SHUTDOWN
 
 [Install]
-WantedBy=sleep.target
+WantedBy=graphical.target
 
 #TODO determine where to place this

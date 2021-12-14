@@ -1,0 +1,17 @@
+[Unit]
+Description=Lock X session using physlock
+Before=sleep.target suspend.target hibernate.target
+#Before=sleep.target
+
+[Service]
+User=timon
+#Type=simple
+Type=forking
+ExecStart=/usr/bin/physlock -ds
+ExecStop=log-working-hours LOGIN_FROM_LOCKSCREEN
+#ExecStart=/usr/bin/physlock
+#Restart=on-failure
+
+[Install]
+WantedBy=sleep.target suspend.target hibernate.target
+#WantedBy=sleep.target
