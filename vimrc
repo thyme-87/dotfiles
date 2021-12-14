@@ -381,7 +381,7 @@ let g:ycm_filetype_blacklist = {
 
 " VIM VOom
 let g:voom_ft_modes = {'markdown': 'markdown', 'tex': 'latex'}
-let g:voom_python_versions = [2]
+let g:voom_python_versions = [3]
 
 " VIM ALE
 "let g:airline_section_error = '%{ALEGetStatusLine()}' "ALE output in vim-airline
