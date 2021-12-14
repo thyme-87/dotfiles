@@ -1,0 +1,42 @@
+#!/usr/bin/env python
+
+#this program needs a config file named 'keylights.conf' in the ${HOME}/.config/ folder
+
+from pathlib import Path
+import syslog
+import configparser
+import leglight
+
+getValues = lambda key,inputData: [ subVal[key] for subVal in inputData if key in subVal ]
+
+config = configparser.ConfigParser()
+config.sections()
+
+configFile = Path.expanduser(Path('~/.config/keylights.conf'))
+if not configFile.is_file():
+    syslog.syslog(syslog.LOG_ERR, "Error - config file not present at ~/.config/keylights.conf")
+    exit(1)
+
+config.read(configFile)
+
+if (not config.has_section('keylights')) or (not config.has_section('defaults')):
+    syslog.syslog(syslog.LOG_ERR, 'Config file is invalid (section is missing). Aborting')
+    syslog.syslog(syslog.LOG_ERR, "Available sections are: ",config.sections())
+    exit(1)
+
+lights = []
+for elem in config.options('keylights'):
+  if config.get('keylights', elem) == 'keylight':
+    lights.append(leglight.LegLight(config.get(elem, 'ip'), config.get(elem, 'port')))
+
+statuses = []
+for light in lights:
+  statuses.append(light.info())
+
+#all lights are off (on == 0) - swith on all lights
+if getValues('on', statuses).count(0) == len(statuses):
+  for light in lights:
+    light.on()
+else: #in any other case, switch all lights off
+  for light in lights:
+    light.off()
