@@ -100,5 +100,24 @@ URxvt*.urlLauncher: chromium
 URxvt*urgentOnBell: false
 URxvt*visualBell: true
 
-! clipboard
-URxvt*perl-ext-common: selection-to-clipboard,default,resize-font
+! clipboard, resize-fonts on the fly, url selection
+URxvt*perl-ext-common: selection-to-clipboard,default,resize-font,url-select
+!URxvt*perl-ext-common: selection-to-clipboard,default,resize-font,url-select,clipboard
+
+!URxvt*.url-select.launcher: /usr/bin/xdg-open
+URxvt*.url-select.launcher: chromium
+URxvt*.url-select.underline: true
+URxvt*.keysym.M-u: perl:url-select:select_next
+
+!Fix copy/paste
+!TODO align with settings in ~/.tmux.conf
+!TODO this is not working as intended yet!
+URxvt.keysym.Control-Meta-c: builtin-string:
+URxvt.keysym.Control-Meta-v: builtin-string:
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+!URxvt.keysym.M-c: perl:clipboard:copy
+!URxvt.keysym.M-v: perl:clipboard:paste
+!URxvt*.keysym.Shift-Control-V: eval:echo foobar
+!URxvt*.iso14755: false
+!URxvt*.iso14755_52: false
