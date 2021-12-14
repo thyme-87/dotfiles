@@ -573,10 +573,6 @@ Plugin 'jceb/vim-orgmode'
 Plugin 'vim-latex/vim-latex'
 " Plugin 'LaTeX-Suite-aka-Vim-LaTeX'
 
-" [2015-10-13] add another monokai color scheme
-" Same thing: color need to be copyied to ~/.vim/colors
-Plugin 'tomasr/molokai'
-
 " [2015-10-13] add vim-airline for vim
 Plugin 'vim-airline/vim-airline'
 
