@@ -351,15 +351,34 @@ let g:tagbar_type_php = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                  SETTINGS FOR SPECIFIC PLUGINS                    "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"VIM ultisnips 2019-01-14
-let g:UltiSnipsListSnippets="<c-s>"
-let g:UltiSnipsExpandTrigger="<c-k>"
-let g:UltiSnipsJumpForwardTrigger="<c-n>"
-let g:UltiSnipsJumpBackwardTrigger="<c-m>"
-let g:UltiSnipsSnippetsDir='~/.vim/ultisnips' "TODO this needs documentation see https://github.com/SirVer/ultisnips/issues/512#issuecomment-348404673
-let g:UltiSnipsSnippetDirectories=["ultisnips"]
+"tagbar
+let g:tagbar_position = 'right'
 
-let g:UltiSnipsEditSplit="vertical"
+"try to set default paths for tagfiles
+set tags+=tags
+set tags+=ctags
+set tags+=~/.ctags
+
+"FZF
+"
+
+"VIM nerdtree
+"TODO quickfix for missing/wrong configures symbols in AUR package for RobotoMono nerd font
+let g:NERDTreeDirArrowExpandable='▶'
+let g:NERDTreeDirArrowCollapsible='▼'
+
+"VIM ultisnips 2019-01-14
+let g:UltiSnipsListSnippets='<c-s>'
+"try this out for a bit before juging
+"inoremap <c-x><c-k> <c-x><c-k>
+"let g:UltiSnipsRemoveSelectModeMappings = 0
+let g:UltiSnipsExpandTrigger='<c-x><c-k>'
+let g:UltiSnipsJumpForwardTrigger='<c-n>'
+let g:UltiSnipsJumpBackwardTrigger='<c-m>'
+let g:UltiSnipsSnippetsDir='~/.vim/UltiSnips' "TODO this needs documentation see https://github.com/SirVer/ultisnips/issues/512#issuecomment-348404673
+let g:UltiSnipsSnippetDirectories=['UltiSnips']
+
+let g:UltiSnipsEditSplit='vertical'
 
 "VIM neosnippet 2018-10-02
 "let g:neosnippet#snippets_directory="~/dotfiles/vim/snippets"
@@ -394,38 +413,84 @@ let g:voom_python_versions = [3]
 let g:ale_linters = {
     \'php': ['phpcs'],
     \'yaml': ['ansible-lint'],
+    \'go': ['revive'],
+    \'terraform': ['checkov', 'tflint', 'terraform']
     \    }
 let g:ale_php_phpcs_standard = 'PSR2'
-let g:ale_statusline_format = ['✗%d', '⚠%d', '☼ok']
+let g:ale_statusline_format = ['×%d', '!%d', '☻ok']
 let g:ale_echo_cursor = 1
 let g:ale_echo_delay = 0
 let g:ale_enabled = 1
 let g:ale_echo_msg_format = '[%linter%]: %s [%severity%]'
 let g:ale_set_loclist = 1
 let g:ale_sign_column_always = 1
-let g:ale_sign_error = '✗»'
-let g:ale_sign_warning = '⌕☞'
+let g:ale_sign_error = '×»'
+let g:ale_sign_warning = '!»'
 let g:ale_echo_msg_error_str = 'Error'
 let g:ale_echo_msg_warning_str  = 'Warning'
 let g:ale_echo_msg_info_str = 'Info'
 nmap <silent> <localleader>m <Plug>(ale_previous_wrap)
 nmap <silent> <localleader>n <Plug>(ale_next_wrap)
 
-" GITGUTTER
-set updatetime=250  "set interval in which gitgutter is updated
-
 " THEMING
 colorscheme monokai "use monokai colorscheme; alternative: molokai
 "let g:molokai_original = 1     "specific setting for molokai
 
+" GITGUTTER
+set updatetime=200  "set interval in which gitgutter is updated
+set signcolumn=yes
+let g:gitgutter_grep=''
+
+"Set colors for gitgutter manually
+highlight GitGutterAddDefault cterm=bold ctermfg=70 ctermbg=237
+highlight GitGutterDeleteDefault cterm=bold ctermfg=160 ctermbg=237
+highlight GitGutterChangeDefault cterm=bold ctermfg=208 ctermbg=237
+
+highlight GitGutterAdd cterm=bold ctermfg=70 ctermbg=237
+highlight GitGutterDelete cterm=bold ctermfg=160 ctermbg=237
+highlight GitGutterChange cterm=bold ctermfg=208 ctermbg=237
+
+"let g:gitgutter_sign_added = '+'
+"let g:gitgutter_sign_modified = '~'
+"let g:gitgutter_sign_removed = '_'
+"let g:gitgutter_sign_removed_first_line = '^'
+"let g:gitgutter_sign_modified_removed = '~_'
+
 " VIM-AIRLINE
+let g:webdevicons_enable_airline_tabline = 1
+let g:webdevicons_enable_airline_statusline = 1
+
 let g:airline_powerline_fonts = 1       "use fonts patched for powerline
-let g:airline_theme="dark"              "use dark theme
+let g:airline_theme='dark'              "use dark theme
 let g:airline#extensions#tagbar#enabled = 0 "disable tagbar integration (performance issue)
 
 let g:airline#extensions#ale#enabled = 1
-let airline#extensions#ale#error_symbol = '✗'
-let airline#extensions#ale#warning_symbol = '⚠'
+let airline#extensions#ale#error_symbol = '×'
+let airline#extensions#ale#warning_symbol = '!'
+let airline#extensions#ale#show_line_numbers = 1
+let airline#extensions#ale#open_lnum_symbol = '(L'
+let airline#extensions#ale#close_lnum_symbol = ')'
+
+"TODO disable truncating of airline sections to check if everything works fine
+let g:airline#extensions#default#section_truncate_width = {}
+"  let g:airline#extensions#default#section_truncate_width = {
+"      \ 'b': 79,
+"      \ 'x': 60,
+"      \ 'y': 88,
+"      \ 'z': 45,
+"      \ 'warning': 80,
+"      \ 'error': 80,
+"      \ }
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_symbols.linenr = ''
+"let g:airline_symbols.branch = ''
+let g:airline_symbols.spell = '¶'
+let g:airline_symbols.whitespace = ' ' "for ale warning/error/info
+"let g:airline_symbols.maxlinenr = ''
+
 set laststatus=2
 
 " VIM LATEX SUITE
