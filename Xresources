@@ -86,7 +86,6 @@ Xft.rgba:           rgb
 Xft.hinting:        false
 Xft.hintstyle:      hintfull
 Xft.autohint:	    false
-
 URxvt*font:             xft:Roboto Mono Nerd Font Mono:style=Regular:size=16:hinting=false
 URxvt*boldFont:         xft:Roboto Mono Nerd Font Mono:style=Bold:size=16:hinting=false
 Rxvt*italicFont:        xft:Roboto Mono Nerd Font Mono:style=Italic:size=16:hinting=false
