@@ -88,14 +88,106 @@ export LC_ALL=en_US.UTF-8
 #PATH=$PATH:~/bin #local bin for personal shell scripts
 export PATH
 
+#----------------------------[SETTINGS FOR GO BEGIN]-----------------------------------
+#Settings for GO development
+#requires /home/$USER/golib and /home/$USER/gocode to be present
+#adds both paths to PATH
+#export GOROOT=/usr/local/go
+export GO111MODULE=auto
+export GOPATH=/home/$USER/golib:/home/$USER/gocode
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+#----------------------------[SETTINGS FOR GO END]-----------------------------------
+
 #indication via ~/dotfiles/bingit-prompt.sh:
 GIT_PS1_SHOWDIRTYSTATE=1
 
 #PS1='[\u@\h \W]\$ ' #old prompt config
 # evaluate how to tweak this:
 #PS1='\[\033[0;32m\]\[\033[0m\033[1m\]\u\[\033[1;34m\]@\[\033[1;34m\]\h \w\[\033[0;31m\]\]$(__git_ps1)\n\[\033[0;32m\]└─\[\033[0m\033[0m\] \$\[\033[0;31m\]$(__awsenv_ps1 2>/dev/null)\[\033[0m\033[0m\]:\[\033[0m\] '
-PS1='\[\033[0;32m\]\[\033[0m\033[1m\]\u\[\033[1;34m\]@\[\033[1;34m\]\h \w \[\033[0;41m\]\]$(__git_ps1 "%s")\[\033[0;31m\]\]\n\[\033[0;32m\]└─\[\033[0m\033[0m\] \[\033[0;31m\](\[\033[0;41m\]$AWS_PROFILE\[\033[0;31m\])\[\033[0m\033[0m\]\$:\[\033[0m\] '
+#PS1='\[\033[0;32m\]\[\033[0m\033[1m\]\u\[\033[1;34m\]@\[\033[1;34m\]\h \w \[\033[0;41m\]\]$(__git_ps1 "%s")\[\033[0;31m\]\]\n\[\033[0;32m\]└─\[\033[0m\033[0m\] \[\033[0;31m\](\[\033[0;41m\]$AWS_PROFILE\[\033[0;31m\])\[\033[0m\033[0m\]\$:\[\033[0m\] '
+PS1='\[\033[0;32m\]\[\033[0m\033[1m\]\u\[\033[1;34m\]@\[\033[1;34m\]\h \w \[\033[0;41m\]\]$(__git_ps1 "%s")\[\033[0;31m\]\]\n\[\033[0;32m\]└─\[\033[0m\033[0m\] \[\033[0;31m\](\[\033[0;41m\]$(__cloudprovider_context)\[\033[0;31m\])\[\033[0m\033[0m\]\$:\[\033[0m\] '
 #export PS1
+
+#----------------------[CLOUD PROVIDER BEGIN]-----------------------------------------
+export CLOUDPROVIDER="${CLOUDPROVIDER:-NONE}"
+# DONE set target cloud provider via ENV variable
+# DONEprovide an alias for conveniently selecting/switching between cloud providers
+#   TODO add autocompletion
+# TODO provide a generic function for providing contextual information for the selected cloud provider
+#   TODO if CLOUDPROVIDER is set to 'NONE' no information shall be given
+# TODO provide convenience aliases/functions for switching between 'projects'/'roles'/'subscriptions' per cloud provider (aws, gcloud, azure)
+alias select-cloudprovider="__switch_cloudprovider"
+alias switch-cloudprovider="__switch_cloudprovider"
+alias set-cloudprovider="__switch_cloudprovider"
+
+__switch_cloudprovider() {
+    CLOUDPROVIDER=$1
+    #COMPLETION="AWS AZURE GCP NONE"
+
+    #VERIFY that the required command(s) are available
+    #TODO use a map for making the code DRY
+    if [[ ${CLOUDPROVIDER} ==  "GCP" ]];
+    then
+        if ! command -v gcloud &> /dev/null
+        then
+            echo "gcloud is not installed! (google-cloud-sdk). RESETTING env var CLOUDPROVIDER to 'NONE'"
+            CLOUDPROVIDER="NONE"
+            return 1
+        fi
+    elif [[ ${CLOUDPROVIDER} ==  "AWS" ]];
+    then
+        if ! command -v aws &> /dev/null
+        then
+            echo "aws is not installed! (awscli). RESETTING env var CLOUDPROVIDER to 'NONE'"
+            CLOUDPROVIDER="NONE"
+            return 1
+        fi
+    elif [[ ${CLOUDPROVIDER} == "AZURE" ]];
+    then
+        if ! command -v azure &> /dev/null
+        then
+            echo "azure is not installed! (aur/azure-cli). RESETTING env var CLOUDPROVIDER to 'NONE'"
+            CLOUDPROVIDER="NONE"
+            return 1
+        fi
+
+    fi
+}
+
+__cloudprovider_context() {
+    if [[ ${CLOUDPROVIDER} == "AWS" ]]; then
+        printf "$AWS_PROFILE"
+    elif [[ ${CLOUDPROVIDER} == "AZURE" ]]; then
+        printf "TBD"
+    elif [[ ${CLOUDPROVIDER} == "GCP" ]]; then
+        read -d "\n" CONFIG_NAME PROJECT_NAME <<< $(gcloud config configurations list | awk '{ if ($2 == "True") { print $1 "\n" $4 }}')
+        printf "${CONFIG_NAME} > ${PROJECT_NAME}"
+    elif [[ ${CLOUDPROVIDER} == "NONE" ]]; then
+        printf ""
+    else
+        printf "UNDEFINED"
+    fi
+    return 0
+}
+
+#TODO merge google_project_completion and gswitch_completion into one command - if possible
+__google_project_completion() {
+    COMPREPLY=()
+    local currentWord=${COMP_WORDS[COMP_CWORD]}
+    local projects=$(gcloud projects list | awk '{if ($1 != "PROJECT_ID") print $1}')
+    COMPREPLY=($(compgen -W "$projects" -- "$currentWord"))
+    return 0
+}
+
+__gswitch_completion() {
+    COMPREPLY=()
+    local currentWord=${COMP_WORDS[COMP_CWORD]}
+    local configurations=$(ls -l ${HOME}/.config/gcloud/configurations | grep -Po "(config_)\K.*" --color=never)
+    COMPREPLY=($(compgen -W "$configurations" -- "$currentWord"))
+    return 0
+}
+#----------------------[CLOUD PROVIDER END]-----------------------------------------
+
 
 #TERM='rxvt-unicode'
 #try to  set term for tmux:
@@ -145,7 +237,12 @@ export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 [ -f /usr/share/fzf/key-bindings.bash ] && source /usr/share/fzf/key-bindings.bash
 [ -f /usr/share/bash-completion/completions/git ] && source /usr/share/bash-completion/completions/git
 [ -f /usr/share/bash-completion/completions/docker ] && source /usr/share/bash-completion/completions/docker
-
+#export CLOUDSDK_PYTHON='/usr/bin/python2.7'
+alias gswitch="gcloud config configurations activate"
+alias gswitch-project="gcloud config set project"
+[ -f /etc/bash_completion.d/google-cloud-sdk ] && source /etc/bash_completion.d/google-cloud-sdk
+complete -F __gswitch_completion gswitch
+complete -F __google_project_completion gswitch-project
 
 #this is a dirty workaround to provide both: autocompletion via fzf and custom autocompletion for ssh
 complete -F _fzf_complete_ssh -o default -o bashdefault -F _completeSSHHosts ssh
