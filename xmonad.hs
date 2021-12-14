@@ -147,7 +147,7 @@ myConfig = def {
         ++
         [
         ((m .|. mod4Mask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_w, xK_e] [1,0] --adjust to match screen order
+        | (key, sc) <- zip [xK_e, xK_w, xK_r] [0,1,2] --adjust to match screen order
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
         ]
         )
