@@ -94,8 +94,8 @@ nnoremap <c-g> :call ShowPath()<CR>
 "                 SELF DEFINED COMMANDS                             "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 com! FormatJSON %!python -m json.tool   "reformat current buffer as JSON file
-com! DotDisplay :call DotDisplay()                                      
-com! DotToPdf   :call DotToPdf()                                        
+com! DotDisplay :call DotDisplay()
+com! DotToPdf   :call DotToPdf()
 com! MarkdownRender :call MarkdownRender()                              "render markdown using pandoc
 com! MarkdownDisplay :call MarkdownDisplay()                            "open the according .pdf-file with zathura
 com! UpdateDictonaries :call UpdateDictionaries()                       "call self defined function to update all dictonaries based on .add files in dotfiles/vim/spell
