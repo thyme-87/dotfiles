@@ -454,9 +454,13 @@ autocmd FileType tex let b:tagbar_ignore = 1    "disable tagbar for tex files
 autocmd FileType tex let g:neocomplete#enable_at_startup = 0 "disable neocomplete for tex files
 autocmd BufEnter * :syn sync minlines=250   "for t400 don't parse whole file for syntax hightlighting
 autocmd BufEnter * :syn sync maxlines=500   "fix syntax hightlighting with `: syntax sync fromstart`
+
 " for more infos see http://vim.wikia.com/wiki/Fix_syntax_highlighting
+
+"DEPRECATED
 " MATCHIT PLUGIN
-runtime macros/matchit.vim  "extend functionality of "%"
+"https://github.com/adelarsq/vim-matchit
+"runtime macros/matchit.vim  "extend functionality of "%"
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
