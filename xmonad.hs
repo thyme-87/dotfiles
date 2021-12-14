@@ -83,7 +83,10 @@ manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
 
 myStartupHook ::X ()
 myStartupHook = do
-     spawn "compton -f -I 0.10 -O 0.10 --backend glx --vsync opengl"
+     spawn "picom -f -I 0.10 -O 0.10 --config /home/$USER/.picom.conf"
+     spawn myScreenLayoutHome
+     spawn "feh --no-fehbg --bg-fill '/home/timon/wallpaper-dark-arch.png'"
+     --spawn "compton -f -I 0.10 -O 0.10 --backend glx --vsync opengl"
 
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
 --withUrgencyHook LibNotifyUrgencyHook <- This still is ToDo!
@@ -98,6 +101,8 @@ myPP = xmobarPP
 --             , ppVisible =   xmobarColor myVisibleWSColor "" . wrap myVisibleWSLeft myVisibleWSRight
 --             , ppUrgent  =   xmobarColor myUrgentWSColor  "" . wrap myUrgentWSLeft myUrgentWSRight
 --             }
+
+myScreenLayoutHome = "xrandr --output VGA-0 --off --output LVDS-0 --off --output DP-0 --off --output DP-1 --off --output DP-2 --off --output DP-3 --off --output DP-4 --mode 2560x1440 --pos 2560x0 --rotate normal --output DP-5 --mode 2560x1440 --pos 0x0 --rotate normal"
 
 myBar = "xmobar ~/dotfiles/xmobarrc"
 
