@@ -111,9 +111,9 @@ com! CfnLint :!cfn-lint %
 com! CfnNag :!cfn_nag_scan --input-path %
 com! Vimrc :tabedit ~/.vimrc
 com! ProvideMysqlPw :call ProvideHashedMysqlPassword()
-com! -nargs=1 MakePasswd :call MakePassword(<q-args>)
-com! -nargs=1 Pwgen :call GenPassword(<q-args>)
-com! -nargs=+ VaultPasswd :call VaultStringWithID(<q-args>)
+com! -nargs=1 MakePasswd :call MakePassword(<f-args>)
+com! -nargs=1 Pwgen :call GenPassword(<f-args>)
+com! -nargs=+ VaultPasswd :call VaultStringWithID(<f-args>)
 
 "com! -nargs=1 Voc :silent !coproc voc <q-args>
 com! -nargs=1 Voc :call WriteVocToDictionary(<q-args>)
@@ -210,7 +210,7 @@ function! MakePassword(length)
     :let l:pw=GeneratePassword(a:length)
     :let l:pw_encrypted= system('mkpasswd --method=sha-512 '.l:pw)
     :let l:pw_encrypted= substitute(l:pw_encrypted, '[\r\n]*$', '', '')
-    :execute 'normal a ' . l:pw_encrypted . " #pw: " . l:pw
+    :execute 'normal a ' . l:pw_encrypted . ' #pw: ' . l:pw
 endfunction
 
 function! ProvideHashedMysqlPassword()
