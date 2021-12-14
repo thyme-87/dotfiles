@@ -22,7 +22,8 @@
 #IMPORTANT! this is the SAME file, that tmux saves the tmux pane names to!
 #LOGFILE=${TIME_TRACKNG_LOGFILE:-~/.time_tracking.log}
 #IMPORTANT! the usage of ${HOME} implies, that the user who calls the program matches the user for whom we want to write the logfile
-LOGFILE=${TIME_TRACKNG_LOGFILE:-${HOME}/.time_tracking.log.DEBUG} #FIXME log this into a debug file until it works as intended
+LOGFILE=${TIME_TRACKING_LOGFILE:-${HOME}/.time_tracking.log}
+
 DATEFORMAT='%Y-%m-%d:%H:%M:%S'
 TIMESTAMP=$(date +"$DATEFORMAT")
 
@@ -34,3 +35,4 @@ echo "\"${TIMESTAMP}\",\"${EVENT}\";" >> "${LOGFILE}"
 # 1. log-working-hours.service (log startup and shutdown)
 # 2. xmonad.hs (log before lockscreen and before suspend)
 # 3. physlock.service (log after lockscreen)
+# for further info on systemd targets see: https://www.freedesktop.org/software/systemd/man/bootup.html
