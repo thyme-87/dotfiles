@@ -1,22 +1,24 @@
 [user]
-	name = "Timon Schröder"
-	email = "timon.schroeder@c3.co"
+    name = "thyme-87"
+    email = "thyme-87@posteo.me"
 [push]
-	default = simple
+    default = simple
+[pull]
+    rebase = true
 [core]
-	excludesfile = ~/.gitignore
+    excludesfile = ~/.gitignore
 [merge]
-	tool = vimdiff
-	conflictstyle = diff3
+    tool = vimdiff
+    conflictstyle = diff3
 [difftool]
     tool = vimdiff
 [mergetool]
     #prompt = false
 [log]
-	date = local
+    date = local
 [alias]
-	pretty-log  = log --graph --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\"
-	plog        = log --graph --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\"
+    pretty-log  = log --graph --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\"
+    plog        = log --graph --pretty=format:\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\"
     plog2       = log --oneline --decorate --all --graph
     review      = log --date=local --pretty=format:\"%C(yellow)%h%C(blue) %ae:%Creset%<|(146) %C(bold)%s%Creset%<(24)authored: %C(bold green)%ad %Cresetcommit: %C(bold green)%cd\"
     filediff    = diff --name-status
