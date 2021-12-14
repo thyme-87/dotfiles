@@ -124,6 +124,8 @@ com! Vterm :call OpenTerminal()
 com! BreakOutSplit :call feedkeys("\<c-w>T")
 "Search in directory for content in files (using ripgrep) see:
 "https://sidneyliebrand.io/blog/how-fzf-and-ripgrep-improved-my-workflow
+"This will apply for the :Files command
+"TODO maybe wrap this with popup window for better styling ;)
 com! -bang -nargs=* Rg
             \ call fzf#vim#grep(
             \   'rg --column --line-number --hidden --ignore-case --no-heading --color=always '.shellescape(<q-args>), 1,
