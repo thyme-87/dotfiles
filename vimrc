@@ -62,8 +62,8 @@ set splitright      "open new splits right
 "let mapleader = "\"
 "TODO currently localleader and leader are mapped to the same key. That is not
 "clever
-let maplocalleader = ","    "set localleacer to ","
-let mapleader = ","         "set leader to ","
+let maplocalleader = ','    "set localleacer to ","
+let mapleader = ','         "set leader to ","
 
 " key mappings in normal mode for navigation between tabs
 nnoremap th :tabfirst<CR>
@@ -78,8 +78,12 @@ nnoremap <c-l> :tabnext<CR>
 " nnoremap gk k
 
 " Keymappings for actions
-nnoremap <F12> :NERDTreeToggle<CR>          "<F12> to toggle Nerdtree
-nnoremap <F11> :!detex % \| wc -w<CR>       "<F11> for simple wordcount
+"<F12> to toggle Nerdtree
+nnoremap <F12> :NERDTreeToggle<CR>
+"<F8>> to toggle Nerdtree
+nnoremap <F8> :NERDTreeToggle<CR>
+"<F11> for simple wordcount
+nnoremap <F11> :!detex % \| wc -w<CR>
 nnoremap <silent> <Leader>t :TagbarToggle<CR>
 nnoremap <silent> <Leader>T :term ++rows=10<CR>
 
@@ -315,7 +319,7 @@ let g:tagbar_type_markdown = {
 \ }
 au BufNewFile,BufRead,BufEnter      README      setlocal spell  spelllang=en_us "set spell check for README files
 " au BufNewFile,BufRead,BufEnter      *.md        setlocal spell  spelllang=de_de "set spellcheck with language de_de for markdown files currently deactivated as I assume that it would break settings for markdown beneath
-autocmd BufNewFile,BufRead,BufEnter *.md setlocal filetype=markdown textwidth=80 
+autocmd BufNewFile,BufRead,BufEnter *.md setlocal filetype=markdown textwidth=80
 autocmd BufNewFile,BufRead,BufEnter *.md nnoremap <buffer> <silent><Leader>t :Voomtoggle<CR>
 autocmd BufNewFile,BufRead,BufEnter *.tex nnoremap <buffer> <silent><Leader>t :VoomToggle<CR>
 "set Voomtoggle only for md files; TODO: set also for .tex file: set also for .tex files
