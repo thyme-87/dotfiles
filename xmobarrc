@@ -3,7 +3,7 @@ Config {
         -- APPEARANCE
         --font = "xft:RobotoMono-Regular:size=9:antialiasing=false"
         --font = "xft:Roboto Mono for Powerline:size=8:antialiasing=true"
-        font = "xft:RobotoMono Nerd Font:style=Regular:size=10:antialiasing=true"
+        font = "xft:RobotoMono Nerd Font:style=Regular:size=12:antialiasing=true"
         , additionalFonts = []
         , textOffset = -1
         , iconOffset = -1
