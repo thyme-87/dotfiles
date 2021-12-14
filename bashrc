@@ -21,7 +21,6 @@ alias nextmonths='cal -3wm $(expr $(date +%m) + 1) $(date +%Y)'
 alias get_audio_sources="pacmd list-sinks | grep -e 'name:' -e 'index:'"
 alias set_default_audio_sink="pactl set-default-sink {}"
 
-#alias ansdoc='ansible-doc $(rg -g "!test/" -g "!tests/" -g "!module_utils/" -g "!doc_fragments/" -g "!cliconf/" -g "!terminal/" -g "!action/" -g "!httpapi/" -g "!callback/" --iglob "*.py" --iglob "!__init__.py" --files /usr/lib/python3.8/site-packages/ansible_collections/ /usr/lib/python3.8/site-packages/ansible/modules/ | grep -oP "(ansible_collections/|ansible/modules/)\K.*" | sed -e 's!plugins/modules/!!' -e 's!/!.!g' -e "s!\.py!!" | fzf -e)'
 alias ansdoc='__ansdoc'
 
 function __ansdoc {
