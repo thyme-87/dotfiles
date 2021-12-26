@@ -1,4 +1,4 @@
-Config { 
+Config {
 
         -- APPEARANCE
         --font = "xft:RobotoMono-Regular:size=9:antialiasing=false"
@@ -39,24 +39,24 @@ Config {
         --, template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %volume%   %weather% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
 
         -- PLUGINS
-        , commands = 
+        , commands =
 
         -- network activity monitor (dynamic interface resolution)
         [ Run DynNetwork    [   "--template",   "<dev>: <tx>kB/s|<rx>kB/s"
                             ,   "--Low"     ,   "1000"        --units: kB/s
                             ,   "--High"    ,   "5000"        --units: kB/s
-                            ,   "--high"    ,   "#00FFDD" 
-                            ,   "--normal"  ,   "#e0e0e0" 
-                            ,   "--low"     ,   "#FF0000" 
+                            ,   "--high"    ,   "#00FFDD"
+                            ,   "--normal"  ,   "#e0e0e0"
+                            ,   "--low"     ,   "#FF0000"
                             ] 10
 
         -- cpu activity monitor
         , Run MultiCpu      [   "--template",   "Cpu: <total0>%|<total1>%"
                             ,   "--Low"     ,   "30"        --units: %
                             ,   "--High"    ,   "65"        --units: %
-                            ,   "--high"    ,   "#FF0000" 
-                            ,   "--normal"  ,   "#00FFDD" 
-                            ,   "--low"     ,   "#66aa11" 
+                            ,   "--high"    ,   "#FF0000"
+                            ,   "--normal"  ,   "#00FFDD"
+                            ,   "--low"     ,   "#66aa11"
                             ,   "--ppad"    ,   "3"
                             ] 10
 
@@ -64,18 +64,18 @@ Config {
         , Run CoreTemp      [   "--template",   "Temp: <core0>°C | <core1>°C"
                             ,   "--Low"     ,   "70"        --units: °C
                             ,   "--High"    ,   "80"        --units: °C
-                            ,   "--high"    ,   "#FF0000" 
-                            ,   "--normal"  ,   "#66aa11" 
-                            ,   "--low"     ,   "#00FFDD" 
+                            ,   "--high"    ,   "#FF0000"
+                            ,   "--normal"  ,   "#66aa11"
+                            ,   "--low"     ,   "#00FFDD"
                             ] 10
-                          
+
         -- memory usage monitor
         , Run Memory        [   "--template",   "Mem: <usedratio>%"
                             ,   "--Low"     ,   "20"        --units: %
                             ,   "--High"    ,   "90"        --units: %
-                            ,   "--high"    ,   "#FF0000" 
-                            ,   "--normal"  ,   "#66aa11" 
-                            ,   "--low"     ,   "#00FFDD" 
+                            ,   "--high"    ,   "#FF0000"
+                            ,   "--normal"  ,   "#66aa11"
+                            ,   "--low"     ,   "#00FFDD"
                             ] 10
         -- swap monitor
         , Run Swap          [] 10
@@ -84,9 +84,9 @@ Config {
         , Run Battery       [   "--template",   "Batt: <acstatus>"
                             ,   "--Low"     ,   "20"        --units: %
                             ,   "--High"    ,   "80"        --units: %
-                            ,   "--high"    ,   "#66aa11" 
-                            ,   "--normal"  ,   "#e0e0e0" 
-                            ,   "--low"     ,   "#FF0000" 
+                            ,   "--high"    ,   "#66aa11"
+                            ,   "--normal"  ,   "#e0e0e0"
+                            ,   "--low"     ,   "#FF0000"
 
                             , "--" --battery specific options
                                     -- discharging status
@@ -97,7 +97,7 @@ Config {
                                     , "-i"  , "<fc=#66aa11>Charged</fc>"
                             ] 50
 
-        -- time and date indicator 
+        -- time and date indicator
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
         , Run Date "<fc=#66aa11>%F (%a) %T</fc>" "date" 10
 
