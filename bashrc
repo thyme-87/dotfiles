@@ -155,11 +155,11 @@ __switch_cloudprovider() {
 }
 
 __cloudprovider_context() {
-    if [[ ${CLOUDPROVIDER} == "AWS" ]]; then
+    if [[ ${CLOUDPROVIDER} =~ (AWS|aws) ]]; then
         printf "$AWS_PROFILE"
-    elif [[ ${CLOUDPROVIDER} == "AZURE" ]]; then
+    elif [[ ${CLOUDPROVIDER} =~ (AZURE|azure|AZ|az) ]]; then
         printf "TBD"
-    elif [[ ${CLOUDPROVIDER} == "GCP" ]]; then
+    elif [[ ${CLOUDPROVIDER} =~ (GCP|gcp|GOOGLE|google) ]]; then
         read -d "\n" CONFIG_NAME PROJECT_NAME <<< $(gcloud config configurations list | awk '{ if ($2 == "True") { print $1 "\n" $4 }}')
         printf "${CONFIG_NAME} > ${PROJECT_NAME}"
     elif [[ ${CLOUDPROVIDER} == "NONE" ]]; then
