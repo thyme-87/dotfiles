@@ -31,6 +31,7 @@ function __ansdoc {
     if [ "${1}X" != "X" ]; then
         ansible-doc "${1}"
     else
+      PYTHON_VERSION=$(python --version | cut -d ' ' -f 2 | grep -Po '\d+.\d+')
       ansible-doc $(rg \
       -g "!test/" \
       -g "!tests/" \
@@ -44,9 +45,9 @@ function __ansdoc {
       --iglob "*.py" \
       --iglob "!__init__.py" \
       --files  \
-      /home/timon/.ansible/collections/ansible_collections \
-      /home/timon/.local/lib/python3.9/site-packages/ansible \
-      /home/timon/.local/lib/python3.9/site-packages/ansible_collections \
+      "${HOME}/.ansible/collections/ansible_collections" \
+      "${HOME}/.local/lib/python${PYTHON_VERSION}/site-packages/ansible" \
+      "${HOME}/.local/lib/python${PYTHON_VERSION}/site-packages/ansible_collections" \
       | grep -oP "^.*(collections/|ansible/modules/)\K.*" \
       | sed -e 's!plugins/modules/!!' -e 's!/!.!g' -e 's!\.py!!' \
       | fzf --preview 'ansible-doc {}' -e)
