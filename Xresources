@@ -79,8 +79,10 @@ URxvt*.depth: 32
 ! URxvt*font: xft:Bitstream Vera Sans Mono:pixelsize=12
 !
 ! Some general settings for xft:
+! Xft.dpi can be used for configuring hidpi screens. See: https://wiki.archlinux.org/title/HiDPI#X_Resources
+! should be multiple of 96 if possible
 Xft.size:           14
-Xft.dpi:            96
+Xft.dpi:            100
 Xft.antialias:      true
 Xft.rgba:           rgb
 Xft.hinting:        false
