@@ -1,7 +1,9 @@
 Config {
 
         -- APPEARANCE
-        --font = "xft:RobotoMono-Regular:size=9:antialiasing=false"
+        --TODO add icons to save space
+        --TODO use multicore plugins for usage and temperature to save some space
+        --     see: https://github.com/jaor/xmobar/blob/master/doc/plugins.org
         --font = "xft:Roboto Mono for Powerline:size=8:antialiasing=true"
         font = "xft:RobotoMono Nerd Font:style=Regular:size=10:antialiasing=true"
         , additionalFonts = []
@@ -31,7 +33,9 @@ Config {
         , alignSep  = "}{"  -- separator between left-right alignment
 
         --for now, deactivate the weather plugin, as it is not working (see below)
-        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ <fc=#e0e0e0>Vol: </fc>%volume%  | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
+        --, template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ <fc=#e0e0e0>Vol: </fc>%volume%  | <action=`gnome-calendar`>%date%</action> | Berlin: %weather% | <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
+        --TEST spotify songinfos
+        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ <fc=#F92672>%spotifyinfo%</fc> | <fc=#e0e0e0>Vol: </fc>%volume%  | <action=`gnome-calendar`>%date%</action> | Berlin: %weather% | <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
 
         --template with build in plugin for weather
         --, template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ <fc=#e0e0e0>volume</fc>%volume%   %EDDT% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
@@ -51,7 +55,7 @@ Config {
                             ] 10
 
         -- cpu activity monitor
-        , Run MultiCpu      [   "--template",   "Cpu: <total0>%|<total1>%"
+        , Run MultiCpu      [   "--template",   "Cpu: <total0>%|<total1>%|<total2>%|<total3>%"
                             ,   "--Low"     ,   "30"        --units: %
                             ,   "--High"    ,   "65"        --units: %
                             ,   "--high"    ,   "#FF0000"
@@ -61,7 +65,7 @@ Config {
                             ] 10
 
         -- cpu core temperature monitor
-        , Run CoreTemp      [   "--template",   "Temp: <core0>°C | <core1>°C"
+        , Run CoreTemp      [   "--template",   "Temp: <core0>°C | <core1>°C | <core2>°C | <core3>°C"
                             ,   "--Low"     ,   "70"        --units: °C
                             ,   "--High"    ,   "80"        --units: °C
                             ,   "--high"    ,   "#FF0000"
