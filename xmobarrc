@@ -112,12 +112,14 @@ Config {
                             ,   ("es",  "<fc=#3579a8>ES </fc>")
                             ]
         , Run ComX "pamixer" [ "--get-volume-human" ] "N/A" "volume" 10
-        , Run StdinReader
         -- weather monitor
+        -- this requires the file 'weather-bin' to be present in $PATH (i.e. at /usr/local/bin)
+        , Run Com "weather-berlin" [ ] "weather" 600
+        , Run Com "/usr/local/bin/spotifyscript" [ ] "spotifyinfo" 5
+        , Run StdinReader
+        --, Run MarqueePipeReader "/usr/local/bin/spotifyscript" (10, 7, "+") "spotifyinfo"
         -- currently broken; see https://github.com/jaor/xmobar/issues/270
-        --, Run Weather "EDDT" [ "--template", "<skyCondition> | <fc=#F92672><tempC></fc>°C | <fc=#F92672><rh></fc>% | <fc=#F92672><pressure></fc> hPa"
-                            ] 36000
-        -- not quite ready yet
+        --, Run Weather "EDDT" [ "--template", "<skyCondition> | <fc=#F92672><tempC></fc>°C | <fc=#F92672><rh></fc>% | <fc=#F92672><pressure></fc> hPa" ] 36000
         --, Run ComX "weather" [ "-mq" ] "N/A" "weather" 600
         ]
     }
