@@ -98,7 +98,7 @@ Config {
                                     -- AC "on" status
                                     , "-O"  , "<fc=#FF0000>Charging</fc>"
                                     -- charged status
-                                    , "-i"  , "<fc=#66aa11>Charged</fc>"
+                                    , "-i"  , "<fc=#66aa11>Full</fc>"
                             ] 50
 
         -- time and date indicator
