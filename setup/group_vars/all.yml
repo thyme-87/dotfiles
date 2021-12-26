@@ -1,0 +1,112 @@
+base_packages:
+  - acpi
+  - acpid
+  - automake
+  - base
+  - base-devel
+  - bash-completion
+  - binutils
+  - calc
+  - cmake
+  - curl
+  - dhcp
+  - fakeroot
+  - gawk
+  - gcc
+  - gdb
+  - gdb-common
+  - git
+  - grep
+  - gvim
+  - gzip
+  - htop
+  - jdk-openjdk #VERIFY
+  - linux
+  - linux-firmware
+  - man-db
+  - man-pages
+  - make
+  - net-tools
+  - networkmanager
+  - python-pip
+  - screen
+  - sudo
+  - tree
+  - unzip
+  - wget
+  - wpa_supplicant
+  - rsync
+
+extended_base_packages:
+  - findutils
+  - fzf
+  - graphviz
+  - jq
+  - pkgfile
+  - ranger
+  - ripgrep
+  - rxvt-unicode #FIXME post X
+  - strace
+  - the_silver_searcher
+  - tmux #?
+  - urxvt-perls
+  - usbutils
+  - wgetpaste
+  - yq
+  - reflector
+  - kubectl
+  - kubectx
+
+
+aur_packages_base:
+  - nerd-fonts-complete
+  - physlock
+  - i3lock
+  - glow
+
+development_packages_pacman:
+  - npm
+  - terragrunt
+  - tfenv
+  - go
+
+development_packages_pip:
+  - ansible-lint
+
+gnome_packages:
+  - xorg-server
+  - xorg-sessreg
+  - xorg-xinit
+  - xf86-video-intel #FIXME?
+  - mesa #FIXME?
+  - gnome-flashback
+  - gnome-autoar
+  - gnome-bluetooth
+  - gnome-online-accounts
+  - gnome-desktop
+  - gnome-menus
+  - gnome-autoar
+  - gnome-panel
+  - gnome-session
+  - geoclue
+  - bluez-tools
+  - bluez-utils
+  - dconf-editor
+  - eog
+  - evince
+  - evolution
+  - file-roller
+  - nautilus-extension
+  - keepassxc
+
+user:
+  name: timon
+  group: timon
+  additional_groups:
+    - tfenv
+
+user_password: foobar
+
+aur_user_name: aur_user
+
+yay_version: 11.0.2-1

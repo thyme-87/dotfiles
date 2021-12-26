@@ -1,0 +1,85 @@
+---
+#basic setup on new machines
+- name: Setup everything
+  hosts: target
+  #remote_user: timon
+  connection: local
+  become: true #FIXME might not even be necessary?
+
+  tasks:
+    - name: Install base packages
+      community.general.pacman:
+        name: "{{ base_packages }}"
+        state: latest
+        update_cache: yes
+
+    - name: Install extended base packages
+      community.general.pacman:
+        name: "{{ extended_base_packages }}"
+        state: latest
+        update_cache: yes
+
+    - name: "Create usergroup for user {{ user_name }}"
+      ansible.builtin.group:
+        name: "{{ user.group }}"
+        state: present
+        system: no
+
+#FIXME ensure that password is set on first run ONLY
+    - name: "Create user {{ user_name }}"
+      ansible.builtin.user:
+        name: "{{ user.name }}"
+        group: "{{ user.group }}"
+        groups: "{{ user.additional_groups }}"
+        state: present
+        #password: "{{ user_password | password_hash('sha512', 'satlystuff') }}" #FIXME
+        system: no
+        append: yes
+
+    - name: "Install some gnome packages"
+      community.general.pacman:
+        name: "{{ extended_base_packages }}"
+        state: latest
+        update_cache: yes
+
+    - name: "Create user for installing AUR packages"
+      ansible.builtin.user:
+        name: "{{ aur_user_name }}"
+        state: present
+        #password: "{{ test | password_hash('sha512', 'satlystuff') }}" #FIXME
+        system: yes
+
+    - name: "Allow user {{ aur_user_name }} passwordless access to pacman"
+      lineinfile:
+        group: root
+        owner: root
+        mode: 0644
+        path: "/etc/sudoers.d/{{ aur_user_name }}"
+        create: yes
+        state: present
+        line: "{{ aur_user_name }} ALL=(ALL) NOPASSWD: /usr/bin/pacman"
+        validate: "/usr/sbin/visudo -cf %s"
+
+    - name: "Fetch package yay from AUR"
+      become: true
+      become_user: "{{ aur_user_name }}"
+      ansible.builtin.git:
+        clone: yes
+        repo: https://aur.archlinux.org/yay.git
+        dest: /tmp/yay
+          #version: "{{ yay_version }}"
+
+    - name: "test makepkg via shell module"
+      become: true
+      become_user: "{{ aur_user_name }}"
+      ansible.builtin.shell: |
+        cd /tmp/yay/
+        makepkg -si --noconfirm
+
+#TODO
+# install pre-X minimal setup
+# install gnome + xmonad + picom + xmobar
+# [x] install and configure yay
+# install aur packages via yay
+# setup gdm config
+# setup dotfiles
