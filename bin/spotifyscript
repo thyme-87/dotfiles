@@ -1,0 +1,12 @@
+#!/bin/bash
+
+pidof spotify -q
+if [[ "$?" = 0 ]]; then
+    songinfo=$(playerctl metadata)
+    #playerctl metadata | awk '/xesam/{print $2 ":" $3 "#" $4}'
+    #playerctl metadata | awk '/artist/{print $0}'
+    artist=$(grep -Po "artist\s+\K.*" <<< $songinfo)
+    title=$(grep -Po "title\s+\K.*$" <<< $songinfo)
+    #echo "$(grep -Po "title\s+\K.*$" <<< $songinfo)"
+    echo "$title by $artist"
+fi
