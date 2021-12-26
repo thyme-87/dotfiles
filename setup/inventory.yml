@@ -1,0 +1,5 @@
+---
+target:
+  hosts:
+    localhost:
+      ansible_host: localhost

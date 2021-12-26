@@ -1,0 +1,11 @@
+[Unit]
+Description=Lock the screen
+Before=sleep.target hibernate.target
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/physlock -d
+
+[Install]
+WantedBy=sleep.target hibernate.target
+

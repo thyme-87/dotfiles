@@ -1,0 +1,8 @@
+#%PAM-1.0
+#auth		required	pam_unix.so
+#2021-06-11 For unknown reasons, physlock seems "somehow" to work wit gdm login now...
+auth		required	pam_securetty.so
+auth		required	pam_nologin.so
+account		required	pam_unix.so
+password	required	pam_unix.so
+session		required	pam_unix.so
