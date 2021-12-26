@@ -81,9 +81,14 @@ manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
     l = 0.2
     t = 0.4
 
-myStartupHook ::X ()
-myStartupHook = do
-     spawn "compton -f -I 0.10 -O 0.10 --backend glx --vsync opengl"
+--TODO VERIFY that starting picom via ~/.xsession is working as expected
+-- ~/.xsession not verified (yet)
+-- alternative it is possible to use the startup hook to run commands / launch stuff
+-- TODO decide what to use, EITHER /etc/X11/xinit/xinitrc.d/
+--      OR myStartupHook (or, potentially ~/.xsession)
+--myStartupHook ::X ()
+--myStartupHook = do
+--     spawn "picom --conf ~/.picom.conf"
 
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
 --withUrgencyHook LibNotifyUrgencyHook <- This still is ToDo!
@@ -105,7 +110,7 @@ toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_m)
 
 myConfig = def {
         manageHook      = ( isFullscreen --> doFullFloat ) <+> manageDocks <+> myManageHook <+> manageHook def
-        , startupHook   = myStartupHook <+> startupHook def
+        --, startupHook   = myStartupHook <+> startupHook def --TODO verify that .xsession is working as expected
         , handleEventHook   =   handleEventHook def <+> fullscreenEventHook
         , layoutHook    = avoidStruts $ toggleLayouts (noBorders Full) $ smartBorders $ layoutHook def
         , modMask                 = myModMask
