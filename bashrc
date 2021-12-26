@@ -131,8 +131,9 @@ export FZF_DEFAULT_OPTS='
 [ -f ~/dotfiles/aws-get-session-token.sh ] && source ~/dotfiles/aws-get-session-token.sh #TODO rename to aws-functions.sh
 [ -f /usr/share/fzf/completion.bash ] && source /usr/share/fzf/completion.bash
 [ -f /usr/share/fzf/key-bindings.bash ] && source /usr/share/fzf/key-bindings.bash
-[ -f /usr/share/bash-completion/completions/git ] && source /usr/share/bash-completion/completions/git
-[ -f /usr/share/bash-completion/completions/docker ] && source /usr/share/bash-completion/completions/docker
+[ -d /usr/share/bash-completion/completions/ ] && source /usr/share/bash-completion/completions/*
+#[ -f /usr/share/bash-completion/completions/git ] && source /usr/share/bash-completion/completions/git
+#[ -f /usr/share/bash-completion/completions/docker ] && source /usr/share/bash-completion/completions/docker
 
 
 #this is a dirty workaround to provide both: autocompletion via fzf and custom autocompletion for ssh
