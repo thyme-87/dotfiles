@@ -161,4 +161,5 @@ myModMask               = mod4Mask -- [super]
 myBorderWidth           = 1
 myNormalBorderColor     = "#e0e0e0"
 myFocusedBorderColor    = "#F92672"
-myWorkSpaces    = [ "1:www", "2:bash", "3:music", "4:mail", "5:firefox", "6:calc", "7:misc", "8:misc", "9:misc"]
+--TODO use icons/symbols for workspaces to save some space
+myWorkSpaces    = [ "1:web", "2:_$", "3:msc", "4:@", "5:firefox", "6:calc", "7:misc", "8:misc", "9:misc"]
