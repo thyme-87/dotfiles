@@ -123,8 +123,8 @@ myConfig = def {
         , normalBorderColor     = myNormalBorderColor
         , focusedBorderColor    = myFocusedBorderColor
         } `additionalKeys`
-        ([ ((mod4Mask .|. shiftMask, xK_l), spawn "i3lock -i /${HOME}/backgrounds/arch_background.png")
-        , ((mod1Mask        , xK_space), spawn "/home/timon/dotfiles/bin/layout_switch")
+        ([ ((mod4Mask .|. shiftMask, xK_l), spawn "i3lock -i ${HOME}/backgrounds/arch_background.png")
+        , ((mod1Mask        , xK_space), spawn "${HOME}/dotfiles/bin/layout_switch")
         , ((mod4Mask            , xK_m), sendMessage ToggleStruts)
         , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +4%")
         , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ -4%")
