@@ -1,8 +1,0 @@
-- clean: []
-- link: 
-    ~/.vim: vim/
-    ~/.vimrc: vimrc
-    ~/.bashrc: bashrc
-    ~/.bash_profile: bash_profile
-- shell: []
-
