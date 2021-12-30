@@ -76,6 +76,19 @@
         cd /tmp/yay/
         makepkg -si --noconfirm
 
+    - name: "Download backgrounds"
+      ansible.builtin.get_url:
+        url: "{{ dropbox_background_url }}"
+        dest: "/home/{{ user.name }}/Downloads/backgrounds.zip"
+
+#TODO test if this is possible in one step
+    - name: "Unzip backgrounds.zip to /home/{{ user.name }}/backgrounds/"
+      ansible.builtin.unarchive:
+        src: "/home/{{ user.name }}/Downloads/backgrounds.zip"
+        dest: "/home/{{ user.name }}/backgrounds/"
+
+
+
 #TODO
 # install pre-X minimal setup
 # install gnome + xmonad + picom + xmobar
