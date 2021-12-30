@@ -31,7 +31,6 @@
       - firefox
       - fzf
       - the_silver_searcher
-      - r
       - ranger
       - ghc
       - jq
