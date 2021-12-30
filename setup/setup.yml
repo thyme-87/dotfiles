@@ -132,6 +132,7 @@
           - name: "Install Vundle"
             #make ~/.vim/bundle
             #clone https://github.com/VundleVim/Vundle.vim.git to ~/.vim/bundle/Vundle.vim
+          - name: "download backgrounds"
           - name: "Link vimrc"
           - name: "Link Ultisnips"
             #link ~/.vim/UltiSnips -> ~/dotfiles/UltiSnips
