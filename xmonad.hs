@@ -83,10 +83,9 @@ manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
 
 myStartupHook ::X ()
 myStartupHook = do
+     spawn "${HOME}/dotfiles/bin/screensetup"
      spawn "picom -f -I 0.10 -O 0.10 --config ${HOME}/.picom.conf"
-     spawn myScreenLayoutHome
-     spawn "feh --no-fehbg --bg-fill ${HOME}/wallpaper-dark-arch.png"
-     --spawn "compton -f -I 0.10 -O 0.10 --backend glx --vsync opengl"
+     spawn "feh --no-fehbg --bg-fill ${HOME}/backgrounds/background_5k_01.png"
 
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
 --withUrgencyHook LibNotifyUrgencyHook <- This still is ToDo!
@@ -102,8 +101,7 @@ myPP = xmobarPP
 --             , ppUrgent  =   xmobarColor myUrgentWSColor  "" . wrap myUrgentWSLeft myUrgentWSRight
 --             }
 
---TODO this MUST be moved to a script that is doing this dynamically
-myScreenLayoutHome = "xrandr --output VGA-0 --off --output LVDS-0 --off --output DP-0 --off --output DP-1 --off --output DP-2 --off --output DP-3 --off --output DP-4 --mode 2560x1440 --pos 2560x0 --rotate normal --output DP-5 --mode 2560x1440 --pos 0x0 --rotate normal"
+--myScreenLayoutHome = "xrandr --output VGA-0 --off --output LVDS-0 --off --output DP-0 --off --output DP-1 --off --output DP-2 --off --output DP-3 --off --output DP-4 --mode 2560x1440 --pos 2560x0 --rotate normal --output DP-5 --mode 2560x1440 --pos 0x0 --rotate normal"
 
 myBar = "xmobar ~/dotfiles/xmobarrc"
 
@@ -111,7 +109,7 @@ toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_m)
 
 myConfig = def {
         manageHook      = ( isFullscreen --> doFullFloat ) <+> manageDocks <+> myManageHook <+> manageHook def
-        --, startupHook   = myStartupHook <+> startupHook def --TODO verify that .xsession is working as expected
+        --, startupHook   = myStartupHook <+> startupHook def --TODO
         , handleEventHook   =   handleEventHook def <+> fullscreenEventHook
         , layoutHook    = avoidStruts $ toggleLayouts (noBorders Full) $ smartBorders $ layoutHook def
         , modMask                 = myModMask
