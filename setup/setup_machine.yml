@@ -60,6 +60,11 @@
         line: "{{ aur_user_name }} ALL=(ALL) NOPASSWD: /usr/bin/pacman"
         validate: "/usr/sbin/visudo -cf %s"
 
+    - name: "Determin if yay is already installed"
+      stat:
+        path: /usr/bin/yay
+      register: yay_present
+
     - name: "Fetch package yay from AUR"
       become: true
       become_user: "{{ aur_user_name }}"
@@ -68,13 +73,15 @@
         repo: https://aur.archlinux.org/yay.git
         dest: /tmp/yay
           #version: "{{ yay_version }}"
+      when: not yay_present.stat.exists
 
-    - name: "test makepkg via shell module"
+    - name: "Install yay via makepkg -si"
       become: true
       become_user: "{{ aur_user_name }}"
       ansible.builtin.shell: |
         cd /tmp/yay/
         makepkg -si --noconfirm
+      when: not yay_present.stat.exists
 
     - name: "Download backgrounds"
       ansible.builtin.get_url:
