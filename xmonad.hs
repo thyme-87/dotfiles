@@ -84,8 +84,11 @@ manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
 myStartupHook ::X ()
 myStartupHook = do
      spawn "${HOME}/dotfiles/bin/screensetup"
-     spawn "picom -f -I 0.10 -O 0.10 --config ${HOME}/.picom.conf"
+     spawn "picom -f -I 0.10 -O 0.10 --config ${HOME}/dotfiles/picom.conf"
      spawn "feh --no-fehbg --bg-fill ${HOME}/backgrounds/background_5k_01.png"
+     spawn "xrdb -merge ${HOME}/dotfiles/Xresources"
+     spawn "setxkbmap de"
+     spawn "xsetroot -cursor_name left_ptr"
 
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
 --withUrgencyHook LibNotifyUrgencyHook <- This still is ToDo!
@@ -109,7 +112,7 @@ toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_m)
 
 myConfig = def {
         manageHook      = ( isFullscreen --> doFullFloat ) <+> manageDocks <+> myManageHook <+> manageHook def
-        --, startupHook   = myStartupHook <+> startupHook def --TODO
+        , startupHook   = myStartupHook <+> startupHook def --TODO
         , handleEventHook   =   handleEventHook def <+> fullscreenEventHook
         , layoutHook    = avoidStruts $ toggleLayouts (noBorders Full) $ smartBorders $ layoutHook def
         , modMask                 = myModMask
