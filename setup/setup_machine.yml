@@ -12,18 +12,27 @@
         name: "{{ base_packages }}"
         state: latest
         update_cache: yes
+      tags:
+        - base
+        - initial
 
     - name: Install extended base packages
       community.general.pacman:
         name: "{{ extended_base_packages }}"
         state: latest
         update_cache: yes
+      tags:
+        - base
+        - initial
 
     - name: "Create usergroup for user {{ user_name }}"
       ansible.builtin.group:
         name: "{{ user.group }}"
         state: present
         system: no
+      tags:
+        - base
+        - initial
 
 #FIXME ensure that password is set on first run ONLY
     - name: "Create user {{ user_name }}"
@@ -35,12 +44,17 @@
         #password: "{{ user_password | password_hash('sha512', 'satlystuff') }}" #FIXME
         system: no
         append: yes
+      tags:
+        - base
+        - initial
 
     - name: "Install some gnome packages"
       community.general.pacman:
         name: "{{ extended_base_packages }}"
         state: latest
         update_cache: yes
+      tags:
+        - gnome
 
     - name: "Create user for installing AUR packages"
       ansible.builtin.user:
@@ -48,6 +62,8 @@
         state: present
         #password: "{{ test | password_hash('sha512', 'satlystuff') }}" #FIXME
         system: yes
+      tags:
+        - yay
 
     - name: "Allow user {{ aur_user_name }} passwordless access to pacman"
       lineinfile:
@@ -59,11 +75,15 @@
         state: present
         line: "{{ aur_user_name }} ALL=(ALL) NOPASSWD: /usr/bin/pacman"
         validate: "/usr/sbin/visudo -cf %s"
+      tags:
+        - yay
 
     - name: "Determin if yay is already installed (check for /usr/bin/yay)"
       stat:
         path: /usr/bin/yay
       register: yay_present
+      tags:
+        - yay
 
     - name: "Fetch package yay from AUR"
       become: true
@@ -74,6 +94,8 @@
         dest: /tmp/yay
           #version: "{{ yay_version }}"
       when: not yay_present.stat.exists
+      tags:
+        - yay
 
     - name: "Install yay via makepkg -si"
       become: true
@@ -82,6 +104,8 @@
         cd /tmp/yay/
         makepkg -si --noconfirm
       when: not yay_present.stat.exists
+      tags:
+        - yay
 
     - name: "Download backgrounds"
       ansible.builtin.get_url:
