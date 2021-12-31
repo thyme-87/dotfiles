@@ -31,4 +31,4 @@ description=$(grep -Po "span class=\"phrase\">\K(.*)(?=<\/span>)" <<< "${result}
 realfeelFahrenheit=$(grep -Po "adInfo.*realfeel\":\"\K(\d+)" <<< "${result}")
 #echo $realfeelFahrenheit
 realfeelCelsius=$(awk "BEGIN {print (${realfeelFahrenheit}-32)/2}")
-printf "In Berlin it is ${description}. The temperature is ${temp}C. It feels like ${realfeelCelsius}°C\n"
+printf "${description} at ${temp}C. (feels like ${realfeelCelsius}°C)\n"
