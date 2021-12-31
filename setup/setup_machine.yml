@@ -109,7 +109,7 @@
 
     - name: "Download backgrounds"
       ansible.builtin.get_url:
-        url: "{{ dropbox_background_url }}"
+        url: "{{ dropbox_background_folder_url }}"
         dest: "/home/{{ user.name }}/Downloads/backgrounds.zip"
 
 #TODO test if this is possible in one step
