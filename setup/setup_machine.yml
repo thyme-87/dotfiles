@@ -107,16 +107,38 @@
       tags:
         - yay
 
+    - name: "Create folder /home/{{ user.name }}/backgrounds/"
+      ansible.builtin.file:
+        path: "/home/{{ user.name }}/backgrounds"
+        state: directory
+        mode: '0755'
+      register: background_directory
+      become: false
+      tags:
+        - desktop
+
     - name: "Download backgrounds"
       ansible.builtin.get_url:
         url: "{{ dropbox_background_folder_url }}"
         dest: "/home/{{ user.name }}/Downloads/backgrounds.zip"
+      become: false
+      tags:
+        - desktop
 
 #TODO test if this is possible in one step
     - name: "Unzip backgrounds.zip to /home/{{ user.name }}/backgrounds/"
       ansible.builtin.unarchive:
         src: "/home/{{ user.name }}/Downloads/backgrounds.zip"
+        remote_src: yes
         dest: "/home/{{ user.name }}/backgrounds/"
+        group: timon
+        owner: timon
+      become: false
+      register: unzip_result
+      failed_when:
+        - '"extracting" not in unzip_result.extract_results.out'
+      tags:
+        - desktop
 
 
 
