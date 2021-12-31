@@ -1,11 +1,17 @@
 #!/bin/bash
 
-screens=$(xrandr --listactivemonitors | awk '{print $4}')
-
 activate_screen_command="--output VGA-0 --off --output LVDS-0 --off"
-for screen in $screens; do
-    activate_screen_command+=" --output $screen --mode 2560x1440 --rotate normal"
-done
+screens=$(xrandr --listactivemonitors | awk '{print $4}' | tr -d '\n')
+laptop_resolution="1920x1080"
+default_resolution="2560x1440"
+
+if [[ $screens =~ eDP1 ]]; then
+    activate_screen_command+=" --output ${screens} --mode ${laptop_resolution} --rotate normal"
+else
+    for screen in $screens; do
+        activate_screen_command+=" --output $screen --mode ${default_resolution} --rotate normal"
+    done
+fi
 
 #echo "xrandr ${activate_screen_command} --pos 0x0"
 xrandr ${activate_screen_command} --pos 0x0
