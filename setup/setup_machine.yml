@@ -60,7 +60,7 @@
         line: "{{ aur_user_name }} ALL=(ALL) NOPASSWD: /usr/bin/pacman"
         validate: "/usr/sbin/visudo -cf %s"
 
-    - name: "Determin if yay is already installed"
+    - name: "Determin if yay is already installed (check for /usr/bin/yay)"
       stat:
         path: /usr/bin/yay
       register: yay_present
