@@ -40,7 +40,6 @@ base_packages:
 extended_base_packages:
   - findutils
   - fzf
-  - graphviz
   - jq
   - pkgfile
   - ranger
@@ -69,6 +68,7 @@ development_packages_pacman:
   - terragrunt
   - tfenv
   - go
+  - graphviz
 
 development_packages_pip:
   - ansible-lint
