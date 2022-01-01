@@ -35,7 +35,7 @@ Config {
         --for now, deactivate the weather plugin, as it is not working (see below)
         --, template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ <fc=#e0e0e0>Vol: </fc>%volume%  | <action=`gnome-calendar`>%date%</action> | Berlin: %weather% | <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
         --TEST spotify songinfos
-        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ <fc=#F92672>%spotifyinfo%</fc> | <fc=#e0e0e0>Vol: </fc>%volume%  | <action=`gnome-calendar`>%date%</action> | Berlin: %weather% | <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
+        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ <fc=#F92672>%spotifyinfo%</fc> | <fc=#e0e0e0>Vol: </fc>%volume%  | <action=`gnome-calendar`>%date%</action> | BER: %weather% | <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
 
         --template with build in plugin for weather
         --, template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ <fc=#e0e0e0>volume</fc>%volume%   %EDDT% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
