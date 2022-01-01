@@ -103,7 +103,7 @@ Config {
 
         -- time and date indicator
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Run Date "<fc=#66aa11>%F (%a) %T [CW %V]</fc>" "date" 10
+        , Run Date "<fc=#66aa11>%F[%V](%a) %T</fc>" "date" 10
 
         -- keyboard layout indicator
         , Run Kbd           [   ("de",  "<fc=#3579a8>DE </fc>")
