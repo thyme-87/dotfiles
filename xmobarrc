@@ -65,7 +65,7 @@ Config {
                             ] 10
 
         -- cpu core temperature monitor
-        , Run CoreTemp      [   "--template",   "Temp: <core0>°C | <core1>°C | <core2>°C | <core3>°C"
+        , Run CoreTemp      [   "--template",   "T(°C): <core0>|<core1>|<core2>|<core3>"
                             ,   "--Low"     ,   "70"        --units: °C
                             ,   "--High"    ,   "80"        --units: °C
                             ,   "--high"    ,   "#FF0000"
