@@ -60,6 +60,9 @@ aur_packages_base:
   - physlock
   - i3lock
   - glow
+  - ffmpeg-full
+  - yubioath-desktop
+  - yubikey-personalizatoin-gui
 
 development_packages_pacman:
   - npm
