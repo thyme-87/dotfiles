@@ -55,7 +55,7 @@ Config {
                             ] 10
 
         -- cpu activity monitor
-        , Run MultiCpu      [   "--template",   "Cpu: <total0>%|<total1>%|<total2>%|<total3>%"
+        , Run MultiCpu      [   "--template",   "CPU(%):<total0>|<total1>|<total2>|<total3>"
                             ,   "--Low"     ,   "30"        --units: %
                             ,   "--High"    ,   "65"        --units: %
                             ,   "--high"    ,   "#FF0000"
