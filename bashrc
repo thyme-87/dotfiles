@@ -10,7 +10,6 @@
 alias tor='~/tor-browser_en-US/start-tor-browser --detach'
 alias bopdf='~/Dropbox/BerlinOnline/4_other/bo_pdf/bopdf.sh'
 alias mychromium='setsid /usr/bin/chromium >& /dev/null &'
-alias weather='weather-report eddb'
 alias csv-view='__csv_view'
 alias b64decode='__base64_decode'
 alias ll='ls -l'
