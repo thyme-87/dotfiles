@@ -53,9 +53,7 @@ extended_base_packages:
   - wgetpaste
   - yq
   - reflector
-  - kubectl
-  - kubectx
-
+  - lm_sensors
 
 aur_packages_base:
   - nerd-fonts-complete
@@ -69,6 +67,8 @@ development_packages_pacman:
   - tfenv
   - go
   - graphviz
+  - kubectl
+  - kubectx
 
 development_packages_pip:
   - ansible-lint
