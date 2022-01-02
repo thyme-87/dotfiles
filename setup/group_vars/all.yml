@@ -101,6 +101,7 @@ gnome_packages:
   - evince
   - evolution
   - file-roller
+  - flameshot
   - nautilus-extension
   - keepassxc
 # - xf86-video-intel #Don't use unless there are problems
