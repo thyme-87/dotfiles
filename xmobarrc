@@ -35,7 +35,7 @@ Config {
         --for now, deactivate the weather plugin, as it is not working (see below)
         --, template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ <fc=#e0e0e0>Vol: </fc>%volume%  | <action=`gnome-calendar`>%date%</action> | Berlin: %weather% | <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
         --TEST spotify songinfos
-        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ <fc=#F92672>%spotifyinfo%</fc> | <fc=#e0e0e0>Vol: </fc>%volume%  | <action=`gnome-calendar`>%date%</action> | BER: %weather% | <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
+        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ | <fc=#F92672>%spotifyinfo%</fc> | <fc=#e0e0e0>Vol: </fc>%volume% |<action=`gnome-calendar`>%date%</action>| %weather%| <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
 
         --template with build in plugin for weather
         --, template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ <fc=#e0e0e0>volume</fc>%volume%   %EDDT% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
@@ -74,7 +74,7 @@ Config {
                             ] 10
 
         -- memory usage monitor
-        , Run Memory        [   "--template",   "Mem: <usedratio>%"
+        , Run Memory        [   "--template",   "M: <usedratio>%"
                             ,   "--Low"     ,   "20"        --units: %
                             ,   "--High"    ,   "90"        --units: %
                             ,   "--high"    ,   "#FF0000"
@@ -114,8 +114,9 @@ Config {
         , Run ComX "pamixer" [ "--get-volume-human" ] "N/A" "volume" 10
         -- weather monitor
         -- this requires the file 'weather-bin' to be present in $PATH (i.e. at /usr/local/bin)
-        , Run Com "weather-berlin" [ ] "weather" 600
-        , Run Com "/usr/local/bin/spotifyscript" [ ] "spotifyinfo" 5
+        , Run Com "weather-berlin" [ "xmobar" ] "weather" 600
+        -- TODO the spotifyscript should either not execute, or (preferably) not even be called when running in laptop mode
+        , Run Com "/usr/local/bin/spotifyscript" [ "xmobar" ] "spotifyinfo" 50
         , Run StdinReader
         --, Run MarqueePipeReader "/usr/local/bin/spotifyscript" (10, 7, "+") "spotifyinfo"
         -- currently broken; see https://github.com/jaor/xmobar/issues/270
