@@ -23,6 +23,7 @@ base_packages:
   - jdk-openjdk #VERIFY
   - linux
   - linux-firmware
+  - lsblk
   - man-db
   - man-pages
   - make
@@ -81,7 +82,7 @@ gnome_packages:
   - xorg-sessreg
   - xorg-xinit
   - xorg-xsetroot
-  - xf86-video-intel #FIXME?
+  - vulkan-intel
   - mesa #FIXME?
   - gnome-flashback
   - gnome-autoar
@@ -102,6 +103,7 @@ gnome_packages:
   - file-roller
   - nautilus-extension
   - keepassxc
+# - xf86-video-intel #Don't use unless there are problems
 
 user:
   name: timon
