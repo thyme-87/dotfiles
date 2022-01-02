@@ -31,4 +31,10 @@ description=$(grep -Po "span class=\"phrase\">\K(.*)(?=<\/span>)" <<< "${result}
 realfeelFahrenheit=$(grep -Po "adInfo.*realfeel\":\"\K(\d+)" <<< "${result}")
 #echo $realfeelFahrenheit
 realfeelCelsius=$(awk "BEGIN {print (${realfeelFahrenheit}-32)/2}")
-printf "${description} at ${temp}C.(RealFeel ${realfeelCelsius}°C)\n"
+
+if [[ $1 == "xmobar" ]]; then
+    temp=$(tr -d '°' <<< $temp)
+    printf "${temp} (${realfeelCelsius})°C\n"
+else
+    printf "${description} at ${temp}C.(RealFeel ${realfeelCelsius}°C)\n"
+fi

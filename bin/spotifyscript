@@ -8,5 +8,9 @@ if [[ "$?" = 0 ]]; then
     artist=$(grep -Po "artist\s+\K.*" <<< $songinfo)
     title=$(grep -Po "title\s+\K.*$" <<< $songinfo)
     #echo "$(grep -Po "title\s+\K.*$" <<< $songinfo)"
-    echo "$title by $artist"
+    if [[ $1 == "xmobar" ]]; then
+        echo "$artist ($title)"
+    else
+        echo "$title by $artist"
+    fi
 fi
