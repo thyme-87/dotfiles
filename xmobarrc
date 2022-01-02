@@ -5,7 +5,7 @@ Config {
         --TODO use multicore plugins for usage and temperature to save some space
         --     see: https://github.com/jaor/xmobar/blob/master/doc/plugins.org
         --font = "xft:Roboto Mono for Powerline:size=8:antialiasing=true"
-        font = "xft:RobotoMono Nerd Font:style=Regular:size=12:antialiasing=true"
+        font = "xft:RobotoMono Nerd Font:style=Regular:size=11:antialiasing=true"
         , additionalFonts = []
         , textOffset = -1
         , iconOffset = -1
