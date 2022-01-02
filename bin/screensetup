@@ -17,7 +17,7 @@ if [[ $number_of_screens > 1 ]]; then
         if [[ $screen =~ (DP1-2) ]]; then
             cmd+=" --output $screen --mode ${laptop_resolution} --pos 0x0 --rotate right"
         elif  [[ $screen =~ DP1-1 ]]; then
-            cmd+=" --output $screen --mode ${default_resolution} --pos 3640x240 --rotate normal"
+            cmd+=" --output $screen --primary --mode ${default_resolution} --pos 3640x240 --rotate normal"
         elif  [[ $screen =~ DP1-3 ]]; then
             cmd+=" --output $screen --mode ${default_resolution} --pos 1080x240 --rotate normal"
         fi
