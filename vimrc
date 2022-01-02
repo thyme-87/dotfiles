@@ -78,6 +78,7 @@ nnoremap <c-l> :tabnext<CR>
 " nnoremap gk k
 
 " Keymappings for actions
+nnoremap <F8> :NERDTreeToggle<CR>
 nnoremap <F12> :NERDTreeToggle<CR>          "<F12> to toggle Nerdtree
 nnoremap <F11> :!opendetex % \| wc -w<CR>       "<F11> for simple wordcount
 nnoremap <silent> <Leader>t :TagbarToggle<CR>
