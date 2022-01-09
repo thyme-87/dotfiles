@@ -1,115 +1,97 @@
 ---
 #basic setup on new machines
-- name: Setup everything
+- name: Setup new system
   hosts: target
-  #remote_user: timon
   connection: local
-  become: true #FIXME might not even be necessary?
+
+  vars_prompt:
+    - name: username
+      prompt: "Provide the username"
+      private: true
+
+    - name: groupname
+      prompt: "Provide the groupname"
+      private: true
+
+    - name: password
+      prompt: "Provide the password for the user"
+      encrypt: sha512_crypt
+      confirm: true
+      salt_size: 7
+      unsafe: yes
+      private: true
+
+  roles:
+    - name: "Install base packages"
+      role: base_install
+      become: true
+      tags:
+        - base
+        - initial
+
+    - name: "Setup user {{ username }}"
+      role: user
+      become: true
+      vars:
+        user:
+          name: "{{ username }}"
+          group: "{{ groupname }}"
+          additional_groups: []
+          password: "{{ password }}"
+          systemuser: false
+      tags:
+        - base
+        - initial
+        - create_user
+
+    - name: "Install desktop environment & xmonad"
+      role: xmonad
+      become: true
+      tags:
+        - base
+        - initial
+        - gnome
+        - xmonad
+
+    - name: "Install yay"
+      role: yay
+      become: true
+      vars:
+        aur_user_name: "aur_user"
+      tags:
+        - yay
+        - base
+        - initial
 
   tasks:
-    - name: Install base packages
-      community.general.pacman:
-        name: "{{ base_packages }}"
-        state: latest
-        update_cache: yes
-      tags:
-        - base
-        - initial
-
-    - name: Install extended base packages
-      community.general.pacman:
-        name: "{{ extended_base_packages }}"
-        state: latest
-        update_cache: yes
-      tags:
-        - base
-        - initial
-
-    - name: "Create usergroup for user {{ user_name }}"
-      ansible.builtin.group:
-        name: "{{ user.group }}"
-        state: present
-        system: no
-      tags:
-        - base
-        - initial
-
-#FIXME ensure that password is set on first run ONLY
-    - name: "Create user {{ user_name }}"
-      ansible.builtin.user:
-        name: "{{ user.name }}"
-        group: "{{ user.group }}"
-        groups: "{{ user.additional_groups }}"
-        state: present
-        #password: "{{ user_password | password_hash('sha512', 'satlystuff') }}" #FIXME
-        system: no
-        append: yes
-      tags:
-        - base
-        - initial
-
-    - name: "Install some gnome packages"
-      community.general.pacman:
-        name: "{{ gnome_packages }}"
-        state: latest
-        update_cache: yes
-      tags:
-        - gnome
-
-    - name: "Create user for installing AUR packages"
-      ansible.builtin.user:
-        name: "{{ aur_user_name }}"
-        state: present
-        #password: "{{ test | password_hash('sha512', 'satlystuff') }}" #FIXME
-        system: yes
-      tags:
-        - yay
-
-    - name: "Allow user {{ aur_user_name }} passwordless access to pacman"
-      lineinfile:
-        group: root
-        owner: root
-        mode: 0644
-        path: "/etc/sudoers.d/{{ aur_user_name }}"
-        create: yes
-        state: present
-        line: "{{ aur_user_name }} ALL=(ALL) NOPASSWD: /usr/bin/pacman"
-        validate: "/usr/sbin/visudo -cf %s"
-      tags:
-        - yay
-
-    - name: "Determin if yay is already installed (check for /usr/bin/yay)"
-      stat:
-        path: /usr/bin/yay
-      register: yay_present
-      tags:
-        - yay
-
-    - name: "Fetch package yay from AUR"
+    - name: "Install pacman tools"
       become: true
-      become_user: "{{ aur_user_name }}"
-      ansible.builtin.git:
-        clone: yes
-        repo: https://aur.archlinux.org/yay.git
-        dest: /tmp/yay
-          #version: "{{ yay_version }}"
-      when: not yay_present.stat.exists
+      community.general.pacman:
+        name: "{{ pacman_tools }}"
+        state: latest
+        update_cache: yes
       tags:
-        - yay
+        - base
+        - initial
 
-    - name: "Install yay via makepkg -si"
+    - name: "Install development packages"
       become: true
-      become_user: "{{ aur_user_name }}"
-      ansible.builtin.shell: |
-        cd /tmp/yay/
-        makepkg -si --noconfirm
-      when: not yay_present.stat.exists
+      community.general.pacman:
+        name: "{{ development_packages_pacman }}"
+        state: latest
+        update_cache: yes
       tags:
-        - yay
+        - tools
 
-    - name: "Create folder /home/{{ user.name }}/backgrounds/"
+    - name: "Install packages from AUR"
+      yay:
+        name: "{{ aur_tools }}"
+        state: latest
+      tags:
+        - test
+    - name: "Create folder /home/{{ username }}/backgrounds/"
       ansible.builtin.file:
-        path: "/home/{{ user.name }}/backgrounds"
+        path: "/home/{{ username }}/backgrounds"
         state: directory
         mode: '0755'
       register: background_directory
@@ -120,19 +102,18 @@
     - name: "Download backgrounds"
       ansible.builtin.get_url:
         url: "{{ dropbox_background_folder_url }}"
-        dest: "/home/{{ user.name }}/Downloads/backgrounds.zip"
+        dest: "/home/{{ username }}/Downloads/backgrounds.zip"
       become: false
       tags:
         - desktop
 
-#TODO test if this is possible in one step
     - name: "Unzip backgrounds.zip to /home/{{ user.name }}/backgrounds/"
       ansible.builtin.unarchive:
         src: "/home/{{ user.name }}/Downloads/backgrounds.zip"
         remote_src: yes
-        dest: "/home/{{ user.name }}/backgrounds/"
-        group: timon
-        owner: timon
+        dest: "/home/{{ username }}/backgrounds/"
+        group: groupname
+        owner: username
       become: false
       register: unzip_result
       failed_when:
