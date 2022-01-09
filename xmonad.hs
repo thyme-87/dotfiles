@@ -83,8 +83,8 @@ manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
 
 myStartupHook ::X ()
 myStartupHook = do
-     spawn "${HOME}/dotfiles/bin/screensetup"
      spawn "picom -f -I 0.10 -O 0.10 --config ${HOME}/dotfiles/picom.conf"
+     spawn "${HOME}/dotfiles/bin/screensetup"
      spawn "feh --no-fehbg --bg-fill ${HOME}/backgrounds/background_5k_01.png"
      spawn "xrdb -merge ${HOME}/dotfiles/Xresources"
      spawn "setxkbmap de"
