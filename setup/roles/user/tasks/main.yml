@@ -1,0 +1,31 @@
+---
+# tasks file for user
+# TODO add option to allow overwriting user setting explicitly
+
+- name: "Get existing users"
+  ansible.builtin.getent:
+    database: passwd
+    split: ':'
+
+- name: "Get existing groups"
+  ansible.builtin.getent:
+    database: group
+    split: ':'
+
+- name: "Create usergroup for user {{ user.name }}"
+  ansible.builtin.group:
+    name: "{{ user.group }}"
+    state: present
+    system: "{% if not user.systemuser %}false{% else %}true{%  endif %}"
+  when: user.group and not (user.group in ansible_facts.getent_group)
+
+- name: "Create user {{ user.name }}"
+  ansible.builtin.user:
+    name: "{{ user.name }}"
+    group: "{{ user.group }}"
+    groups: "{% if user.additional_groups %}user.additional_groups{% endif %}"
+    state: present
+    password: "{{ user.password }}"
+    system: "{% if not user.systemuser %}false{% else %}true{%  endif %}"
+    append: yes
+  when: not (user.name in ansible_facts.getent_passwd)

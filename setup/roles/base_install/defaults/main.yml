@@ -1,0 +1,60 @@
+---
+# defaults file for base_install
+
+base_packages:
+  - acpi
+  - acpid
+  - automake
+  - base
+  - base-devel
+  - bash-completion
+  - binutils
+  - calc
+  - cmake
+  - curl
+  - dhcp
+  - fakeroot
+  - gawk
+  - gcc
+  - gdb
+  - gdb-common
+  - git
+  - grep
+  - gvim
+  - gzip
+  - htop
+  - jdk-openjdk #VERIFY
+  - linux
+  - linux-firmware
+  - lsblk
+  - man-db
+  - man-pages
+  - make
+  - net-tools
+  - networkmanager
+  - python-pip
+  - screen
+  - sudo
+  - tree
+  - unzip
+  - wget
+  - wpa_supplicant
+  - rsync
+
+extended_base_packages:
+  - findutils
+  - fzf
+  - jq
+  - pkgfile
+  - ranger
+  - ripgrep
+  - rxvt-unicode
+  - urxvt-perls
+  - strace
+  - the_silver_searcher
+  - tmux
+  - usbutils
+  - wgetpaste
+  - yq
+  - reflector
+  - lm_sensors

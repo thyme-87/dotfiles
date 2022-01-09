@@ -1,0 +1,9 @@
+---
+# defaults file for user
+
+user:
+  systemsuser: false
+  name: "default"
+  group: ""
+  password: default
+  additional_groups: []

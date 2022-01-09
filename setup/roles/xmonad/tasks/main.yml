@@ -1,0 +1,13 @@
+---
+# tasks file for xmonad
+- name: "Install gnome base packages"
+  community.general.pacman:
+    name: "{{ gnome_packages }}"
+    state: latest
+    update_cache: yes
+
+- name: "Install xmonad base packages"
+  community.general.pacman:
+    name: "{{ xmonad_base_packages }}"
+    state: latest
+    update_cache: yes

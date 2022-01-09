@@ -1,0 +1,18 @@
+---
+# vars file for xmonad
+#TODO build a logic to install correct drivers
+
+gnome_base_packages:
+  - xorg-server
+  - xorg-sessreg
+  - xorg-xinit
+  - xorg-xsetroot
+  - vulkan-intel
+  - mesa
+  - gnome-flashback
+  - bluez-tools
+  - bluez-utils
+
+xmonad_base_packages:
+  - xmonad
+  - xmobar

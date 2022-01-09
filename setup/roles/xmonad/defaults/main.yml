@@ -1,0 +1,19 @@
+---
+# defaults file for xmonad
+gnome_base_packages:
+  - xorg-server
+  - xorg-sessreg
+  - xorg-xinit
+  - xorg-xsetroot
+  - vulkan-intel
+  - mesa #FIXME?
+  - gnome-flashback
+  - geoclue
+  - bluez-tools
+  - bluez-utils
+  - file-roller
+  - libnautilus-extension
+
+xmonad_base_packages:
+  - xmonad
+  - xmobar
