@@ -4,3 +4,9 @@
 [submodule "fonts"]
     path = fonts
     url = git@github.com:powerline/fonts
+[submodule "setup/foobar"]
+	path = setup/foobar
+	url = https://github.com/mnussbaum/ansible-yay.git
+[submodule "setup/library/yay"]
+	path = setup/library/yay
+	url = https://github.com/mnussbaum/ansible-yay.git
