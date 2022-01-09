@@ -17,7 +17,6 @@ base_packages:
   - gdb-common
   - git
   - grep
-  - gvim
   - gzip
   - htop
   - jdk-openjdk #VERIFY
@@ -53,31 +52,10 @@ extended_base_packages:
   - usbutils
   - wgetpaste
   - yq
-  - reflector
+  - reflector #TODO
   - lm_sensors
 
-aur_packages_base:
-  - nerd-fonts-complete
-  - physlock
-  - i3lock
-  - glow
-  - ffmpeg-full
-  - yubioath-desktop
-  - yubikey-personalizatoin-gui
-
-development_packages_pacman:
-  - npm
-  - terragrunt
-  - tfenv
-  - go
-  - graphviz
-  - kubectl
-  - kubectx
-
-development_packages_pip:
-  - ansible-lint
-
-gnome_packages:
+gnome_base_packages:
   - xorg-server
   - xorg-sessreg
   - xorg-xinit
@@ -85,36 +63,78 @@ gnome_packages:
   - vulkan-intel
   - mesa #FIXME?
   - gnome-flashback
-  - gnome-autoar
-  - gnome-bluetooth
-  - gnome-online-accounts
-  - gnome-desktop
-  - gnome-menus
-  - gnome-autoar
-  - gnome-panel
-  - gnome-session
   - geoclue
   - bluez-tools
   - bluez-utils
+  - file-roller
+  - libnautilus-extension
+
+xmonad_base_packages:
+  - xmonad
+  - xmobar
+
+aur_tools:
+  - adwaita-qt
+  - chromaprint-fftw
+  - davs2
+  - flite1-patched
+  - ffmpeg-full
+  - glow
+  - google-chrome
+  - i3lock
+  - lensfun-git
+  - libklvanc-git
+  - libopenaptx
+  - libopenmpt-svn
+  - librist
+  - nerd-fonts-complete
+  - opendetex
+  - openh264
+  - physlock
+  - rockchip-mpp
+  - shine
+  - slack
+  - sphinxbase
+  - spotify
+  - tfenv #FIXME handle tfenv group
+  - ttf-ms-fonts
+  - twitch-curses
+  - uavs3d-git
+  - urxvt-resize-font-git
+  - vo-amrwbenc
+  - xavs
+  - xavs2
+  - yay
+  - yubioath-desktop
+  - yubikey-personalizatoin-gui
+  - zeal-git
+
+pip_packages:
+  - ansible-lint
+  - yubikey-manager
+  - solaar
+
+pacman_tools:
+  - arandr
+  - chromium
   - dconf-editor
+  - discord
+  - evolution
   - eog
   - evince
-  - evolution
-  - file-roller
   - flameshot
-  - nautilus-extension
+  - gvim
   - keepassxc
-# - xf86-video-intel #Don't use unless there are problems
+  - telegram-desktop
+# - xf86-video-intel #Don't use unless there are problems?
 
-user:
-  name: timon
-  group: timon
-  additional_groups:
-    - tfenv
-
-user_password: foobar
-
-aur_user_name: aur_user
+development_packages_pacman:
+  - npm
+  - terragrunt
+  - go
+  - graphviz
+  - kubectl
+  - kubectx
 
 yay_version: 11.0.2-1
 
