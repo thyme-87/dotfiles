@@ -52,8 +52,8 @@ myVisibleWSRight    =   ")"
 myCurrentWSLeft     =   "["
 myCurrentWSRight    =   "]"
 
+--TODO clarify the urgencyHook does not seem to be used. Maybe clean this up OR work out what I wanted to achieve here
 data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
-
 instance UrgencyHook LibNotifyUrgencyHook where
     urgencyHook LibNotifyUrgencyHook w = do
         name        <- getName w
@@ -93,6 +93,8 @@ myStartupHook = do
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
 --withUrgencyHook LibNotifyUrgencyHook <- This still is ToDo!
 
+--TODO use example here: https://xmonad.org/configurations.html
+--to filter out NSP scratchpads
 myPP = xmobarPP
             { ppCurrent = xmobarColor "#F92672" "" . wrap "[" "]"
             , ppTitle = xmobarColor "#F92672" "#272822" . shorten myTitleLength}
