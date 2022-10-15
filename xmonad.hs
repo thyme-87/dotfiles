@@ -10,6 +10,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Util.Paste
 import XMonad.Util.NamedWindows
 import XMonad.Util.Run(spawnPipe, safeSpawn)
+import XMonad.Util.SpawnOnce
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.Scratchpad
 import XMonad.Layout.Grid
@@ -81,14 +82,13 @@ manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
     l = 0.2
     t = 0.4
 
+--The startupHook can be used to launch programs automatically.
+--I use it for picom
+--Main setup is handled via ~/.xprofile now
 myStartupHook ::X ()
 myStartupHook = do
-     spawn "picom -f -I 0.10 -O 0.10 --config ${HOME}/dotfiles/picom.conf"
-     spawn "${HOME}/dotfiles/bin/screensetup"
-     spawn "feh --no-fehbg --bg-fill ${HOME}/backgrounds/background_5k_01.png"
-     spawn "xrdb -merge ${HOME}/dotfiles/Xresources"
-     spawn "setxkbmap de"
-     spawn "xsetroot -cursor_name left_ptr"
+     spawnOnce "picom -f -I 0.10 -O 0.10 --config ${HOME}/dotfiles/picom.conf"
+     --spawn "feh --no-fehbg --bg-fill ${HOME}/backgrounds/background.jpg"
 
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
 --withUrgencyHook LibNotifyUrgencyHook <- This still is ToDo!
