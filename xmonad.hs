@@ -130,9 +130,11 @@ myConfig = def {
         , ((mod1Mask.|. shiftMask, xK_j), spawn "pactl set-sink-volume @DEFAULT_SINK@ -4%")
         , ((mod1Mask.|. shiftMask, xK_k), spawn "pactl set-sink-volume @DEFAULT_SINK@ +4%")
         , ((0, xF86XK_AudioMute), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+        , ((controlMask, xK_s), spawn "spotifyscript notify-songinfo")                      --print songinfo via notify-send
+        , ((controlMask .|. mod1Mask, xK_s), spawn "spotifyscript copyUrl")                     --copy url into copy&paste buffer
         , ((controlMask .|. mod1Mask, xK_t), spawn myTerminal)
-        , ((mod1Mask .|. shiftMask, xK_comma), scratchpad) --urxvt quake-style
-        , ((controlMask, xK_space), spawn "synapse")
+        , ((mod1Mask .|. shiftMask, xK_comma), scratchpad)                                  --urxvt quake-style
+        , ((controlMask, xK_space), spawn myLauncher)
         , ((0, xF86XK_Tools), spawn "systemctl suspend")
         , ((mod1Mask, xK_Num_Lock), spawn "log-working-hours SUSPEND && systemctl suspend")
         , ((0, 0x1008FF21), spawn "log-working-hours SUSPEND && systemctl suspend")
@@ -156,6 +158,7 @@ myConfig = def {
 
     scratchpad = scratchpadSpawnActionTerminal myTerminal
 
+myLauncher              = "synapse"     --TODO explore rofi
 myTerminal              = "urxvt -ls" --spawn urxvt as a login_shell and parse ~/.bash_profile
 myModMask               = mod4Mask -- [super]
 myBorderWidth           = 1
