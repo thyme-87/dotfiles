@@ -14,7 +14,6 @@ import XMonad.Util.NamedWindows
 import XMonad.Util.Run(spawnPipe, safeSpawn)
 import XMonad.Util.SpawnOnce
 import XMonad.Util.EZConfig(additionalKeys)
-import XMonad.Util.Scratchpad
 import XMonad.Util.NamedScratchpad
 import XMonad.Layout.Grid
 import XMonad.Layout.ResizableTile
