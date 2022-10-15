@@ -1,6 +1,8 @@
 import XMonad
 import XMonad.Config.Gnome
 import XMonad.Config.Desktop
+import XMonad.ManageHook
+import XMonad.Hooks.DynamicProperty
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -13,6 +15,7 @@ import XMonad.Util.Run(spawnPipe, safeSpawn)
 import XMonad.Util.SpawnOnce
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.Scratchpad
+import XMonad.Util.NamedScratchpad
 import XMonad.Layout.Grid
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.ThreeColumns
@@ -60,7 +63,12 @@ instance UrgencyHook LibNotifyUrgencyHook where
         Just idx    <- fmap (W.findTag w) $ gets windowset
         safeSpawn "notify-send" [show name, "workspace" ++ idx]
 
-myManageHook = floatHook <+> fullscreenManageHook <+> manageScratchPad
+myManageHook = floatHook <+> fullscreenManageHook <+> namedScratchpadManageHook scratchpads
+
+--custom event hook to make spotify float after it is launched
+myHandleEventHook = dynamicPropertyChange "WM_NAME" (className =? "Spotify" --> floating)
+            where
+                floating = customFloating $ W.RationalRect 0.6 0.6 0.2 0.2
 
 floatHook = composeAll
     [ className =? "gimp"   --> doFloat
@@ -72,15 +80,37 @@ floatHook = composeAll
     , resource =? "gnome-control-center" --> doFloat
     , resource =? "gnome-weather" --> doFloat]
 
-manageScratchPad::ManageHook
-manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
+scratchpads :: [NamedScratchpad]
+scratchpads = [ NS "terminal" spawnTerminal findTerminal manageTerminal
+        , NS "keepassxc" spawnKeepassxc findKeepassxc manageKeepassxc
+        , NS "spotify" spawnSpotify findSpotify manageSpotify
+        ]
+        where
+            spawnTerminal   = myTerminal ++ "-t scratchpad"
+            findTerminal    = resource =? "scratchpad"
+            manageTerminal  = customFloating $ W.RationalRect l t w h
+                        where
+                            h = 0.9
+                            w = 0.9
+                            t = 0.05
+                            l = 0.05 
+            spawnKeepassxc  = "keepassxc"
+            findKeepassxc   = className =? "KeePassXC"
+            manageKeepassxc = customFloating $ W.RationalRect l t w h
+                        where
+                            h = 0.6
+                            w = 0.6
+                            t = 0.1
+                            l = 0.1
+            spawnSpotify    = "spotify"
+            findSpotify     = className =? "Spotify"
+            manageSpotify   = customFloating $ W.RationalRect l t w h
+                        where
+                            h = 0.6
+                            w = 0.6
+                            t = 0.1
+                            l = 0.1
 
-    where
-
-    h = 0.6
-    w = 0.5
-    l = 0.2
-    t = 0.4
 
 --The startupHook can be used to launch programs automatically.
 --I use it for picom
@@ -113,7 +143,7 @@ toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_m)
 myConfig = def {
         manageHook      = ( isFullscreen --> doFullFloat ) <+> manageDocks <+> myManageHook <+> manageHook def
         , startupHook   = myStartupHook <+> startupHook def --TODO
-        , handleEventHook   =   handleEventHook def <+> fullscreenEventHook
+        , handleEventHook   =  myHandleEventHook <+> handleEventHook def <+> fullscreenEventHook
         , layoutHook    = avoidStruts $ toggleLayouts (noBorders Full) $ smartBorders $ layoutHook def
         , modMask                 = myModMask
         , terminal                = myTerminal
@@ -135,7 +165,9 @@ myConfig = def {
         , ((controlMask, xK_s), spawn "spotifyscript notify-songinfo")                      --print songinfo via notify-send
         , ((controlMask .|. mod1Mask, xK_s), spawn "spotifyscript copyUrl")                     --copy url into copy&paste buffer
         , ((controlMask .|. mod1Mask, xK_t), spawn myTerminal)
-        , ((mod1Mask .|. shiftMask, xK_comma), scratchpad)                                  --urxvt quake-style
+        , ((mod1Mask .|. shiftMask, xK_comma), namedScratchpadAction scratchpads "terminal")      --urxvt quake-style
+        , ((mod4Mask .|. shiftMask, xK_k), namedScratchpadAction scratchpads "keepassxc")
+        , ((mod4Mask, xK_s), namedScratchpadAction scratchpads "spotify")
         , ((controlMask, xK_space), spawn myLauncher)
         , ((0, xF86XK_Tools), spawn "systemctl suspend")
         , ((mod1Mask, xK_Num_Lock), spawn "log-working-hours SUSPEND && systemctl suspend")
@@ -156,10 +188,8 @@ myConfig = def {
         ]
         )
 
-    where
 
-    scratchpad = scratchpadSpawnActionTerminal myTerminal
-
+--check  https://bbs.archlinux.org/viewtopic.php?id=116266 for thinking about how to use AltGr as mod5Mask
 myLauncher              = "synapse"     --TODO explore rofi
 myTerminal              = "urxvt -ls" --spawn urxvt as a login_shell and parse ~/.bash_profile
 myModMask               = mod4Mask -- [super]
