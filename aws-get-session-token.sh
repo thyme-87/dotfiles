@@ -28,7 +28,7 @@ function __set_aws_profile {
 }
 
 function __complete_aws_profile {
-	local currentWord=${COMP_WORDS[COMP_CWORD]}
+    local currentWord=${COMP_WORDS[COMP_CWORD]}
     AWS_PROFILES_COMPLETION_LIST=$(cat "$HOME/.aws/config" | \
         grep --extended-regexp "\[(profile|Profile)" | \
         sed -E "s/^\[(Profile|profile)\s+(.*)\].?*/\2/g")
