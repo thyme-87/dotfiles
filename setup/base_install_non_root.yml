@@ -229,6 +229,17 @@
       tags:
         - uhk
 
+    - name: "Set udev rules for streamdeck"
+      become: true
+      ansible.builtin.copy:
+        remote_src: false
+        src: config/streamdeck.rules
+        dest: /etc/udev/rules.d/streamdeck.rules
+        owner: root
+        group: root
+      tags:
+        - streamdeck
+
       #TODO this requires acpilight to be installed
       # maybe this is more generic? https://wiki.archlinux.org/title/acpid
     - name: "Provide brightness control scripts"
