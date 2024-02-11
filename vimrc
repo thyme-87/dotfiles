@@ -500,11 +500,16 @@ let g:airline#extensions#default#section_truncate_width = {}
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
-let g:airline_symbols.linenr = ''
+"let g:airline_symbols.linenr = ''
+let g:airline_symbols.linenr = 'Ξ' "≡Ξcurrent line number
 "let g:airline_symbols.branch = ''
 let g:airline_symbols.spell = '¶'
 let g:airline_symbols.whitespace = ' ' "for ale warning/error/info
-"let g:airline_symbols.maxlinenr = ''
+"let g:airline_symbols.maxlinenr = 'Ξ'
+"let g:airline_symbols.maxlinenr = '󰷉' "
+let g:airline_symbols.maxlinenr = '' "defaults to 'trigram for heaven U+2630' - which is not part of Roboto Mono NerdFonts
+"let g:airline_symbols.notexists='' "symbol for marking files that are not (yet) under version control
+let g:airline_symbols.notexists='󱪘' "symbol for marking files that are not (yet) under version control
 
 set laststatus=2
 
