@@ -1,0 +1,32 @@
+---
+# tasks file for swap
+
+- name: "Create swap file /swapfile"
+  ansible.builtin.command:
+    cmd: "dd if=/dev/zero of=/swapfile bs=1M count={{ hostvars.localhost.ansible_facts.memtotal_mb }} status=progress"
+    creates: /swapfile
+  register: swapfile_created
+  when: hostvars.localhost.ansible_facts.swaptotal_mb == 0
+
+- name: "Set permissions for /swapfile"
+  ansible.builtin.file:
+    path: /swapfile
+    mode: '0600'
+  when: swapfile_created.skipped is not true
+
+- name: "Format /swapfile"
+  ansible.builtin.command:
+    cmd: mkswap -U clear /swapfile
+  when: swapfile_created.skipped is not true
+
+- name: "Enable swapfile"
+  ansible.builtin.command:
+    cmd: swapon /swapfile
+  when: swapfile_created.skipped is not true
+
+- name: "Add entry for /swapfile to /etc/fstab"
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    line: "/swapfile    none    swap    defaults    0    0"
+    state: present
+  when: swapfile_created.skipped is not true
