@@ -1,0 +1,10 @@
+---
+# defaults file for tmux
+
+tmux_packages:
+  - tmux
+
+tmux_plugins:
+  - tmux-plugins/tpm
+  - tmux-plugins/tmux-yank
+  - tmux-plugins/tmux-resurrect

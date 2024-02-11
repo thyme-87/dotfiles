@@ -1,0 +1,24 @@
+---
+# tasks file for tmux
+- name: "Install tmux packages if not present"
+  become: true
+  ansible.builtin.pacman:
+    name: "{{ tmux_packages }}"
+    state: latest
+    update_cache: true
+
+  #TODO skip when already present
+- name: "Install tmux plugins via git clone"
+  local_action:
+    module: ansible.builtin.git
+    repo: "https://github.com/{{ item }}"
+    dest: "{{ hostvars.localhost.ansible_env.HOME }}/.tmux/plugins/{{ item | regex_search('[a-zA-Z-_.]+$') }}"
+  loop: "{{ tmux_plugins }}"
+
+- name: "Provide tmux.conf via symlink"
+  ansible.builtin.file:
+    src: "{{ hostvars.localhost.ansible_env.HOME }}/dotfiles/tmux.conf"
+    dest: "{{ hostvars.localhost.ansible_env.HOME }}/.tmux.conf"
+    owner: "{{ hostvars.localhost.ansible_env.USER }}"
+    group: "{{ hostvars.localhost.ansible_env.USER }}"
+    state: link
