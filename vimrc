@@ -336,11 +336,12 @@ let g:vim_markdown_folding_disabled = 1
 au BufNewFile,BufRead,BufEnter      README      setlocal spell  spelllang=en_us "set spell check for README files
 " au BufNewFile,BufRead,BufEnter      *.md        setlocal spell  spelllang=de_de "set spellcheck with language de_de for markdown files currently deactivated as I assume that it would break settings for markdown beneath
 autocmd BufNewFile,BufRead,BufEnter *.md setlocal filetype=markdown textwidth=80
-autocmd BufNewFile,BufRead,BufEnter *.md nnoremap <buffer> <silent><Leader>t :Voomtoggle<CR>
 autocmd BufNewFile,BufRead,BufEnter *.tex nnoremap <buffer> <silent><Leader>t :VoomToggle<CR>
 "set Voomtoggle only for md files; TODO: set also for .tex file: set also for .tex files
-autocmd BufNewFile,BufReadPost *.md call voom#Init('markdown',1)    "use voom#Init function to generate Tree
-autocmd BufWritePost,BufEnter *.md call voom#BodyUpdateTree()     "update the tree after the file has been saved
+"Voom setup broken for markdown as of 2023-05 - not sure if it is worth to fix it
+"autocmd BufNewFile,BufRead,BufEnter *.md nnoremap <buffer> <silent><Leader>t :Voomtoggle<CR>
+"autocmd BufNewFile,BufReadPost *.md call voom#Init('markdown',1)    "use voom#Init function to generate Tree
+"autocmd BufWritePost,BufEnter *.md call voom#BodyUpdateTree()     "update the tree after the file has been saved
 autocmd BufWritePost *.tex call voom#BodyUpdateTree()    "update the tree after the file has been saved
 
 "PHP
