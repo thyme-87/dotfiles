@@ -1,4 +1,4 @@
-base_packages:
+system_base_pkgs:
   - acpi
   - acpid
   - automake
@@ -6,145 +6,241 @@ base_packages:
   - base-devel
   - bash-completion
   - binutils
-  - calc
   - cmake
   - curl
   - dhcp
+  - dhcpcd
   - fakeroot
-  - gawk
-  - gcc
-  - gdb
-  - gdb-common
   - git
+  - gnu-netcat
   - grep
   - gzip
-  - htop
-  - jdk-openjdk #VERIFY
+  - iwd
   - linux
   - linux-firmware
-  - lsblk
+  - lsof
   - man-db
   - man-pages
   - make
   - net-tools
-  - networkmanager
-  - python-pip
-  - screen
+  - reflector
   - sudo
-  - tree
-  - unzip
   - wget
-  - wpa_supplicant
   - rsync
 
-extended_base_packages:
+system_base_extended_pkgs:
+  - bluez-tools
+  - bluez-utils
+  - calc
+  - ctags
   - findutils
   - fzf
+  - gawk
+  - htop
   - jq
+  - jdk-openjdk #VERIFY
+  - lm_sensors
+  - mtr
+  - networkmanager #validate if still needed
   - pkgfile
+  - python-pip
   - ranger
   - ripgrep
   - rxvt-unicode
-  - urxvt-perls
-  - strace
+  - pam-u2f
+  - screen
+  - tree
   - the_silver_searcher
   - tmux
+  - unzip
   - usbutils
   - wgetpaste
+  - wpa_supplicant
   - yq
-  - reflector #TODO
-  - lm_sensors
 
-gnome_base_packages:
+dev_tools:
+  - gdb
+  - gdb-common
+  - ghc
+  - go
+  - gcc
+  - glow
+  - graphviz
+  - hexedit
+  - hexyl
+  - npm
+  - pastebinit
+  - kubectl
+  - kubectx
+  - strace
+  - terragrunt
+  - rlwrap
+
+graphics_base_pkgs:
   - xorg-server
   - xorg-sessreg
   - xorg-xinit
   - xorg-xsetroot
+  - xf86-video-intel
   - vulkan-intel
-  - mesa #FIXME?
+  - mesa
+
+gnome_base_pkgs:
+  - gnome
   - gnome-flashback
-  - geoclue
-  - bluez-tools
-  - bluez-utils
-  - file-roller
+  - gnome-themes-extra
   - libnautilus-extension
 
 xmonad_base_packages:
   - xmonad
+  - xmonad-extras
+  - xmonad-utils
+  - xmonad-contrib
   - xmobar
 
-aur_tools:
-  - adwaita-qt
+desktop_environment_basic_tools:
+  - adwaita-qt5
+  - adwaita-qt6
+  - arandr
+  - acpilight
+  - chromium
+  - firefox
+  - flameshot
+  - feh
+  - geoclue
+  - gvim
+  - i3lock
+  - keepassxc
+  - mplayer
+  - pamixer
+  - picom
+  - playerctl
+  - qt6-webchannel
+  - qt6-webengine
+  - rofi
+  - rofi-calc
+  - seahorse
+  - scrot
+  - tesseract
+  - tesseract-data-deu
+  - tesseract-data-eng
+  - urxvt-perls
+  - xss-lock
+
+desktop_environment_convenience:
+  - bc
+  - dconf-editor
+  - discord
+  - telegram-desktop
+  - evolution #TODO decide if this is really required
+  - openh264
+  - redshift
+  - ttf-roboto-mono-nerd
+  - ttf-jetbrains-mono-nerd
+  - vlc
+  - yubico-pam
+  - yubikey-personalization-gui
+  - zathura
+  - zathura-pdf-mupdf
+
+# the packages listed here will be installed withour further checks/inspection!
+# this list MUST be limited to the absolute bare minimum
+aur_packages:
   - chromaprint-fftw
   - davs2
-  - flite1-patched
   - ffmpeg-full
-  - glow
   - google-chrome
-  - i3lock
-  - lensfun-git
-  - libklvanc-git
-  - libopenaptx
+  - libopenaptx-git
   - libopenmpt-svn
-  - librist
-  - nerd-fonts-complete
   - opendetex
-  - openh264
-  - physlock
-  - rockchip-mpp
+  - physlock-git
   - shine
   - slack
   - sphinxbase
   - spotify
-  - tfenv #FIXME handle tfenv group
+  - tfenv
   - ttf-ms-fonts
-  - twitch-curses
   - uavs3d-git
   - urxvt-resize-font-git
   - vo-amrwbenc
   - xavs
   - xavs2
-  - yay
-  - yubioath-desktop
-  - yubikey-personalizatoin-gui
+  - yubico-authenticator #might fail as needs gpg key
   - zeal-git
 
 pip_packages:
   - ansible-lint
-  - yubikey-manager
   - solaar
-
-pacman_tools:
-  - arandr
-  - chromium
-  - dconf-editor
-  - discord
-  - evolution
-  - eog
-  - evince
-  - flameshot
-  - gvim
-  - keepassxc
-  - telegram-desktop
-# - xf86-video-intel #Don't use unless there are problems?
-
-development_packages_pacman:
-  - npm
-  - terragrunt
-  - go
-  - graphviz
-  - kubectl
-  - kubectx
+  - yubikey-manager
+  - xkcdpass
+  - pylint
 
 yay_version: 11.0.2-1
 
-dropbox_background_folder_url: !vault |
-    $ANSIBLE_VAULT;1.1;AES256
-    39323739383938383334623862386332643166303562633134373161646166646363353437306236
-    3236643165373661616138356361356532353162326637340a363632663435633363636566333236
-    62366237633331646663326131656165393237353862326437306162323433326132616130643932
-    3432333736626631650a333064306661366362616235316664363162373231306231633839663033
-    37643735393261363732353462656235316439656339336164633431616564653936613066663836
-    32616162373232666361363039373464366137366132643537393738366165393036356539666466
-    32306365623632616439336632393261323066386536316636356237333832333633626561376131
-    34396239316431613239
+#dropbox_background_folder_url: !vault |
+#    $ANSIBLE_VAULT;1.1;AES256
+#    39323739383938383334623862386332643166303562633134373161646166646363353437306236
+#    3236643165373661616138356361356532353162326637340a363632663435633363636566333236
+#    62366237633331646663326131656165393237353862326437306162323433326132616130643932
+#    3432333736626631650a333064306661366362616235316664363162373231306231633839663033
+#    37643735393261363732353462656235316439656339336164633431616564653936613066663836
+#    32616162373232666361363039373464366137366132643537393738366165393036356539666466
+#    32306365623632616439336632393261323066386536316636356237333832333633626561376131
+#    34396239316431613239
+
+#FIXME this is not really sustainable.
+# a program might need more than "just" a config file
+# examples: vim, tmux
+# both of these need at least one "initial" plugin being fetched from github to be working proberly
+# TODO either the structure must provide optional key-value pairs (i.e. "fetch" and "run") to keep per-program configuration at one place, OR each (or certain) programs deserve their own role OR there might be a better way?
+# All symlinks will be relative to ${HOME}/
+# this MUST be handled by a role that i.e. will take care of existing files (i.e. bashrc, bash_profile)
+config_symlinks:
+  xmobar:
+    src: xmobarrc
+    target: .xmobarrc
+  tmux:
+    src: tmux.conf
+    target: .tmux.conf
+  picom:
+    src: picom.conf
+    target: .picom.conf
+  bash_profile:
+    src: bash_profile
+    target: .bash_profile
+  bash:
+    src: bashrc
+    target: .bashrc
+  rofi:
+    src: config/rofi/config.rasi
+    target: .config/rofi/config.rasi
+  ctags:
+    src: ctags
+    target: .ctags
+  curl:
+    src: curlrc
+    target: .curlrc
+  xresources:
+    src: Xresources
+    target: .Xresources
+  git:
+    src: gitconfig
+    target: .gitconfig
+  inputrc:
+    src: inputrc
+    target: .inputrc
+  pylint:
+    src: pylintrc
+    target: .pylintrc
+  redshift:
+    src: redshift.conf
+    target: .config/redshift.conf
+  ranger:
+    src: config/ranger/rc.conf
+    target: .config/ranger/rc.conf
+  zathura:
+    src: zathurarc
+    target: .config/zathura/zathurarc
+  gvim:
+    src: gvimrc
+    target: .gvimrc
