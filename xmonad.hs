@@ -189,7 +189,7 @@ myConfig = def {
 
 
 --check  https://bbs.archlinux.org/viewtopic.php?id=116266 for thinking about how to use AltGr as mod5Mask
-myLauncher              = "synapse"     --TODO explore rofi
+myLauncher              = "rofi -show combi"     --TODO explore rofi
 myTerminal              = "urxvt -ls" --spawn urxvt as a login_shell and parse ~/.bash_profile
 myModMask               = mod4Mask -- [super]
 myBorderWidth           = 1
