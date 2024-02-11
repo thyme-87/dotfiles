@@ -112,6 +112,7 @@ URxvt*visualBell: true
 URxvt*.perl-lib: /usr/lib/urxvt/perl/
 URxvt*perl-ext-common: selection-to-clipboard,keyboard-select,clipboard,resize-font
 !URxvt*perl-ext-common: selection-to-clipboard,default,resize-font,url-select,clipboard
+!URxvt*.keyboard-select.clipboard: true
 
 !URxvt*.url-select.launcher: /usr/bin/xdg-open
 URxvt*.url-select.launcher: chromium
