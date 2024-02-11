@@ -362,6 +362,8 @@ let g:tagbar_type_php = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "tagbar
 let g:tagbar_position = 'right'
+"let g:tagbar_iconchars = ["▶",  '▼']
+let g:tagbar_iconchars = ['+',  '-']
 
 "try to set default paths for tagfiles
 set tags+=tags
