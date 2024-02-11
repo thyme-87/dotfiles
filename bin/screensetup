@@ -1,5 +1,14 @@
 #!/bin/bash
 
+#FIXME THIS HAS BEEN SUPERSEEDED BY COMMAND monitorsetup
+
+#TODO
+# 1. only disable laptop display if FOUR displays are detected
+#    potentially also evalute the display resolutions
+# 2. by default, assume that we have 2x2k displays in landscape mode 
+#    (no rotation) and the laptop display to the right
+# 4. via command line argument, switch back to "laptop mode"
+
 #activate_screen_command="--output VGA-0 --off --output LVDS-0 --off"
 command_suffix="--output DP2 --off --output HDMI1 --off --output HDMI2 --off --output VIRTUAL1 --off"
 laptop_output="eDP1"
@@ -14,12 +23,12 @@ default_resolution="2560x1440"
 if [[ $number_of_screens > 1 ]]; then
     cmd+="--output ${laptop_output} --off --output DP1 --off"
     for screen in $screens; do
-        if [[ $screen =~ (DP1-2) ]]; then
-            cmd+=" --output $screen --mode ${laptop_resolution} --pos 0x0 --rotate right"
-        elif  [[ $screen =~ DP1-1 ]]; then
-            cmd+=" --output $screen --primary --mode ${default_resolution} --pos 3640x240 --rotate normal"
+        if  [[ $screen =~ DP1-1 ]]; then
+            cmd+=" --output $screen --mode ${default_resolution} --pos 2560x0 --rotate normal"
+        elif [[ $screen =~ (DP1-2) ]]; then
+            cmd+=" --output $screen --mode ${default_resolution} --pos 0x0 --rotate normal"
         elif  [[ $screen =~ DP1-3 ]]; then
-            cmd+=" --output $screen --mode ${default_resolution} --pos 1080x240 --rotate normal"
+            cmd+=" --output $screen --primary --mode ${default_resolution} --pos 2560x0 --rotate normal"
         fi
     done
     cmd+=" ${command_suffix}"
