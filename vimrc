@@ -374,9 +374,11 @@ set tags+=~/.ctags
 "
 
 "VIM nerdtree
-"TODO quickfix for missing/wrong configures symbols in AUR package for RobotoMono nerd font
-let g:NERDTreeDirArrowExpandable='▶'
-let g:NERDTreeDirArrowCollapsible='▼'
+"TODO quickfix for missing/wrong symbols in RobotoMono nerd font (via AUR)
+"let g:NERDTreeDirArrowExpandable='▶'
+let g:NERDTreeDirArrowExpandable="\uf44a"
+"let g:NERDTreeDirArrowCollapsible='▼'
+let g:NERDTreeDirArrowCollapsible="\uf44b"
 
 "VIM ultisnips 2019-01-14
 let g:UltiSnipsListSnippets='<c-s>'
@@ -470,6 +472,8 @@ highlight GitGutterChange cterm=bold ctermfg=208 ctermbg=237
 " VIM-AIRLINE
 let g:webdevicons_enable_airline_tabline = 1
 let g:webdevicons_enable_airline_statusline = 1
+let g:webdevicons_enable_nerdtree = 1
+let g:webdevicons_conceal_nerdtree_brackets = 1
 
 let g:airline_powerline_fonts = 1       "use fonts patched for powerline
 let g:airline_theme='dark'              "use dark theme
