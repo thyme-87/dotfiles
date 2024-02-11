@@ -1,0 +1,33 @@
+---
+# tasks file for install_aur_packages
+# TODO before we can install packages from AUR, we _should_ make sure, that all dependencies that can be handled via pacman are satisfied (i.e. tesseract for ffmpeg-full)
+# TODO find a way to handle conflicts (i.e. chromaprint-fftw conflicts with chromaprint)
+#TODO handle pgp key import
+# FCF986EA15E6E293A5644F10B4322F04D67658D8 for ffmpeg-full
+#TODO 2022-10-10 ffmpeg-full installation failed because /opt/cuda/bin was not in PATH.
+#possibly it would be a good idea to add cuda to idk extended_base_packages
+#TODO 2022-10-10 zeal-git depends on qt6-webchannel qt6-webengine
+
+- name: "Build list of packages that where installed manually via Pacman -Qqm"
+  ansible.builtin.command:
+    cmd: pacman -Qqm
+  register: installed_packages
+
+- ansible.builtin.set_fact:
+    aur_packages_to_install: "{{ aur_packages | difference(installed_packages.stdout_lines) }}"
+
+- name: "No action required"
+  ansible.builtin.debug:
+    msg: "All packages listed in aur_packags  are already installed"
+  when: aur_packages_to_install | length == 0
+
+- name: "Will install the following packages via yay"
+  ansible.builtin.debug:
+    var: aur_packages_to_install
+  when: aur_packages_to_install | length > 0
+
+- name: "Install packages"
+  ansible.builtin.command:
+    cmd: "yay -Sy {{ aur_packages_to_install | join(' ') }} --answerclean A --answerdiff N --pacman pacman --noconfirm --batchinstall"
+  when: aur_packages_to_install | length > 0
+
