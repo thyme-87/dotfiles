@@ -88,10 +88,15 @@ Xft.rgba:           rgb
 Xft.hinting:        false
 Xft.hintstyle:      hintfull
 Xft.autohint:	    false
-URxvt*font:             xft:Roboto Mono Nerd Font Mono:style=Regular:size=16:hinting=false
-URxvt*boldFont:         xft:Roboto Mono Nerd Font Mono:style=Bold:size=16:hinting=false
-Rxvt*italicFont:        xft:Roboto Mono Nerd Font Mono:style=Italic:size=16:hinting=false
-Rxvt*boldItalicFont:    xft:Roboto Mono Nerd Font Mono:style=Bold Italic:size=16:hinting=false
+
+!TODO the font section depends on the installed fonts on the system
+!     currently, we are using: "community/ttf-roboto-mono-nerd"
+URxvt*font:             xft:RobotoMono Nerd Font Mono:style=Regular:size=16:hinting=false, \
+                        xft:Noto Color Emoji:style=Regular:size=14
+!URxvt*boldFont:         xft:Roboto Mono Nerd Font Mono:style=Bold:size=16:hinting=false
+URxvt*boldFont:         xft:RobotoMono Nerd Font:style=Bold:size=16:hinting=false
+URxvt*italicFont:        xft:RobotoMono Nerd Font Mono:style=Italic:size=16:hinting=false
+URxvt*boldItalicFont:    xft:RobotoMono Nerd Font Mono:style=Bold Italic:size=16:hinting=false
 
 !URxvt.letterSpace: -1
 
