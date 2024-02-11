@@ -1,0 +1,10 @@
+#convenience for azure cli # ignore E005
+
+AZ_CLI_PATH=/usr/bin/az
+[ ! -f ${AZ_CLI_PATH} ] && return 1 # return error cause az cli is not installed
+
+#TODO show current tenant
+#TODO show current subscription
+#TODO convenience for switching subscription
+#TODO convenience for switching tenant
+#TODO convenience for getting user info
