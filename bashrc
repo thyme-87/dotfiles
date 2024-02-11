@@ -87,9 +87,6 @@ export LC_ALL=en_US.UTF-8
 #export XDG_CURRENT_DESKTOP=GNOME
 
 
-#PATH=$PATH:~/bin #local bin for personal shell scripts
-export PATH
-
 #----------------------------[SETTINGS FOR GO BEGIN]-----------------------------------
 #Settings for GO development
 #requires /home/$USER/golib and /home/$USER/gocode to be present
