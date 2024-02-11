@@ -1,13 +1,53 @@
 ---
 # tasks file for xmonad
-- name: "Install gnome base packages"
-  community.general.pacman:
-    name: "{{ gnome_packages }}"
-    state: latest
-    update_cache: yes
 
 - name: "Install xmonad base packages"
   community.general.pacman:
     name: "{{ xmonad_base_packages }}"
     state: latest
     update_cache: yes
+  register: xmonad_pkgs
+
+- name: "create directory {{ hostvars.localhost.ansible_env.HOME}}/.xmonad/"
+  ansible.builtin.file:
+    path: "{{ hostvars.localhost.ansible_env.HOME}}/.xmonad/"
+    state: directory
+    owner: "{{ hostvars.localhost.ansible_env.USER }}"
+    group: "{{ hostvars.localhost.ansible_env.USER }}"
+    mode: '0755'
+
+- name: "provide xmonad config"
+  ansible.builtin.file:
+    src: "{{ hostvars.localhost.ansible_env.HOME }}/dotfiles/xmonad.hs"
+    dest: "{{ hostvars.localhost.ansible_env.HOME }}/.xmonad/xmonad.hs"
+    owner: "{{ hostvars.localhost.ansible_env.USER }}"
+    group: "{{ hostvars.localhost.ansible_env.USER }}"
+    state: link
+
+- name: "Build xmonad config"
+  become: true
+  become_user: "{{ hostvars.localhost.ansible_env.USER }}"
+  ansible.builtin.command:
+    cmd: xmonad --recompile
+    creates: "{{ hostvars.localhost.ansible_env.HOME }}/.xmonad/xmonad-x86_64-linux"
+
+  #everything ${HOME}/.bash_profile related should at least be
+  #moved to a separate file
+- name: "Check status of ${HOME}/.bash_profile"
+  ansible.builtin.stat:
+    path: "{{ hostvars.localhost.ansible_env.HOME }}/.bash_profile"
+  register: bash_profile_stat
+
+- name: "Delete ${HOME}/.bash_profile if it is not a symlink"
+  ansible.builtin.file:
+    path: "{{ hostvars.localhost.ansible_env.HOME }}/.bash_profile"
+    state: absent
+  when: bash_profile_stat.stat.islnk == false
+
+- name: "Ensure that ${HOME}/dotfiles/bash_profile is linked to ${HOME}/.bash_profile"
+  ansible.builtin.file:
+    src: "{{ hostvars.localhost.ansible_env.HOME }}/dotfiles/bash_profile"
+    dest: "{{ hostvars.localhost.ansible_env.HOME }}/.bash_profile"
+    owner: "{{ hostvars.localhost.ansible_env.USER }}"
+    group: "{{ hostvars.localhost.ansible_env.USER }}"
+    state: link
