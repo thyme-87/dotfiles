@@ -108,7 +108,9 @@ URxvt*urgentOnBell: false
 URxvt*visualBell: true
 
 ! clipboard, resize-fonts on the fly, url selection
-URxvt*perl-ext-common: selection-to-clipboard,default,resize-font,url-select
+!see: https://github.com/xyb3rt/urxvt-perls
+URxvt*.perl-lib: /usr/lib/urxvt/perl/
+URxvt*perl-ext-common: selection-to-clipboard,keyboard-select,clipboard,resize-font
 !URxvt*perl-ext-common: selection-to-clipboard,default,resize-font,url-select,clipboard
 
 !URxvt*.url-select.launcher: /usr/bin/xdg-open
