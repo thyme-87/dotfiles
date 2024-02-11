@@ -123,10 +123,11 @@ scratchpads = [ NS "terminal" spawnTerminal findTerminal manageTerminal
                             t = 0.1
                             l = 0.1
 
-
 --The startupHook can be used to launch programs automatically.
 --I use it for picom
 --Main setup is handled via ~/.xprofile now
+--TODO setting background image via xmonad startup hook _could_be beneficial
+--     TODO align on ONE concept to set backround image irrespective of actual content (device agnostic)
 myStartupHook ::X ()
 myStartupHook = do
      spawnOnce "picom -f -I 0.10 -O 0.10 --config ${HOME}/dotfiles/picom.conf"
