@@ -78,16 +78,18 @@ scratchpads :: [NamedScratchpad]
 scratchpads = [ NS "terminal" spawnTerminal findTerminal manageTerminal
         , NS "keepassxc" spawnKeepassxc findKeepassxc manageKeepassxc
         , NS "spotify" spawnSpotify findSpotify manageSpotify
+        , NS "gvim" spawnGvim findGvim manageGvim
+        , NS "streamdeck" spawnStreamdeck findStreamdeck manageStreamdeck
         ]
         where
-            spawnTerminal   = myTerminal ++ "-t scratchpad"
+            spawnTerminal   = myTerminal ++ " -name scratchpad"
             findTerminal    = resource =? "scratchpad"
             manageTerminal  = customFloating $ W.RationalRect l t w h
                         where
                             h = 0.9
                             w = 0.9
                             t = 0.05
-                            l = 0.05 
+                            l = 0.05
             spawnKeepassxc  = "keepassxc"
             findKeepassxc   = className =? "KeePassXC"
             manageKeepassxc = customFloating $ W.RationalRect l t w h
@@ -100,8 +102,24 @@ scratchpads = [ NS "terminal" spawnTerminal findTerminal manageTerminal
             findSpotify     = className =? "Spotify"
             manageSpotify   = customFloating $ W.RationalRect l t w h
                         where
-                            h = 0.6
-                            w = 0.6
+                            h = 0.9
+                            w = 0.9
+                            t = 0.15
+                            l = 0.15
+            spawnGvim       = "gvim"
+            findGvim        = className =? "Gvim"
+            manageGvim      = customFloating $ W.RationalRect l t w h
+                        where
+                            h = 1.1
+                            w = 1
+                            t = 0.02
+                            l = 0.003
+            spawnStreamdeck     = "streamdeck"
+            findStreamdeck      = className =? "StreamDeck UI"
+            manageStreamdeck    = customFloating $ W.RationalRect l t w h
+                        where
+                            h = 0.7
+                            w = 0.7
                             t = 0.1
                             l = 0.1
 
@@ -114,7 +132,7 @@ myStartupHook = do
      spawnOnce "picom -f -I 0.10 -O 0.10 --config ${HOME}/dotfiles/picom.conf"
      --spawn "feh --no-fehbg --bg-fill ${HOME}/backgrounds/background.jpg"
 
-main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
+main = xmonad . ewmhFullscreen =<< statusBar myBar myPP toggleStrutsKey myConfig
 --withUrgencyHook LibNotifyUrgencyHook <- This still is ToDo!
 
 --TODO use example here: https://xmonad.org/configurations.html
@@ -150,7 +168,7 @@ myConfig = def {
         } `additionalKeys`
         ([ ((mod4Mask .|. shiftMask, xK_l), spawn "i3lock --image=${HOME}/backgrounds/background-corrupted.png") --FIXME
         , ((mod1Mask        , xK_space), spawn "${HOME}/dotfiles/bin/layout_switch")
-        , ((mod4Mask            , xK_m), sendMessage ToggleStruts)
+        , ((mod4Mask            , xK_m), sendMessage ToggleStruts)                              --toggle xmobar
         , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +4%")
         , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ -4%")
         , ((mod1Mask.|. shiftMask, xK_j), spawn "pactl set-sink-volume @DEFAULT_SINK@ -4%")
