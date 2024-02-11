@@ -10,7 +10,7 @@ Config {
         , dpi = 96,
         , additionalFonts = []
         , textOffset = -1
-        , iconOffset = -1
+        , iconOffset = 0
         , iconRoot = "."
         , alpha = 255
         , position = TopW L 100
