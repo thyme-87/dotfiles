@@ -32,15 +32,10 @@ Config {
         , sepChar   = "%"   -- delineator between plugin and text
         , alignSep  = "}{"  -- separator between left-right alignment
 
-        --for now, deactivate the weather plugin, as it is not working (see below)
-        --, template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ <fc=#e0e0e0>Vol: </fc>%volume%  | <action=`gnome-calendar`>%date%</action> | Berlin: %weather% | <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
-        --TEST spotify songinfos
-        , template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ | <fc=#F92672>%spotifyinfo%</fc> | <fc=#e0e0e0>Vol: </fc>%volume% |<action=`gnome-calendar`>%date%</action>| %weather%| <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
-
+        , template = "%StdinReader% |%battery%|%multicpu% | %coretemp% | %memory% | %dynnetwork% }{ | <fc=#F92672>%spotifyinfo%</fc> | :%volume% |<action=`dunstify-cal`>%date%</action>| %weather%| <action=`layout_switch`>%kbd%</action>"
         --template with build in plugin for weather
-        --, template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ <fc=#e0e0e0>volume</fc>%volume%   %EDDT% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
         --template with custom command for weather
-        --, template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %volume%   %weather% | <action=`gnome-calendar`>%date%</action> || <action=`~/dotfiles/bin/layout_switch`>%kbd%</action>"
+        --, template = "%StdinReader% | %battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %volume%   %weather% | <action=`gnome-calendar`>%date%</action> || <action=`layout_switch`>%kbd%</action>"
 
         -- PLUGINS
         , commands =
@@ -55,17 +50,17 @@ Config {
                             ] 10
 
         -- cpu activity monitor
-        , Run MultiCpu      [   "--template",   "CPU(%):<total0>|<total1>|<total2>|<total3>"
+        , Run MultiCpu      [   "--template",   "\xe266 %:<total0>|<total1>|<total2>|<total3>"
                             ,   "--Low"     ,   "30"        --units: %
                             ,   "--High"    ,   "65"        --units: %
                             ,   "--high"    ,   "#FF0000"
                             ,   "--normal"  ,   "#00FFDD"
                             ,   "--low"     ,   "#66aa11"
-                            ,   "--ppad"    ,   "3"
+                            ,   "--ppad"    ,   "2"
                             ] 10
 
         -- cpu core temperature monitor
-        , Run CoreTemp      [   "--template",   "T(°C): <core0>|<core1>|<core2>|<core3>"
+        , Run CoreTemp      [   "--template",   "\xf2c8: <core0>|<core1>|<core2>|<core3>"
                             ,   "--Low"     ,   "70"        --units: °C
                             ,   "--High"    ,   "80"        --units: °C
                             ,   "--high"    ,   "#FF0000"
@@ -74,7 +69,7 @@ Config {
                             ] 10
 
         -- memory usage monitor
-        , Run Memory        [   "--template",   "M: <usedratio>%"
+        , Run Memory        [   "--template",   "\xf035b: <usedratio>%"
                             ,   "--Low"     ,   "20"        --units: %
                             ,   "--High"    ,   "90"        --units: %
                             ,   "--high"    ,   "#FF0000"
@@ -85,7 +80,7 @@ Config {
         , Run Swap          [] 10
 
         -- battery monitor
-        , Run Battery       [   "--template",   "Batt: <acstatus>"
+        , Run Battery       [   "--template",   "<acstatus>"
                             ,   "--Low"     ,   "20"        --units: %
                             ,   "--High"    ,   "80"        --units: %
                             ,   "--high"    ,   "#66aa11"
@@ -94,16 +89,16 @@ Config {
 
                             , "--" --battery specific options
                                     -- discharging status
-                                    , "-o"  , "<left>% (<timeleft>)"
+                                    , "-o"  , "\xf242  <left>% (<timeleft>)"
                                     -- AC "on" status
-                                    , "-O"  , "<fc=#FF0000>Charging</fc>"
+                                    , "-O"  , "<fc=#FF0000>\xf0084</fc>"
                                     -- charged status
-                                    , "-i"  , "<fc=#66aa11>Full</fc>"
+                                    , "-i"  , "<fc=#66aa11>\xf0084</fc>"
                             ] 50
 
         -- time and date indicator
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Run Date "<fc=#66aa11>%F[%V](%a) %T</fc>" "date" 10
+        , Run Date "<fc=#66aa11>%F (%a)[%V] %T</fc>" "date" 10
 
         -- keyboard layout indicator
         , Run Kbd           [   ("de",  "<fc=#3579a8>DE </fc>")
@@ -111,16 +106,16 @@ Config {
                             ,   ("fr",  "<fc=#3579a8>FR </fc>")
                             ,   ("es",  "<fc=#3579a8>ES </fc>")
                             ]
-        , Run ComX "pamixer" [ "--get-volume-human" ] "N/A" "volume" 10
+        , Run ComX "pamixer" [ "--get-volume-human" ] "N/A" "volume" 10 --TODO this can be made more beautiful with a custom script
         -- weather monitor
         -- this requires the file 'weather-bin' to be present in $PATH (i.e. at /usr/local/bin)
         , Run Com "weather-berlin" [ "xmobar" ] "weather" 600
         -- TODO the spotifyscript should either not execute, or (preferably) not even be called when running in laptop mode
-        , Run Com "/usr/local/bin/spotifyscript" [ "xmobar" ] "spotifyinfo" 50
+        , Run Com "spotifyscript" [ "xmobar" ] "spotifyinfo" 50 -- FIXME this must then be templated by ansible I guess???
         , Run StdinReader
         --, Run MarqueePipeReader "/usr/local/bin/spotifyscript" (10, 7, "+") "spotifyinfo"
+        --
         -- currently broken; see https://github.com/jaor/xmobar/issues/270
-        --, Run Weather "EDDT" [ "--template", "<skyCondition> | <fc=#F92672><tempC></fc>°C | <fc=#F92672><rh></fc>% | <fc=#F92672><pressure></fc> hPa" ] 36000
-        --, Run ComX "weather" [ "-mq" ] "N/A" "weather" 600
+        , Run ComX "weather-berlin" [ "xmobar" ] "N/A" "weather" 600 --FIXME this must be handled via ansible
         ]
     }
