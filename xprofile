@@ -1,0 +1,21 @@
+#set GTK Theme for GTK 4
+export GTK_THEME=Adwaita-dark
+
+#set theme adwaita for QT 5
+QT_STYLE_OVERRIDE=adwaita-dark
+
+#set mouse pointer
+xsetroot -cursor_name left_ptr
+
+#set keyboard layout
+setxkbmap de
+
+#merge Xresources
+xrdb -merge ${HOME}/dotfiles/Xresources
+
+#custom script for screensetup
+${HOME}/dotfiles/bin/screensetup
+
+#set background image
+#TODO evaluate if this fits better with xmonad.hs (i.e. when switching screens to align on new display dimensions)
+feh --no-fehbg --bg-fill ${HOME}/backgrounds/background.jpg
