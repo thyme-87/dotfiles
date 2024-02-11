@@ -4,7 +4,7 @@ Before=sleep.target suspend.target hibernate.target
 #Before=sleep.target
 
 [Service]
-User=timon
+User=${USER}
 #Type=simple
 Type=forking
 ExecStart=/usr/bin/physlock -ds
