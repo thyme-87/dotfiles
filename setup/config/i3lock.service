@@ -3,7 +3,7 @@ Description=Lock the screen
 Before=sleep.target suspend.target hibernate.target
 
 [Service]
-User=timon
+User=${USER}
 Type=forking
 Environment=DISPLAY=":1"
 ExecStart=/usr/bin/i3lock -i ${HOME}/backgrounds/arch_background.png
