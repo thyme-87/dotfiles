@@ -177,9 +177,11 @@ myConfig = def {
         , ((controlMask, xK_i), spawn "spotifyscript notify-songinfo")                          --print songinfo via notify-send
         , ((controlMask .|. mod1Mask, xK_s), spawn "spotifyscript copyUrl")                     --copy url into copy&paste buffer
         , ((controlMask .|. mod1Mask, xK_t), spawn myTerminal)
-        , ((mod1Mask .|. shiftMask, xK_comma), namedScratchpadAction scratchpads "terminal")      --urxvt quake-style
-        , ((mod4Mask .|. shiftMask, xK_k), namedScratchpadAction scratchpads "keepassxc")
-        , ((mod4Mask, xK_s), namedScratchpadAction scratchpads "spotify")
+        , ((mod1Mask .|. shiftMask, xK_comma), namedScratchpadAction scratchpads "terminal")    --urxvt quake-style
+        , ((mod1Mask, xK_p), namedScratchpadAction scratchpads "keepassxc")                     --keepassxc
+        , ((mod1Mask, xK_m), namedScratchpadAction scratchpads "spotify")
+        , ((mod1Mask, xK_v), namedScratchpadAction scratchpads "gvim")                          --TODO FIXME this overlaps with emacs shortcut!
+        , ((mod1Mask .|. shiftMask, xK_s), namedScratchpadAction scratchpads "streamdeck")
         , ((controlMask, xK_space), spawn myLauncher)
         , ((0, xF86XK_Tools), spawn "systemctl suspend")
         , ((mod1Mask, xK_Num_Lock), spawn "log-working-hours SUSPEND && systemctl suspend")
