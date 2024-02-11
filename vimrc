@@ -455,13 +455,13 @@ set signcolumn=yes
 let g:gitgutter_grep=''
 
 "Set colors for gitgutter manually
-highlight GitGutterAddDefault cterm=bold ctermfg=70 ctermbg=237
-highlight GitGutterDeleteDefault cterm=bold ctermfg=160 ctermbg=237
-highlight GitGutterChangeDefault cterm=bold ctermfg=208 ctermbg=237
+highlight GitGutterAddDefault cterm=bold ctermfg=70 ctermbg=237 guibg=NONE guifg=#00ff00
+highlight GitGutterDeleteDefault cterm=bold ctermfg=160 ctermbg=237 guibg=NONE guifg=#ff0000
+highlight GitGutterChangeDefault cterm=bold ctermfg=208 ctermbg=237 guibg=NONE guifg=#aa9922
 
-highlight GitGutterAdd cterm=bold ctermfg=70 ctermbg=237
-highlight GitGutterDelete cterm=bold ctermfg=160 ctermbg=237
-highlight GitGutterChange cterm=bold ctermfg=208 ctermbg=237
+highlight GitGutterAdd cterm=bold ctermfg=70 ctermbg=237 guibg=#272822 guifg=#00ff00
+highlight GitGutterDelete cterm=bold ctermfg=160 ctermbg=237 guibg=#272822 guifg=#ff0000
+highlight GitGutterChange cterm=bold ctermfg=208 ctermbg=237 guibg=#272822 guifg=#aa9922
 
 "let g:gitgutter_sign_added = '+'
 "let g:gitgutter_sign_modified = '~'
