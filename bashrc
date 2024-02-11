@@ -261,8 +261,11 @@ alias gswitch-project="gcloud config set project"
 complete -F __gswitch_completion gswitch
 complete -F __google_project_completion gswitch-project
 
+#this is a dirty workaround to get tab completion for glow
+#see issue: https://github.com/charmbracelet/glow/issues/457
+complete -o default -o bashdefault glow
 #this is a dirty workaround to provide both: autocompletion via fzf and custom autocompletion for ssh
 complete -F _fzf_complete_ssh -o default -o bashdefault -F _completeSSHHosts ssh
 complete -F _completeSSHHosts -o default -b bashdefault scp
 #complete -C /usr/bin/aws_completer aws #use command completion for bash
-complete -C /home/timon/.local/bin/aws_completer aws
+complete -C ${HOME}/.local/bin/aws_completer aws

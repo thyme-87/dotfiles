@@ -44,10 +44,10 @@ set     certificate_file    =   ~/.mutt/mailcerts
 source  "gpg2 -dq $HOME/.my-pwds.gpg |"
 
 # For now we test with only one account
-set     from            =   timon.schroeder@posteo.de
+#set     from            = firstname.lastname@provider.tld
 set     hostname        =   "posteo.de" 
-set     realname        =   "Timon Schröder"
-set     imap_user       =   timon.schroeder@posteo.de
+#set     realname        =   "Firstname Lastname"
+#set     imap_user       =   imap_username
 set     imap_pass       =   $my_pw_posteo
 set     folder          =   "imaps://$imap_user@posteo.de/"
 set     spoolfile       =   +INBOX
