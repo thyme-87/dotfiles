@@ -1,0 +1,210 @@
+#!/usr/bin/env python
+# TODO implement debug mode
+""" Some fancy docstring """
+
+import re
+import subprocess
+import sys
+import time
+
+# multiline regex to fetch all settings for all "connected" monitors
+# using regex ^([a-zA-Z]+)[0-9].* to match name
+regexMonitorSettings = re.compile(
+        r"^((\w+[0-9])"
+        r"(-[0-9])?\s"
+        r"(connected|disconnected).*\n"
+        r"(^\s.*\n)*)", re.MULTILINE)
+
+# line regex to fetch all supported resoultions
+regexMonitorSupportedResolutions = re.compile(r"(?<=\n\s{2})[0-9]+x[0-9]+.*")
+
+regexMonitorMainAttributes = re.compile(r"^\w+[0-9].*")
+
+# parse available information of the connected monitor:
+regexMonitorImportantInfos = re.compile(
+        r"(\w+(?:-\d)?)\s" # name
+        r"(connected|disconnected)" # connected or disconnected
+        r"\s(primary)?" # primary (if defined)
+        r"(?:\s)?(\d+x\d+)?" # resolution (only when connected)
+        r"\+?(\d+)?" # x-axis (only when connected)
+        r"\+?(\d+)?" # y-axis (only when connected)
+        r"\s?\(?(\dx[0-9a-fA-F]+)?\)?" # mode (only when connected)
+        r"\s?(\w+)" # current orientation
+        )
+
+# parse the supported resolutions
+regexMonitorParseResolutions = re.compile(
+        r"(\d+x\d+)" # resolution non-unique!
+        r"\s\((\dx.+)\)\s" # mode (unique per monitor)
+        r"(\d+(?:\.\d+)?)MHz\s" # refresh rate (?)
+        r"(.(?=HSync)).+" # horizontal sync (+/-)
+        r"(.(?=VSync))"  # vertical sync (+/-)
+        )
+
+def get_connected_monitor_information():
+    """ Parse available information about connected monitors using randr """
+
+    with subprocess.Popen(
+            ["xrandr", "--verbose"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+            ) as xrandr_cmd:
+        try:
+            output, errors = xrandr_cmd.communicate(timeout=5)
+        except subprocess.TimeoutExpired:
+            xrandr_cmd.kill()
+            output, errors = xrandr_cmd.communicate()
+            print("Something went wrong!", errors.decode())
+            sys.exit(1)
+
+        # create new array for storing information on connected monitors
+        connected_monitors = []
+
+        #empty dict for storing resolutions by key
+        resolutions = {}
+
+        # find all available monitors that match the regex regexMonitorSettings
+        monitors = regexMonitorSettings.findall(output.decode())
+
+        # extract main attributes and supported resolutions for all available monitors
+        for monitor in monitors:
+            main_attributes = regexMonitorMainAttributes.findall(monitor[0])
+            monitor_attributes = regexMonitorImportantInfos.findall(main_attributes[0])[0]
+            is_connected = monitor_attributes[1] == "connected"
+            is_primary = monitor_attributes[2] == "primary"
+            monitor_settings = {
+                    'Name': monitor_attributes[0],
+                    'Connected': is_connected,
+                    'Primary': is_primary,
+                    'CurrentResolution': monitor_attributes[3],
+                    'Position-x': monitor_attributes[4],
+                    'Position-y': monitor_attributes[5],
+                    'Mode': monitor_attributes[6],
+                    'Orientation': monitor_attributes[7]
+                    }
+            supported_resolutions = regexMonitorSupportedResolutions.findall(monitor[0])
+            for resolution in supported_resolutions:
+                tmp = regexMonitorParseResolutions.findall(resolution)[0]
+                details = {
+                        'Resolution': tmp[0],
+                        #'Mode': tmp[1],
+                        'RefreshRate': tmp[2],
+                        'HSync': tmp[3],
+                        'VSync': tmp[4],
+                        'Monitor': [monitor_attributes[0]]
+                        }
+                if tmp[1] in resolutions:
+                    #mode already exists!
+                    resolutions[tmp[1]]['Monitor'].append(monitor_attributes[0])
+                else:
+                    #mode does not exist yet
+                    resolutions.update({tmp[1]: details})
+            connected_monitors.append(monitor_settings)
+
+        return connected_monitors, resolutions
+
+# we consider two options:
+# option 1:
+#   all monitors have the same refreshrate available
+# option 2:
+#   two monitors have the same refreshrate,
+#   the first display (laptop display) doesn't support this rate
+def find_shared_modes(av_resolutions, target_resolution):
+    """ docstring """
+    #store modes that have target_resolution
+    target_modes = {}
+
+    for key, res in av_resolutions.items():
+        if res['Resolution'] == target_resolution:
+            target_modes.update({key: res})
+
+    # sort by refresh rate
+    target_modes = dict(sorted(target_modes.items(),
+                               key=lambda item: item[1]['RefreshRate'],
+                               reverse=False))
+
+    return target_modes
+
+# we assume that the first monitor is the (builtin) laptop monitor
+# and that its resolution will remain unchanged
+#
+# we assume that we have 2 monitors with the same resolution
+# with the resolution being explicitly specified via parameter target_resolution
+def build_xrandr_cmd(resolutions, monitors, target_resolution):
+    """ docstring """
+    screen_width, screen_height = [int(s) for s in re.compile(r"\d+").findall(target_resolution)]
+
+    cmd_array = []
+    counter=0
+    first_monitor_pos_x = 2*screen_width
+
+    # TODO calculate absolute y position for first monitor dynamically
+    #y_offset = int(re.compile(r"\d+$").findall(monitor['CurrentResolution'])[0])
+    first_monitor_pos_y = screen_height - 1080
+
+    for i, monitor in enumerate(monitors):
+        if not monitor['Connected']:
+            cmd_array.append("--output " + monitor['Name'] + " --off")
+        else:
+            if i == 0: #first monitor assumed to always be the laptop builtin screen
+                cmd_array.append("--output " + monitor['Name']
+                                  + " --mode " +  monitor['CurrentResolution']
+                                  + " --pos "
+                                      + str(first_monitor_pos_x)
+                                      + "x"
+                                      + str(first_monitor_pos_y)
+                                  + " --rotate " + monitor['Orientation'])
+            else:
+                mode = ""
+                for elem in resolutions.items():
+                    if monitor['Name'] in elem[1]['Monitor']:
+                        mode = elem[0]
+                        break
+                cmd_array.append("--output " + monitor['Name']
+                                  + " --mode " + mode
+                                  + " --pos "
+                                    + str(screen_width*counter)
+                                    + "x"
+                                    + str(0)
+                                  + " --rotate " + monitor['Orientation'])
+                counter += 1
+
+    return cmd_array
+
+def set_up_monitors(cmd_array):
+    """ docstring """
+
+    for cmd in cmd_array:
+        try:
+            ret = subprocess.run(["xrandr"] + cmd.split(),
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE,
+                                 check=True)
+            ret.check_returncode()
+        except subprocess.CalledProcessError as e:
+            print("Something went wrong!", e.stderr.decode("utf-8"))
+            sys.exit(1)
+        time.sleep(0.1)
+    # This is a very unsophisticated hack
+    # it relies on the laptop resolutions being stored as the first element in the cmd_array array.
+    try:
+        ret = subprocess.run(["xrandr"] + cmd_array[0].split(),
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE,
+                             check=True)
+        ret.check_returncode()
+    except subprocess.CalledProcessError as e:
+        print("Something went wrong!", e)
+        sys.exit(1)
+
+    return True
+
+if __name__ == "__main__":
+    TARGET_RESOLUTION = "2560x1440"
+    available_monitors, available_resolutions = get_connected_monitor_information()
+    modes = find_shared_modes(available_resolutions, TARGET_RESOLUTION)
+    cmd_str = build_xrandr_cmd(modes, available_monitors, TARGET_RESOLUTION)
+    set_up_monitors(cmd_str)
+    sys.exit(0)
+ # TODO autoswitch between laptop mode and "docked" mode(?)
+ # TODO if feh is configured, maybe run feh to clear the screenbackground
