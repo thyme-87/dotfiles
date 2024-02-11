@@ -1,0 +1,8 @@
+---
+# defaults file for xmobar
+
+xmobar_custom_scripts:
+  - spotifyscript
+  - layout_switch
+  - weather-berlin
+  - dunstify-cal

@@ -1,0 +1,24 @@
+---
+# tasks file for xmobar
+- name: "Ensure that xmobar is installed"
+  become: true
+  ansible.builtin.pacman:
+    name: xmobar
+    state: latest
+    update_cache: true
+
+- name: "Ensure that ${HOME}.xmobarrc is symlinked to ${HOME}/dotfiles/xmobarrc"
+  ansible.builtin.file:
+    src: "{{ hostvars.localhost.ansible_env.HOME }}/dotfiles/xmobarrc"
+    dest: "{{ hostvars.localhost.ansible_env.HOME }}/.xmobarrc"
+    owner: "{{ hostvars.localhost.ansible_env.USER }}"
+    group: "{{ hostvars.localhost.ansible_env.USER }}"
+    state: link
+
+- name: "Create symlink for custom commands to /usr/local/bin"
+  become: true
+  ansible.builtin.file:
+    src: "{{ hostvars.localhost.ansible_env.HOME }}/dotfiles/bin/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    state: link
+  loop: "{{ xmobar_custom_scripts }}"
