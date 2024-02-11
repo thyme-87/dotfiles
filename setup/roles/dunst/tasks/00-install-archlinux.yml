@@ -1,0 +1,24 @@
+---
+# TODO check if notify-osd is installed and handle this situation (i.e. https://open.spotify.com/track/2MHYrhA8DAkgP9zAFekp2D )
+# TODO handle existing dunst installation: https://dunst-project.org/faq/#how-to-switch-back-to-notify-osd
+- name: "Install notification-server dunst"
+  become: true
+  community.general.pacman:
+    name: dunst
+    state: latest
+    update_cache: true
+
+- name: "Ensure dir ${HOME}/.config/dunst/ exists"
+  ansible.builtin.file:
+    path: "{{ hostvars.localhost.ansible_env.HOME }}/.config/dunst/"
+    owner: "{{ hostvars.localhost.ansible_env.USER }}"
+    group: "{{ hostvars.localhost.ansible_env.USER }}"
+    state: directory
+
+- name: "Setup symlink for ${HOME}/.config/dunst/dunstrc"
+  ansible.builtin.file:
+    src: "{{ hostvars.localhost.ansible_env.HOME }}/dotfiles/dunstrc"
+    dest: "{{ hostvars.localhost.ansible_env.HOME }}/.config/dunst/dunstrc"
+    owner: "{{ hostvars.localhost.ansible_env.USER }}"
+    group: "{{ hostvars.localhost.ansible_env.USER }}"
+    state: link

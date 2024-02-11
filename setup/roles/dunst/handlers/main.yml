@@ -1,0 +1,6 @@
+---
+# handlers file for dunst
+- name: "Ensure dunst.service is enabled"
+  ansible.builtin.service:
+    name: dunst.service
+    state: enabled

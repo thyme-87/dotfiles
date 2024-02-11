@@ -1,0 +1,4 @@
+---
+# tasks file for dunst
+- name: "Install dunst on {{ hostvars.localhost.ansible_facts.distribution | lower }}"
+  ansible.builtin.include_tasks: "00-install-{{ hostvars.localhost.ansible_facts.distribution | lower }}.yml"
