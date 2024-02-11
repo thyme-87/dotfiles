@@ -540,8 +540,8 @@ autocmd FileType tex :NoMatchParen          "don't match parenthesis
 autocmd FileType tex setlocal nocursorline  "don't set a cursorline for .tex files
 autocmd FileType tex let b:tagbar_ignore = 1    "disable tagbar for tex files
 autocmd FileType tex let g:neocomplete#enable_at_startup = 0 "disable neocomplete for tex files
-autocmd BufEnter * :syn sync minlines=250   "for t400 don't parse whole file for syntax hightlighting
-autocmd BufEnter * :syn sync maxlines=500   "fix syntax hightlighting with `: syntax sync fromstart`
+autocmd BufEnter * :syn sync minlines=400   "for t400 don't parse whole file for syntax hightlighting
+autocmd BufEnter * :syn sync maxlines=1000   "fix syntax hightlighting with `: syntax sync fromstart`
 
 " for more infos see http://vim.wikia.com/wiki/Fix_syntax_highlighting
 
