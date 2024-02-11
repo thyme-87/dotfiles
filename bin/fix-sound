@@ -1,0 +1,16 @@
+#!/bin/bash
+
+
+#TODO find out if there is a chance to figure this out automatically:
+pacmd set-card-profile alsa_card.pci-0000_00_1f.3 output:hdmi-stereo-extra3
+
+#TODO FIXME maybe two steps are needed
+# pactl set-card-profile alsa_card.pci-0000_00_1f.3 "output:hdmi-stereo"
+# pactl set-default-sink alsa_output.pci-0000_00_1f.3.hdmi-stereo
+
+pamixer --list-sinks
+read -p "Select default sink: " input
+
+echo "Set default sink to: $input"
+pacmd set-default-sink $input
+echo "done!"
