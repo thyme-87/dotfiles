@@ -20,3 +20,6 @@ set page-padding 1
 set incremental-search 1
 
 set selection-clipboard clipboard #set target for selection to clipboard instead of x11 primary
+
+#Set font and font size for status bar and menu
+set font 'monospace normal 14'
