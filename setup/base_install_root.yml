@@ -1,0 +1,168 @@
+---
+#TODO there are three main scenarios here that need to be addressed:
+# 1. bare system after pacstrap install & arch-chroot (no user, no python-pip, no-
+# 2. system with some initial configuration (i.e. non-root user created)
+# 3. partially setup system where some re-installation/sync should be performed
+
+#TODO create mirrorlist via reflector
+#TODO set hostname if it is not set as provided via var hostname
+#     check via .hostvars.localhost.ansible_facts.hostname against existing hostname
+#TODO enable bluetooth.service
+#TODO enable ntp (via timedatectl?)
+#TODO set a higher value for "Deny access" (default is 3) in /etc/security/faillock.conf
+#     this is the reason why sudo will sometimes "randomly" fail (after a wrong password was provided 3 times in a row)
+# TODO decide and add container runtime. Podman is to be preferred but might be considerable more work (i.e. fuse-overlayfs)
+# TODO set `FallbackDNS=` in /etc/systemd/resolved.conf
+
+#basic setup on new machines
+- name: Setup new system
+  hosts: target
+  connection: local
+
+  vars_prompt:
+    - name: hostname
+      prompt: "Please provide the hostname"
+      private: false
+
+    - name: username
+      prompt: "Provide the username"
+      private: false
+
+    - name: groupname
+      prompt: "Provide the groupname"
+      private: false
+
+    - name: password
+      prompt: "Provide the password for the user"
+      encrypt: sha512_crypt
+      confirm: true
+      salt_size: 7
+      unsafe: yes
+      private: true
+
+  pre_tasks:
+    - name: "Update packages"
+      ansible.builtin.pacman:
+        update_cache: yes
+
+  roles:
+    - name: "Setup user {{ username }} (if it doesn't exist yet)"
+      role: user
+      become: true
+      vars:
+        user:
+          name: "{{ username }}"
+          group: "{{ groupname }}"
+          additional_groups: []
+          password: "{{ password }}"
+          systemuser: false
+      tags:
+        - base
+        - initial
+        - create_user
+
+    - name: "Configure pacman"
+      role: pacman
+      become: true
+      tags:
+        - base
+        - initial
+        - pacman
+
+    - name: "Create swapfile"
+      become: true
+      role: swap
+      tags:
+        - base
+        - initial
+        - swap
+
+  tasks:
+    - name: "Install essential system packages"
+      become: true
+      ansible.builtin.pacman:
+        name: "{{ system_base_pkgs }}"
+        state: latest
+      tags:
+        - base
+        - initial
+        - base_system_pkgs
+
+    - name: "Install extended system packages"
+      become: true
+      ansible.builtin.pacman:
+        name: "{{ system_base_extended_pkgs }}"
+        state: latest
+      tags:
+        - base
+        - initial
+        - base_system_extended_pkgs
+
+    - name: "Ensure that dhcpcd is installed"
+      become: true
+      ansible.builtin.pacman:
+        name: dhcpcd
+        state: latest
+      tags:
+        - base
+        - initial
+        - dhcpcd
+
+    - name: "Enable and start dhcpcd"
+      become: true
+      ansible.builtin.service:
+        name: dhcpcd.service
+        state: started
+        enabled: true
+        daemon_reload: true
+      tags:
+        - base
+        - initial
+        - dhcpcd
+
+    - name: "Enable and start systemd-resolved"
+      become: true
+      ansible.builtin.service:
+        name: systemd-resolved.service
+        state: started
+        enabled: true
+        daemon_reload: true
+      tags:
+        - base
+        - initial
+        - systemd-resolved
+
+    - name: "Ensure that iwd is installed"
+      become: true
+      ansible.builtin.pacman:
+        name: iwd
+        state: latest
+      tags:
+        - base
+        - initial
+        - iwd
+
+    - name: "Enable and start iwd"
+      become: true
+      ansible.builtin.service:
+        name: iwd.service
+        state: started
+        enabled: true
+        daemon_reload: true
+      tags:
+        - base
+        - initial
+        - iwd
+
+    - name: "Enable and start bluetooth.service"
+      become: true
+      ansible.builtin.service:
+        name: bluetooth.service
+        state: started
+        enabled: true
+        daemon_reload: true
+      tags:
+        - base
+        - initial
+        - bluetooth
+
