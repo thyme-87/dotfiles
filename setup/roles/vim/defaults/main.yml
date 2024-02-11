@@ -1,0 +1,29 @@
+---
+# defaults file for vim
+
+vim_packages:
+  - gvim
+
+vim_initial_plugins:
+  - sickill/vim-monokai
+  - VundleVim/Vundle.vim
+
+vim_ycm_dependencies:
+  - base-devel
+  - cmake
+  - clang
+  - python-bottle
+  - python-watchdog
+
+vim_ycm_opt_dependencies:
+  - gopls
+  - rust-analyzer
+  - typescript
+  - python-jedi
+  - python-numpydoc
+  - python-regex
+  - java-environment
+
+vim_ycm_aur_dependencies:
+  - nodejs-tern
+  - jdtls

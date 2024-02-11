@@ -1,0 +1,74 @@
+---
+# tasks file for vim
+- name: "Uninstall package 'vim' if present"
+  ansible.builtin.pacman:
+    name: vim
+    state: absent
+
+- name: "Install gvim to get all the bells and whistles"
+  ansible.builtin.pacman:
+    name: "{{ vim_packages }}"
+    state: latest
+    update_cache: true
+
+  #TODO check if already present
+- name: "Fetch initial plugins for vim"
+  local_action:
+    module: ansible.builtin.git
+    repo: "https://github.com/{{ item }}"
+    dest: "{{ hostvars.localhost.ansible_env.HOME }}/.vim/bundle/{{ item | regex_search('[a-zA-Z-_.]+$') }}"
+  loop: "{{ vim_initial_plugins }}"
+
+- name: "Create directory ${HOME}/.vim/colors/"
+  ansible.builtin.file:
+    dest: "{{ hostvars.localhost.ansible_env.HOME }}/.vim/colors/"
+    owner: "{{ hostvars.localhost.ansible_env.USER }}"
+    group: "{{ hostvars.localhost.ansible_env.USER }}"
+    state: directory
+
+- name: "Create symlink for monokai color scheme"
+  ansible.builtin.file:
+    src: "{{ hostvars.localhost.ansible_env.HOME }}/.vim/bundle/vim-monokai/colors/monokai.vim"
+    dest: "{{ hostvars.localhost.ansible_env.HOME }}/.vim/colors/monokai.vim"
+    owner: "{{ hostvars.localhost.ansible_env.USER }}"
+    group: "{{ hostvars.localhost.ansible_env.USER }}"
+    state: link
+
+- name: "Create symlink for ${HOME}/.vimrc"
+  ansible.builtin.file:
+    src: "{{ hostvars.localhost.ansible_env.HOME }}/dotfiles/vimrc"
+    dest: "{{ hostvars.localhost.ansible_env.HOME }}/.vimrc"
+    owner: "{{ hostvars.localhost.ansible_env.USER }}"
+    group: "{{ hostvars.localhost.ansible_env.USER }}"
+    state: link
+
+- name: "Install build dependencies for YouCompleteMe"
+  ansible.builtin.pacman:
+    name: "{{ vim_ycm_dependencies }}"
+    state: latest
+    update_cache: yes
+
+  #make this configurable
+- name: "Install optional dependencies for YouCompleteMe"
+  ansible.builtin.pacman:
+    name: "{{ vim_ycm_opt_dependencies }}"
+    state: latest
+    update_cache: yes
+
+  #FIXME only install when absent
+- name: "Install optional dependencies from AUR via yay"
+  ansible.builtin.command:
+    cmd: "yay -Sy {{ vim_ycm_aur_dependencies | join(' ') }} --answerclean A --answerdiff N --pacman pacman --noconfirm"
+    creates: /usr/lib/node_modules/tern/bin/tern
+
+- name: "Build YouCompleteMe"
+  ansible.builtin.command:
+    cmd: python3 install.py --all
+    creates: "{{ hostvars.localhost.ansible_env.HOME }}/.vim/bundle/youcompleteme/python/ycm/__pycache__/"
+  args:
+    chdir: "{{ hostvars.localhost.ansible_env.HOME }}/.vim/bundle/youcompleteme"
+
+- name: "Initial launch to install plugins"
+  ansible.builtin.command:
+    cmd: vim -c "PluginInstall" -c ":qa"
+    creates: "{{ hostvars.localhost.ansible_env.HOME }}/.vim/bundle/vim-airline"
