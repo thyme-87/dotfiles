@@ -142,6 +142,7 @@ desktop_environment_convenience:
   - yubikey-personalization-gui
   - zathura
   - zathura-pdf-mupdf
+  - xdotool
 
 # the packages listed here will be installed withour further checks/inspection!
 # this list MUST be limited to the absolute bare minimum
