@@ -23,7 +23,7 @@ import XMonad.Layout.Fullscreen
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.ToggleLayouts
 import qualified XMonad.StackSet as W
---import XMonad.Hooks.EwmhDesktops --ambigous with fullscreenEventHook
+import XMonad.Hooks.EwmhDesktops --ambigous with fullscreenEventHook
 import Graphics.X11.ExtraTypes.XF86
 import System.IO
 import Data.Ratio ((%))
