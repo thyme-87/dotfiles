@@ -7,9 +7,18 @@ if [[ "$?" = 0 ]]; then
     #playerctl metadata | awk '/artist/{print $0}'
     artist=$(grep -Po "artist\s+\K.*" <<< $songinfo)
     title=$(grep -Po "title\s+\K.*$" <<< $songinfo)
+    album=$(grep -Po "album\s+\K.*$" <<< $songinfo)
+    url=$(grep -Po "url\s+\K.*$" <<< $songinfo)
     #echo "$(grep -Po "title\s+\K.*$" <<< $songinfo)"
     if [[ $1 == "xmobar" ]]; then
         echo "$artist ($title)"
+    elif [[ $1 == "notify-songinfo" ]]; then
+        coverartUrl=$(grep -Po "artUrl\s+\K.*" <<< $songinfo)
+        coverartTmp=$(mktemp)
+        curl -sLo "${coverartTmp}" "${coverartUrl}"
+        notify-send -i "${coverartTmp}" "${title}" "by ${artist} on ${album}"
+    elif [[ $1 == "copyUrl" ]]; then
+        xsel -b -i <<< "${url}"
     else
         echo "$title by $artist"
     fi
