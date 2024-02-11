@@ -1,0 +1,22 @@
+---
+# tasks file for time-tracking
+- name: create symlink for dotfiles/bin/log-working-hours to /usr/local/bin"
+  ansible.builtin.file:
+    src: "{{ hostvars.localhost.ansible_env.HOME }}/dotfiles/bin/log-working-hours"
+    dest: /usr/local/bin/log-working-hours
+    state: link
+
+- name: "Provide systemd service file"
+  ansible.builtin.copy:
+    src: config/log-working-hours/log-working-hours.service
+    dest: /usr/lib/systemd/system/log-working-hours.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: "Enable log-working-hours.service via systemd"
+  ansible.builtin.service:
+    name: log-working-hours.service
+    enabled: true
+    state: started
+
