@@ -50,6 +50,17 @@ set ttimeoutlen=0   "set keycode delays
 set splitbelow      "open new splits below
 set splitright      "open new splits right
 
+"TODO evaluate if configuring target clipboard at vim level provider better control or should remain deferred to ~/.Xresources
+"set clipboard=unnamedplus
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+"           gvim related settings BEGIN
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+:let did_install_default_menus = 1
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+"           gvim related settings END
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                       COMPATIBILITY
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
