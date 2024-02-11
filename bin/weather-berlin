@@ -24,17 +24,81 @@ result=$(curl "${URL}" \
     -H 'accept-language: de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7' \
     --silent)
 
-temp=$(grep -Po "\"temp\":\K(.*)\"" --color=none <<< "${result}" | tr -d '"' )
-#echo $temp
+result_string=$(grep -Po "\"temp\":\"\K(.*)\"" --color=none <<< "${result}" | tr -d '"' )
+#echo "#################"
+#echo "result_string: $result_string"
+#echo "#################"
+temperature_celsius=$(grep -Po "^\d+" --color=none <<< "${result_string}")
+#echo "#################"
+#echo "temperature_celsius: ${temperature_celsius}"
+#echo "#################"
+temperature_reelFeel=$(grep -Po ":\K-?\d+" --color=none <<< "${result_string}")
+#echo "#################"
+#echo "temperature_reelFeel: ${temperature_reelFeel}"
+#echo "#################"
 description=$(grep -Po "span class=\"phrase\">\K(.*)(?=<\/span>)" <<< "${result}")
+#echo "#################"
 #echo $description
-realfeelFahrenheit=$(grep -Po "adInfo.*realfeel\":\"\K(\d+)" <<< "${result}")
-#echo $realfeelFahrenheit
-realfeelCelsius=$(awk "BEGIN {print (${realfeelFahrenheit}-32)/2}")
+#echo "#################"
+
+if [[ "${description}" == "Mostly cloudy" ]]; then
+    if [[ $(date +%H) < 18 ]]; then
+        weather_symbol="\ue312"
+    else
+        weather_symbol="\ue37e"
+    fi
+elif [[ "${description}" == "Cloudy" ]]; then
+    if [[ $(date +%H) < 18 ]]; then
+        weather_symbol="\ue312"
+    else
+        weather_symbol="\ue37e"
+    fi
+elif [[ "${description}" == "Light rain" ]]; then
+    if [[ $(date +%H) < 18 ]]; then
+        #day
+        weather_symbol="\ue316"
+    else
+        #night
+        weather_symbol="\ue326"
+    fi
+elif [[ "${description}" == "Mostly clear" ]]; then
+    if [[ $(date +%H) < 18 ]]; then
+        #day
+        weather_symbol="\ue343"
+    else
+        #night
+        #eventually \uf0594 should be perfect...
+        weather_symbol="\ue32b"
+    fi
+elif [[ "${description}" == "Clear" ]]; then
+    if [[ $(date +%H) < 18 ]]; then
+        #day
+        weather_symbol="\ue343"
+    else
+        #night
+        #eventually \uf0594 should be perfect...
+        #possibly also \ue370 looks nice
+        #weather_symbol="\ue32b"
+        weather_symbol="󰖔" #dafuq?
+    fi
+elif [[ "${description}" == "Sunny" ]]; then
+    if [[ $(date +%H) < 18 ]]; then
+        weather_symbol="\ue30d"
+    fi
+elif [[ "${description}" =~ ("Mostly sunny"|"Partly sunny") ]]; then
+    if [[ $(date +%H) < 18 ]]; then
+        weather_symbol="\ue30d"
+    fi
+else
+    weather_symbol=""
+fi
 
 if [[ $1 == "xmobar" ]]; then
-    temp=$(tr -d '°' <<< $temp)
-    printf "${temp} (${realfeelCelsius})°C\n"
+    if [[ "${weather_symbol}" != "" ]]; then
+        printf "${weather_symbol} ${temperature_celsius}(${temperature_reelFeel})°C\n"
+    else
+        printf "${temperature_celsius}(${temperature_reelFeel})°C\n"
+    fi
 else
-    printf "${description} at ${temp}C.(RealFeel ${realfeelCelsius}°C)\n"
+    printf "${description} at ${temperature_celsius}°C. (RealFeel ${temperature_reelFeel}°C)\n"
 fi
