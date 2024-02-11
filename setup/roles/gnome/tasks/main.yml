@@ -1,0 +1,8 @@
+---
+# tasks file for gnome
+#
+    - name: "Install gnome base packages"
+      community.general.pacman:
+        name: "{{ gnome_base_pkgs }}"
+        state: latest
+        update_cache: yes

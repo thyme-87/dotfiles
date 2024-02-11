@@ -1,0 +1,19 @@
+---
+# defaults file for gnome
+ 
+#TODO only install intel if VGA compatible controller is Intel
+gnome_base_pkgs:
+  - xorg-server
+  - xorg-sessreg
+  - xorg-xinit
+  - xorg-xsetroot
+  - xf86-video-intel
+  - vulkan-intel
+  - mesa
+  - gnome
+  - gnome-flashback
+  - gnome-themes-extra
+  - geoclue
+  - bluez-tools
+  - bluez-utils
+  - libnautilus-extension

@@ -1,0 +1,5 @@
+---
+# tasks file for greeter
+#
+- name: "Install greeter {{ greeter_name }}"
+  ansible.builtin.include_tasks: "00-{{ greeter_name }}-installation.yml"

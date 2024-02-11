@@ -1,0 +1,38 @@
+---
+# tasks for installing lightdm greeter
+# TODO if xmonad is installed, ${HOME}/.dmrc should be provided
+# TODO if a background image is provided/available it should also be configured here
+- name: "Install packages for lightdm"
+  community.general.pacman:
+    name: "{{ greeter_lightdm_pkgs }}"
+    state: latest
+    update_cache: yes
+
+- name: "Set sessions-directory in /etc/lightdm/lightdm.conf"
+  ansible.builtin.lineinfile:
+    path: /etc/lightdm/lightdm.conf
+    regexp: '^#(sessions-directory=.*)'
+    line: \g<1>
+    owner: root
+    group: root
+    mode: '0644'
+    backrefs: true
+
+- name: "Enable lightdm greeter"
+  ansible.builtin.systemd:
+    name: lightdm.service
+    enabled: true
+
+- name: "Ensure gnome-themes-extra is present"
+  ansible.builtin.pacman:
+    name: gnome-themes-extra
+    state: present
+
+- name: "Set adwaita-dark as the theme for lightdm-gtk-greeter"
+  ansible.builtin.lineinfile:
+    path: /etc/lightdm/lightdm-gtk-greeter.conf
+    regexp: '#(theme-name=.*)'
+    line: \g<1> Adwaita-dark
+    owner: root
+    group: root
+    backrefs: true

@@ -1,0 +1,8 @@
+---
+# defaults file for greeter
+
+greeter_name: lightdm
+
+greeter_lightdm_pkgs:
+  - lightdm
+  - lightdm-gtk-greeter
