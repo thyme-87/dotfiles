@@ -175,7 +175,7 @@ pip_packages:
   - xkcdpass
   - pylint
 
-yay_version: 11.0.2-1
+yay_version: 12.2.0-1
 
 #dropbox_background_folder_url: !vault |
 #    $ANSIBLE_VAULT;1.1;AES256
