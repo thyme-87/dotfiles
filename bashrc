@@ -2,6 +2,8 @@
 # ~/.bashrc
 # This file is executed for interactive non-login shells.
 #
+#TODO convenience for setting the card-profile when switching between laptop mode and docked mode
+# pactl set-card-profile alsa_card.pci-0000_00_1f.3 "output:hdmi-stereo-extra1"
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
