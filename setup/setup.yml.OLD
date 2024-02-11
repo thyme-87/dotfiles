@@ -5,6 +5,12 @@
 - hosts: 127.0.0.1
   connection: local
   become: yes
+
+  vars_prompt:
+    - name: hostname
+      prompt: "Please provide the hostname"
+      private: true
+
   vars:
     offical_packages:
       - ansible
@@ -95,9 +101,11 @@
             pacman:
                     update_cache: yes
   tasks:
+            #TODO this is to be used later to decide on how to setup bootmanager
           - name: "Verify EFI vars"
             command: ls /sys/firmware/efi/efivars
 
+            #TODO use sane defaults but make this configurable
           - name: "Set timezone"
             command: ln -sf /usr/share/zoneinfo/Europe/Berlin/ /etc/localtime
 
