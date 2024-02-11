@@ -4,16 +4,16 @@ Config {
         --TODO add icons to save space
         --TODO use multicore plugins for usage and temperature to save some space
         --     see: https://github.com/jaor/xmobar/blob/master/doc/plugins.org
-        --font = "xft:Roboto Mono for Powerline:size=8:antialiasing=true"
-        font = "xft:RobotoMono Nerd Font:style=Regular:size=11:antialiasing=true"
+        --font = "xft:RobotoMono Nerd Font:style=Regular:size=11:antialiasing=true"
+        --font = "xft:RobotoMono Nerd Font:size=11:style=regular"
+        font = "xft:RobotoMono Nerd Font regular 11"
+        , dpi = 96,
         , additionalFonts = []
         , textOffset = -1
         , iconOffset = -1
         , iconRoot = "."
         , alpha = 255
         , position = TopW L 100
-
-        --font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
         , bgColor = "#272822"
         , fgColor = "#e0e0e0"
         , border = TopB 0
