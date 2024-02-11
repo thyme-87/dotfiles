@@ -1,43 +1,26 @@
 ---
 # tasks file for yay
+#TODO make it possible to fetch a specific version of yay
+#TODO split building and installing of the package into two tasks to make it more clear, when sudo privileges are required
 
-#TODO move this also into the user role!
-- name: "Create user for installing AUR packages"
-  ansible.builtin.user:
-    name: "{{ aur_user_name }}"
-    state: present
-    system: yes
-
-- name: "Allow user {{ aur_user_name }} passwordless access to pacman"
-  lineinfile:
-    group: root
-    owner: root
-    mode: 0644
-    path: "/etc/sudoers.d/{{ aur_user_name }}"
-    create: yes
-    state: present
-    line: "{{ aur_user_name }} ALL=(ALL) NOPASSWD: /usr/bin/pacman"
-    validate: "/usr/sbin/visudo -cf %s"
-
-- name: "Determin if yay is already installed (check for /usr/bin/yay)"
+- name: "Determine if yay is already installed (check for /usr/bin/yay)"
   stat:
     path: /usr/bin/yay
   register: yay_present
 
 - name: "Fetch package yay from AUR"
-  become: true
-  become_user: "{{ aur_user_name }}"
-  ansible.builtin.git:
-    clone: yes
+  local_action:
+    module: ansible.builtin.git
     repo: https://aur.archlinux.org/yay.git
+    clone: yes
     dest: /tmp/yay
       #version: "{{ yay_version }}" #FIXME
   when: not yay_present.stat.exists
 
+#TODO it could be, that become: true is required
 - name: "Install yay via makepkg -si"
-  become: true
-  become_user: "{{ aur_user_name }}"
-  ansible.builtin.shell: |
-    cd /tmp/yay/
-    makepkg -si --noconfirm
+  local_action:
+    module: ansible.builtin.command makepkg -i --noconfirm
+    args:
+      chdir: /tmp/yay
   when: not yay_present.stat.exists
