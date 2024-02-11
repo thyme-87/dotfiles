@@ -575,6 +575,10 @@ Plugin 'VundleVim/Vundle.vim'
 " in a FIXED syntax that informs about the date, name, purpose. It CAN be
 " extended by a short comment.
 " SYNTAX: [YYYY-MM-DD] PLUGINNAME PURPOSE COMMENT
+"TODO evaluate using org.vim (https://github.com/axvr/org.vim)
+
+" [2023-10-03] add reStructuredText for Vim
+Plugin 'habamax/vim-rst'
 
 " [2021-12-05] add autocompletion for terraform
 Plugin 'junegunn/vader.vim'
