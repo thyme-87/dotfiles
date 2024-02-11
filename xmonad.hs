@@ -64,11 +64,6 @@ instance UrgencyHook LibNotifyUrgencyHook where
 
 myManageHook = floatHook <+> fullscreenManageHook <+> namedScratchpadManageHook scratchpads
 
---custom event hook to make spotify float after it is launched
-myHandleEventHook = dynamicPropertyChange "WM_NAME" (className =? "Spotify" --> floating)
-            where
-                floating = customFloating $ W.RationalRect 0.6 0.6 0.2 0.2
-
 floatHook = composeAll
     [ className =? "gimp"   --> doFloat
     , resource =? "synapse" --> doIgnore
@@ -142,7 +137,7 @@ toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_m)
 myConfig = def {
         manageHook      = ( isFullscreen --> doFullFloat ) <+> manageDocks <+> myManageHook <+> manageHook def
         , startupHook   = myStartupHook <+> startupHook def --TODO
-        , handleEventHook   =  myHandleEventHook <+> handleEventHook def <+> fullscreenEventHook
+        , handleEventHook   =  handleEventHook def <+> XMonad.Layout.Fullscreen.fullscreenEventHook
         , layoutHook    = avoidStruts $ toggleLayouts (noBorders Full) $ smartBorders $ layoutHook def
         , modMask                 = myModMask
         , terminal                = myTerminal
