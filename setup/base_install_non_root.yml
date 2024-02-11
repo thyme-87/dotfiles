@@ -1,0 +1,359 @@
+---
+#This playbook is to be run with the non-root user that was created at the initial setup
+#TODO check that we are not root before executing anything
+#TODO install pip_packages! DECIDE user specific vs global installation
+#TODO split building package for yay and installing it into two tasks, so that privilege escalation is handled (and visible) at the level of ansible
+#TODO handle graphics driver installation (this should probably be a separate role)
+#TODO make GTK theme configurable
+#TODO provide symlinks for vim snippets etc.
+#TODO provide symlinks for ranger
+#TODO provide/provision redshift.conf via symlink
+- name: Setup new system
+  hosts: target
+  connection: local
+
+  pre_tasks:
+    - name: "Install basic graphics packages"
+      become: true
+      ansible.builtin.pacman:
+        name: "{{ graphics_base_pkgs }}"
+        state: latest
+        update_cache: true
+      tags:
+        - initial
+        - base
+        - graphics
+        - desktop
+
+    - name: "Install gnome base packages"
+      become: true
+      community.general.pacman:
+        name: "{{ gnome_base_pkgs }}"
+        state: latest
+        update_cache: yes
+      tags:
+        - initial
+        - base
+        - gnome
+        - desktop
+
+    - name: "Set theme Adwaita-dark for GTK 2"
+      ansible.builtin.file:
+        src: "{{ hostvars.localhost.ansible_env.HOME }}/dotfiles/gtkrc-2.0"
+        dest: "{{ hostvars.localhost.ansible_env.HOME }}/.gtkrc-2.0"
+        owner: "{{ hostvars.localhost.ansible_env.USER }}"
+        group: "{{ hostvars.localhost.ansible_env.USER }}"
+        state: link
+      tags:
+        - initial
+        - base
+        - gnome
+        - gtk-theme
+        - gtk2-theme
+
+    - name: "Set theme Adwaita-dark for GTK 3"
+      ansible.builtin.copy:
+        remote_src: false
+        src: /usr/share/gtk-3.0/settings.ini
+        dest: "{{ hostvars.localhost.ansible_env.HOME }}/.config/gtk-3.0/settings.ini"
+        owner: "{{ hostvars.localhost.ansible_env.USER }}"
+        group: "{{ hostvars.localhost.ansible_env.USER }}"
+      tags:
+        - initial
+        - base
+        - gnome
+        - gtk-theme
+        - gtk3-theme
+
+    - name: "Set theme Adwaita-dark for GTK 3"
+      ansible.builtin.lineinfile:
+        path: "{{ hostvars.localhost.ansible_env.HOME }}/.config/gtk-3.0/settings.ini"
+        regex: ^(gtk-theme-name = )Adwaita$
+        line: \g<1>Adwaita-dark
+        backrefs: true
+      tags:
+        - initial
+        - base
+        - gnome
+        - gtk-theme
+        - gtk3-theme
+
+    - name: "Set theme Adwaita-dark for GTK 4 via ${HOME}/.xprofile -> ${HOME}/dotfiles/xprofile"
+      ansible.builtin.file:
+        src: "{{ hostvars.localhost.ansible_env.HOME }}/dotfiles/xprofile"
+        dest: "{{ hostvars.localhost.ansible_env.HOME }}/.xprofile"
+        owner: "{{ hostvars.localhost.ansible_env.USER }}"
+        group: "{{ hostvars.localhost.ansible_env.USER }}"
+        state: link
+      tags:
+        - initial
+        - base
+        - gnome
+        - gtk-theme
+        - gtk4-theme
+
+    - name: "Install desktop environment basic tools"
+      become: true
+      ansible.builtin.pacman:
+        name: "{{ desktop_environment_basic_tools }}"
+        state: latest
+        update_cache: true
+      tags:
+        - initial
+        - base
+        - de_basics
+        - desktop
+
+  roles:
+    - name: "Install & configure xmonad"
+      role: xmonad
+      become: true
+      tags:
+        - base
+        - initial
+        - gnome
+        - xmonad
+        - desktop
+
+    - name: "Install greeter"
+      role: greeter
+      become: true
+      tags:
+        - base
+        - initial
+        - desktop
+        - greeter
+
+    - name: "Install yay"
+      role: yay
+      tags:
+        - yay
+
+    - name: "Initial install of packages via yay"
+      role: install_aur_packages
+      tags:
+        - aur_packages
+
+    - name: "Install and setup xmobar"
+      role: xmobar
+      tags:
+        - desktop
+        - xmobar
+
+    - name: "Install and setup dunst"
+      role: dunst
+      tags:
+        - desktop
+        - dunst
+
+    - name: "Install and setup gvim"
+      role: vim
+      become: true
+      tags:
+        - desktop
+        - vim
+
+    - name: "Install and setup tmux"
+      role: tmux
+      tags:
+        - desktop
+        - tmux
+
+    - name: "Setup convenience for timetracking (for work)"
+      role: time-tracking
+      become: true
+      tags:
+        - desktop
+        - work
+        - log-working-hours
+
+  tasks:
+    - name: "Install dev tools"
+      become: true
+      ansible.builtin.pacman:
+        name: "{{ dev_tools }}"
+        state: latest
+        update_cache: true
+
+      #FIXME "dotfiles" should be configurable
+      #FIXME this should probably be a separate role
+      #FIXME must be able to handle ~/config/FOO/config.conf style target paths (that may require the FOO directory to be created before creating the symlink)
+      #FIXME also must be able to handle exisiting files (must be deleted)
+      #FIXME maybe this should better be a post_task???
+    - name: "Create symlinks for config files held in $(HOME)/dotfiles"
+      ansible.builtin.file:
+        src: "{{ hostvars.localhost.ansible_env.HOME }}/dotfiles/{{ item.value.src }}"
+        dest: "{{ hostvars.localhost.ansible_env.HOME }}/{{ item.value.target }}"
+        owner: "{{ hostvars.localhost.ansible_env.USER }}"
+        group: "{{ hostvars.localhost.ansible_env.USER }}"
+        state: link
+      loop: "{{ config_symlinks | dict2items}}"
+      tags:
+        - desktop
+        - symlinks
+
+    - name: "Enable acpid.service"
+      become: true
+      ansible.builtin.service:
+        name: acpid.service
+        state: started
+        enabled: true
+      tags:
+        - desktop
+        - laptop
+        - acpi
+
+
+      #FIXME own role?
+      #for this to really work, it might also be required to add the use to the video group
+      #TODO this should only be set if we're on a laptop
+    - name: "Set udev rule for setting backlight brightness on laptops"
+      become: true
+      ansible.builtin.copy:
+        remote_src: false
+        src: config/backlight.rules
+        dest: /etc/udev/rules.d/backlight.rules
+        owner: root
+        group: root
+      tags:
+        - backlight
+
+    - name: "Set udev rule for ultimate hacking keyboard UHK60"
+      become: true
+      ansible.builtin.copy:
+        remote_src: false
+        src: config/50-uhk60.rules
+        dest: /etc/udev/rules.d/50-uhk60.rules
+        owner: root
+        group: root
+      tags:
+        - uhk
+
+      #TODO this requires acpilight to be installed
+      # maybe this is more generic? https://wiki.archlinux.org/title/acpid
+    - name: "Provide brightness control scripts"
+      become: true
+      ansible.builtin.copy:
+        src: "config/{{ item }}"
+        dest: "/etc/acpi/events/{{ item }}"
+        owner: root
+        group: root
+        mode: '0644'
+      loop: [ "brightness_up", "brightness_down" ]
+      tags:
+        - backlight
+
+    - name: "Install convenience packages"
+      become: true
+      ansible.builtin.pacman:
+        name: "{{ desktop_environment_convenience }}"
+        state: latest
+        update_cache: true
+      tags:
+        - convenience
+
+  post_tasks:
+      #TODO make this a role maybe? so we can chose either physlock or i3lock
+    - name: "Provide physlock.service"
+      become: true
+      ansible.builtin.copy:
+        src: config/physlock/physlock.service
+        dest: /usr/lib/systemd/system/physlock.service
+        remote_src: false
+        owner: root
+        group: root
+        mode: '0644'
+      tags:
+        - desktop
+        - xmonad
+        - screenlock
+        - physlock
+
+    - name: "Enable physlock.service"
+      become: true
+      ansible.builtin.service:
+        name: physlock.service
+        state: started
+        enabled: true
+      tags:
+        - desktop
+        - xmonad
+        - screenlock
+        - physlock
+
+      #This is required because the ${HOME}/dotfiles/bin/ssh-find-agent script wants this file to be present
+    - name: "Create folder /home/{{ hostvars.localhost.ansible_env.USER }}/.ssh/authorized_keys"
+      ansible.builtin.file:
+        path: "{{ hostvars.localhost.ansible_env.HOME }}/.ssh/authorized_keys"
+        state: touch
+        owner: "{{ hostvars.localhost.ansible_env.USER }}"
+        group: "{{ hostvars.localhost.ansible_env.USER }}"
+        mode: '0644'
+      tags:
+        - desktop
+        - authorized_keys
+
+    - name: "Create folder /home/{{ hostvars.localhost.ansible_env.USER }}/backgrounds/"
+      ansible.builtin.file:
+        path: "{{ hostvars.localhost.ansible_env.HOME }}/backgrounds"
+        state: directory
+        mode: '0755'
+      register: background_directory
+      become: false
+      tags:
+        - desktop
+        - backgrounds
+
+    - name: "Download backgrounds"
+      ansible.builtin.get_url:
+        url: "{{ dropbox_background_folder_url }}"
+        dest: "{{ hostvars.localhost.ansible_env.HOME }}/Downloads/backgrounds.zip"
+      become: false
+      tags:
+        - desktop
+        - background
+
+    - name: "Unzip backgrounds.zip to {{ hostvars.localhost.ansible_env.HOME }}/backgrounds/"
+      ansible.builtin.unarchive:
+        src: "{{ hostvars.localhost.ansible_env.HOME }}/Downloads/backgrounds.zip"
+        remote_src: yes
+        dest: "{{ hostvars.localhost.ansible_env.HOME }}/backgrounds/"
+        group: "{{ hostvars.localhost.ansible_env.USER }}"
+        owner: "{{ hostvars.localhost.ansible_env.USER }}"
+      become: false
+      register: unzip_result
+      failed_when:
+        - '"extracting" not in unzip_result.extract_results.out'
+      tags:
+        - desktop
+        - background
+
+    - name: "Enable redshift service"
+      ansible.builtin.command:
+        cmd: systemctl --user enable redshift.service
+        creates: "/home/{{ hostvars.localhost.ansible_env.USER }}/.config/systemd/user/default.target.wants/redshift.service"
+      tags:
+        - desktop
+        - redshift
+
+    #FIXME this _should_ probably be handled somewhere else
+    - name: "Provide redshift config"
+      ansible.builtin.file:
+        src: "{{ hostvars.localhost.ansible_env.HOME }}/dotfiles/redshift.conf"
+        dest: "{{ hostvars.localhost.ansible_env.HOME }}/.config/redshift.conf"
+        owner: "{{ hostvars.localhost.ansible_env.USER }}"
+        group: "{{ hostvars.localhost.ansible_env.USER }}"
+        state: link
+      tags:
+        - desktop
+        - redshift
+
+    - name: "Set theme for keepassxc"
+      ansible.builtin.lineinfile:
+        path: "{{ hostvars.localhost.ansible_env.HOME }}/.config/keepassxc/keepassxc.ini"
+        regexp: ^ApplicationTheme=
+        line: ApplicationTheme=dark
+        state: present
+      tags:
+        - desktop
+        - keepassx
