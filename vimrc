@@ -427,8 +427,12 @@ let g:ale_linters = {
     \'php': ['phpcs'],
     \'yaml': ['ansible-lint'],
     \'go': ['revive'],
-    \'terraform': ['checkov', 'tflint', 'terraform']
+    \'terraform': ['checkov', 'tflint', 'terraform'],
+    \'bash': ['shellcheck', 'bashate']
     \    }
+
+let g:ale_sh_bashate_options = '-i E005' "ignore file does not begin with shebang/missing .sh prefix
+
 let g:ale_php_phpcs_standard = 'PSR2'
 let g:ale_statusline_format = ['×%d', '!%d', '☻ok']
 let g:ale_echo_cursor = 1
