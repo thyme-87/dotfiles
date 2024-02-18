@@ -1,10 +1,74 @@
 #convenience for azure cli # ignore E005
 
+#TODO convenience for getting user info
+
 AZ_CLI_PATH=/usr/bin/az
 [ ! -f ${AZ_CLI_PATH} ] && return 1 # return error cause az cli is not installed
 
-#TODO show current tenant
-#TODO show current subscription
-#TODO convenience for switching subscription
-#TODO convenience for switching tenant
-#TODO convenience for getting user info
+__az_set_default_config_option() {
+    az config set core.collect_telemetry=false &>/dev/null
+    az config set core.output=jsonc &>/dev/null
+    az config set core.cache_ttl=30 &>/dev/null
+    az config set logging.enable_log_file=false &>/dev/null
+    az config set output.show_survey_links=false &>/dev/null
+    az config set clients.show_secrets_warning=false &>/dev/null
+    az config set extensions.use_dynamic_install=yes_prompt &>/dev/null
+    az config get --local
+}
+
+__az_get_current_tenant() {
+    # TODO implement caching strategy to reduce lag
+    az rest --method get --url https://graph.microsoft.com/v1.0/domains --query 'value[?isDefault].id' -o tsv
+}
+
+__az_switch_tenant_completion() {
+    COMPREPLY=()
+    local currentWord=${COMP_WORDS[COMP_CWORD]}
+    local azure_tenant_default_domains=$(az rest --method get --url https://management.azure.com/tenants?api-version=2020-01-01 --query "value[*].defaultDomain" -o tsv)
+
+    COMPREPLY=($(compgen -W "${azure_tenant_default_domains}" -- "${currentWord}"))
+    return 0
+}
+
+__az_switch_tenant() {
+    #TODO implement caching to reduce lag
+    local target_tenant="${1}"
+    # device code flow is supported for CLI only workflow
+    # az login --use-device-code --tenant "${target_tenant}" --allow-no-subscriptions --all
+    az login --tenant "${target_tenant}" --allow-no-subscriptions --all
+}
+
+complete -F __az_switch_tenant_completion __az_switch_tenant
+
+__az_get_active_subscription() {
+    az account list --query '[?isDefault].name' -o tsv 2>/dev/null
+}
+
+__az_get_azure_context() {
+    local tenant=$(__az_get_current_tenant)
+    local subscription=$(__az_get_active_subscription)
+    echo "(${tenant%%.*} | $subscription)"
+}
+
+__az_get_tenant_by_domain_name() {
+    local PARAM="'"$1"'"
+    az rest --method get --url "https://graph.microsoft.com/v1.0/tenantRelationships/findTenantInformationByDomainName(domainName=$PARAM)" --query 'tenantId' -o tsv
+}
+
+__az_switch_subscription_completion() {
+    COMPREPLY=()
+    local currentWord=${COMP_WORDS[COMP_CWORD]}
+    local subscription_id_pairs=$(az account list --query "[].{SubscriptionName:name, SubscriptionId:id}" 2>/dev/null)
+    local subscription_names=$(jq .[].SubscriptionName <<< $subscription_id_pairs | sed -e 's/\s/_/g')
+    COMPREPLY=($(compgen -W "${subscription_names}" -- "${currentWord}"))
+    return 0
+}
+
+__az_switch_subscription() {
+    #FIXME find a more reliable way to handle subscriptions with spaces in the name
+    #TODO cache subscription to reduce lag
+    local target_subscription=$(sed -e 's/_/ /g' <<< "${1}")
+    az account set --subscription "${target_subscription}"
+}
+
+complete -F __az_switch_subscription_completion __az_switch_subscription
