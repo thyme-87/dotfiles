@@ -153,11 +153,14 @@ __switch_cloudprovider() {
     fi
 }
 
+[ -f "${HOME}/dotfiles/scripts/azure-convenience" ] && \
+    source "${HOME}/dotfiles/scripts/azure-convenience"
 __cloudprovider_context() {
     if [[ ${CLOUDPROVIDER} =~ (AWS|aws) ]]; then
         printf "$AWS_PROFILE"
     elif [[ ${CLOUDPROVIDER} =~ (AZURE|azure|AZ|az) ]]; then
-        printf "TBD"
+        #__azure_get_current_subscription_name
+        printf -- '%s' "$(__az_get_azure_context)"
     elif [[ ${CLOUDPROVIDER} =~ (GCP|gcp|GOOGLE|google) ]]; then
         read -d "\n" CONFIG_NAME PROJECT_NAME <<< $(gcloud config configurations list | awk '{ if ($2 == "True") { print $1 "\n" $4 }}')
         printf "${CONFIG_NAME} > ${PROJECT_NAME}"
