@@ -1,4 +1,5 @@
 import XMonad
+import XMonad.Actions.GridSelect
 import XMonad.Config.Gnome
 import XMonad.Config.Desktop
 import XMonad.ManageHook
@@ -53,6 +54,15 @@ myVisibleWSLeft     =   "("
 myVisibleWSRight    =   ")"
 myCurrentWSLeft     =   "["
 myCurrentWSRight    =   "]"
+
+--GSConfig for XMonad.Actions.GridSelect
+gsconfig1 = def {
+    gs_cellheight = 30,
+    gs_cellwidth = 100,
+    gs_cellpadding = 2,
+    gs_font = "xft:RobotoMono Nerd Font Mono:style=Regular:size=16:hinting=false"
+}
+
 
 --TODO clarify the urgencyHook does not seem to be used. Maybe clean this up OR work out what I wanted to achieve here
 data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
@@ -179,6 +189,8 @@ myConfig = def {
         , ((controlMask .|. mod1Mask, xK_s), spawn "spotifyscript copyUrl")                     --copy url into copy&paste buffer
         , ((controlMask .|. mod1Mask, xK_t), spawn myTerminal)
         , ((mod1Mask .|. shiftMask, xK_comma), namedScratchpadAction scratchpads "terminal")    --urxvt quake-style
+        , ((mod1Mask, xK_comma), goToSelected def)                                              --Xmonad.Actions.GridSelect
+        , ((mod4Mask, xK_comma), gridselectWorkspace gsconfig1 W.view)                          --Xmonad.Actions.GridSelect
         , ((mod1Mask, xK_p), namedScratchpadAction scratchpads "keepassxc")                     --keepassxc
         , ((mod1Mask, xK_m), namedScratchpadAction scratchpads "spotify")
         , ((mod1Mask, xK_v), namedScratchpadAction scratchpads "gvim")                          --TODO FIXME this overlaps with emacs shortcut!
