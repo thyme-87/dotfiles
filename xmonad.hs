@@ -3,7 +3,7 @@ import XMonad.Actions.GridSelect
 import XMonad.Config.Gnome
 import XMonad.Config.Desktop
 import XMonad.ManageHook
-import XMonad.Hooks.DynamicProperty
+import XMonad.Hooks.OnPropertyChange
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
