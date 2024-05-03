@@ -29,6 +29,10 @@ alias set_default_audio_sink="pactl set-default-sink {}"
 alias ansdoc='__ansdoc'
 
 function __ansdoc {
+    ansible-doc "$(ansible-doc -l 2>/dev/null | fzf --preview 'ansible-doc {}' -e)"
+}
+
+function __ansdoc_deprecated {
     if [ "${1}X" != "X" ]; then
         ansible-doc "${1}"
     else
