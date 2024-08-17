@@ -6,9 +6,12 @@
 # remember: urxvt background color is: #313131 272822
 set recolor-lightcolor '#313131'
 set recolor-darkcolor '#e0e0e0'
-set highlight-color '#36B9CF'
-set highlight-active-color '#F92672'
-set highlight-transparency 0.5
+#set highlight-color '#36B9CF'
+set highlight-color 'rgba(54, 185, 207, 0.5)'
+#set highlight-active-color '#F92672'
+set highlight-active-color "rgba(249, 38, 114, 0.5)"
+#setting highlight-transparency has been removed
+#set highlight-transparency 0.5
 set recolor 1
 
 set statusbar-bg '#313131'
@@ -23,3 +26,5 @@ set selection-clipboard clipboard #set target for selection to clipboard instead
 
 #Set font and font size for status bar and menu
 set font 'monospace normal 14'
+
+set database 'sqlite'
