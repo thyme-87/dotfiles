@@ -368,3 +368,19 @@
       tags:
         - desktop
         - keepassx
+
+    - name: "Create folder /home/${USER}/.gnupg/ if it does not exist yet"
+      ansible.builtin.file:
+        path: "{{ hostvars.localhost.ansible_env.HOME }}/.gnupg"
+        state: directory
+        mode: '0700'
+      tags:
+        - gpg
+
+    - name: "Create file /home/${USER}/.gnupg/gpg-agent.conf to ensure pinentry-ttf is used by gpg"
+      ansible.builtin.lineinfile:
+        path: "{{ hostvars.localhost.ansible_env.HOME }}/.gnupg/gpg-agent.conf"
+        line: pinentry-program /usr/bin/pinentry-tty
+        create: true
+      tags:
+        - gpg
