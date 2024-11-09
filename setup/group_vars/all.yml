@@ -38,12 +38,14 @@ system_base_extended_pkgs:
   - gawk
   - htop
   - jq
-  - jdk-openjdk #VERIFY
+  - jdk-openjdk # VERIFY
   - lm_sensors
   - mtr
-  - networkmanager #validate if still needed
+  - networkmanager # validate if still needed
   - pkgfile
+  - python-jmespath
   - python-pip
+  - python-pipx
   - ranger
   - ripgrep
   - rxvt-unicode
@@ -169,7 +171,7 @@ aur_packages:
   - yubico-authenticator #might fail as needs gpg key
   - zeal-git
 
-pip_packages:
+pip_packages: # FIXME - no pipx must be used
   - ansible-lint
   - solaar
   - yubikey-manager
