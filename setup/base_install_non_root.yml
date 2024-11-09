@@ -229,6 +229,36 @@
       tags:
         - uhk
 
+      # TODO FIXME custom groups should be created differently
+    - name: "Create group plugdev for zsa keyboard"
+      become: true
+      ansible.builtin.group:
+        name: plugdev
+        state: present
+      tags:
+        - zsa
+
+    - name: "Add user to group plugdev for zsa keyboard"
+      become: true
+      ansible.builtin.user:
+        name: "{{ hostvars.localhost.ansible_env.USER }}"
+        groups: plugdev
+        append: true
+      tags:
+        - zsa
+
+    - name: "Set udev rules for zsa voyager keyboard"
+      become: true
+      ansible.builtin.copy:
+        remote_src: false
+        src: config/60-zsa.rules
+        dest: /etc/udev/rules.d/60-zsa.rules
+        owner: root
+        group: root
+        mode: "0644"
+      tags:
+        - zsa
+
     - name: "Set udev rules for streamdeck"
       become: true
       ansible.builtin.copy:
