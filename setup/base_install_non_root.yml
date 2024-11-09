@@ -226,6 +226,7 @@
         dest: /etc/udev/rules.d/50-uhk60.rules
         owner: root
         group: root
+        mode: "0644"
       tags:
         - uhk
 
@@ -267,6 +268,7 @@
         dest: /etc/udev/rules.d/streamdeck.rules
         owner: root
         group: root
+        mode: "0644"
       tags:
         - streamdeck
 
