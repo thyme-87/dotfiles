@@ -1,7 +1,7 @@
 ---
 #This playbook is to be run with the non-root user that was created at the initial setup
 #TODO check that we are not root before executing anything
-#TODO install pip_packages! DECIDE user specific vs global installation
+#TODO install pip_packages! DECIDE user specific vs global installation (or pipx)
 #TODO split building package for yay and installing it into two tasks, so that privilege escalation is handled (and visible) at the level of ansible
 #TODO handle graphics driver installation (this should probably be a separate role)
 #TODO make GTK theme configurable
@@ -414,5 +414,25 @@
         path: "{{ hostvars.localhost.ansible_env.HOME }}/.gnupg/gpg-agent.conf"
         line: pinentry-program /usr/bin/pinentry-tty
         create: true
+        mode: '0644'
       tags:
         - gpg
+
+    - name: "Create folder /home/${USER}/.config/python_keyring/ if it does not exist yet"
+      ansible.builtin.file:
+        path: "{{ hostvars.localhost.ansible_env.HOME }}/.config/python_keyring/"
+        state: directory
+        mode: '0700'
+      tags:
+        - python
+
+    - name: "Ensure that python is not trying to use KDE Wallet Service"
+      ansible.builtin.copy:
+        src: config/keyringrc.cfg
+        dest: "{{ hostvars.localhost.ansible_env.HOME }}/.config/python_keyring/keyringrc.cfg"
+        remote_src: false
+        owner: "{{ hostvars.localhost.ansible_env.USER }}"
+        group: "{{ hostvars.localhost.ansible_env.USER }}"
+        mode: '0644'
+      tags:
+        - python
