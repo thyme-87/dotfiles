@@ -1,0 +1,10 @@
+[Trigger]
+Type = Path
+Operation = Install
+Operation = Upgrade
+Target = usr/share/applications/freeplane.desktop
+
+[Action]
+Description = Ensure that freeplane is using custom java version
+When = PostTransaction
+Exec = {{ freeplane_custom_script_path }}

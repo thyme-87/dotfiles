@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: MIT-0
+---
+# defaults file for freeplane
+
+freeplane_custom_script_path: /usr/share/libalpm/scripts/freeplane-custom-java-env
+freeplane_custom_hook_path: /usr/share/libalpm/hooks/update-freeplane.hook
+freeplane_custom_java_pkg: jdk21-openjdk
+freeplane_java_home: /usr/lib/jvm/java-21-openjdk/

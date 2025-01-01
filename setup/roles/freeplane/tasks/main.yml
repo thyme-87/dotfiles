@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: MIT-0
+---
+# tasks file for freeplane
+- name: "Install custom java version required by freeplane"
+  community.general.pacman:
+    name: "{{ freeplane_custom_java_pkg }}"
+    state: present
+    update_cache: true
+
+- name: "Install freeplane via pacman"
+  community.general.pacman:
+    name: freeplane
+    state: latest
+    update_cache: true
+
+- name: "Set custom java path"
+  ansible.builtin.lineinfile:
+    path: /usr/share/applications/freeplane.desktop
+    regexp: '^(Exec=)(freeplane .*)'
+    line: '\1env FREEPLANE_JAVA_HOME={{ freeplane_java_home }} \2'
+    backrefs: true
+
+- name: "Install script for custom pacman hook"
+  ansible.builtin.template:
+    src: freeplane-custom-java-env-pacman-hook-script.j2
+    dest: "{{ freeplane_custom_script_path }}"
+    group: root
+    owner: root
+    mode: '0755'
+
+- name: "Install script for custom pacman hook"
+  ansible.builtin.template:
+    src: freeplane-custom-java-env-pacman-hook.j2
+    dest: "{{ freeplane_custom_hook_path }}"
+    group: root
+    owner: root
+    mode: '0644'

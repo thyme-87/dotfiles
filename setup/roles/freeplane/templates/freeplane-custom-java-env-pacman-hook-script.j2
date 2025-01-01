@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# The purpose of this hook is, to ensure that freeplane gets started with the
+# right java version. To achieve this, the custom environment variable
+# FREEPLANE_JAVA_HOME is set when running freeplane via the freeplane.desktop
+# shortcut
+# Exec=env FREEPLANE_JAVA_HOME=/usr/lib/jvm/java-21-openjdk/ freeplane %F
+TARGET_PATH=/usr/share/applications/freeplane.desktop
+CUSTOM_JAVA_HOME={{ freeplane_java_home }}
+
+echo "Setting custom java home for freeplane desktop shortcut (${TARGET_PATH}):"
+echo "Exec=env FREEPLANE_JAVA_HOME=${CUSTOM_JAVA_HOME} freeplane %F"
+
+sed -i.BACKUP "s|^\(Exec=\)\(freeplane .*\)|\1env FREEPLANE_JAVA_HOME=${CUSTOM_JAVA_HOME} \2|1" "${TARGET_PATH}"
