@@ -107,31 +107,31 @@ scratchpads = [ NS "terminal" spawnTerminal findTerminal manageTerminal
                             h = 0.6
                             w = 0.6
                             t = 0.1
-                            l = 0.1
+                            l = 0.2
             spawnSpotify    = "spotify"
             findSpotify     = className =? "Spotify"
             manageSpotify   = customFloating $ W.RationalRect l t w h
                         where
-                            h = 0.9
-                            w = 0.9
-                            t = 0.15
-                            l = 0.15
+                            h = 0.8
+                            w = 0.8
+                            t = 0.05
+                            l = 0.1
             spawnGvim       = "gvim"
             findGvim        = className =? "Gvim"
             manageGvim      = customFloating $ W.RationalRect l t w h
                         where
-                            h = 1.1
-                            w = 1
-                            t = 0.02
-                            l = 0.003
+                            h = 0.8
+                            w = 0.6
+                            t = 0.1
+                            l = 0.2
             spawnStreamdeck     = "streamdeck"
             findStreamdeck      = className =? "StreamDeck UI"
             manageStreamdeck    = customFloating $ W.RationalRect l t w h
                         where
-                            h = 0.7
-                            w = 0.7
+                            h = 0.6
+                            w = 0.6
                             t = 0.1
-                            l = 0.1
+                            l = 0.2
 
 --The startupHook can be used to launch programs automatically.
 --I use it for picom
