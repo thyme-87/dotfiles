@@ -163,9 +163,11 @@ myBar = "xmobar ~/dotfiles/xmobarrc"
 
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_m)
 
+-- setWMName to "LG3D" to fix Java GUI applications
+-- for details see: https://thinkingeek.com/2012/01/24/fix-java-gui-applications-xmonad/
 myConfig = def {
         manageHook      = ( isFullscreen --> doFullFloat ) <+> manageDocks <+> myManageHook <+> manageHook def
-        , startupHook   = myStartupHook <+> startupHook def --TODO
+        , startupHook   = myStartupHook <+> setWMName "LG3D" <+> startupHook def --TODO
         , handleEventHook   =  handleEventHook def <+> XMonad.Layout.Fullscreen.fullscreenEventHook
         , layoutHook    = avoidStruts $ toggleLayouts (noBorders Full) $ smartBorders $ layoutHook def
         , modMask                 = myModMask
