@@ -226,4 +226,4 @@ myBorderWidth           = 1
 myNormalBorderColor     = "#e0e0e0"
 myFocusedBorderColor    = "#F92672"
 --TODO use icons/symbols for workspaces to save some space
-myWorkSpaces    = [ "1:\xf059f", "2:_$", "3:msc", "4:@", "5:\xf0239", "6:calc", "7:misc", "8:misc", "9:misc"]
+myWorkSpaces    = [ "1:\xf059f", "2:\xf489", "3:\xeb63", "4:@", "5:\xf0239", "6:\xf1ec", "7:\xeb63", "8:\xeb63", "9:\xeb63"]
