@@ -192,8 +192,8 @@ myConfig = def {
         , ((controlMask .|. mod1Mask, xK_t), spawn myTerminal)
         , ((mod1Mask .|. shiftMask, xK_comma), namedScratchpadAction scratchpads "terminal")    --urxvt quake-style
         , ((mod1Mask, xK_comma), goToSelected def)                                              --Xmonad.Actions.GridSelect
-        , ((mod4Mask, xK_comma), gridselectWorkspace gsconfig1 W.view)                          --Xmonad.Actions.GridSelect
-        , ((mod1Mask, xK_p), namedScratchpadAction scratchpads "keepassxc")                     --keepassxc
+        , ((mod4Mask .|. shiftMask, xK_comma), gridselectWorkspace gsconfig1 W.view)            --Xmonad.Actions.GridSelect --TODO bring window to current desktop
+        , ((mod1Mask, xK_k), namedScratchpadAction scratchpads "keepassxc")                     --keepassxc
         , ((mod1Mask, xK_m), namedScratchpadAction scratchpads "spotify")
         , ((mod1Mask, xK_v), namedScratchpadAction scratchpads "gvim")                          --TODO FIXME this overlaps with emacs shortcut!
         , ((mod1Mask .|. shiftMask, xK_s), namedScratchpadAction scratchpads "streamdeck")
