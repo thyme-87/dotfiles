@@ -44,6 +44,7 @@ system_base_extended_pkgs:
   - networkmanager  # validate if still needed
   - pkgfile
   - python-jmespath
+  - python-lsp-server
   - python-pip
   - python-pipx
   - ranger
