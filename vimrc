@@ -466,19 +466,31 @@ let g:voom_python_versions = [3]
 
 let g:ale_linters = {
     \'php': ['phpcs'],
-    \'yaml': ['ansible-lint'],
+    \'yaml': ['ansible-lint', 'yamllint'],
     \'go': ['revive'],
     \'terraform': ['checkov', 'tflint', 'terraform'],
-    \'bash': ['shellcheck', 'bashate']
+    \'bash': ['shellcheck', 'bashate'],
+    \'python': ['black', 'pylint', 'flake8']
     \    }
 
-let g:ale_sh_bashate_options = '-i E005' "ignore file does not begin with shebang/missing .sh prefix
+let g:ale_fixers = {
+            \'*': ['remove_trailing_lines', 'trim_whitespace'],
+            \'python': ['black'],
+            \'terraform': ['terraform-fmt-fixer']
+            \ }
 
+let g:ale_sh_bashate_options = '-i E005' "ignore file does not begin with shebang/missing .sh prefix
+let g:ale_virtualenv_dir_names = ['.venv', 'venv', 'env', '.env', 'virtualenv']
+let g:ale_python_pylint_options = '--init-hook ''import sys; sys.path.append(".")'''
+let g:ale_python_pylint_executable = 'pipenv'
+" --init-hook 'import sys; sys.path.append(\".\")'
 let g:ale_php_phpcs_standard = 'PSR2'
 let g:ale_statusline_format = ['×%d', '!%d', '☻ok']
 let g:ale_echo_cursor = 1
 let g:ale_echo_delay = 0
 let g:ale_enabled = 1
+let g:ale_lint_on_text_changed = 'always'
+let g:ale_lint_delay = 200
 let g:ale_echo_msg_format = '[%linter%]: %s [%severity%]'
 let g:ale_set_loclist = 1
 let g:ale_sign_column_always = 1
